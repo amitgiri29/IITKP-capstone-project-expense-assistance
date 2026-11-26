@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Expense Policy Assistant
 
 ![SPARKS AI Lab](assets/brand/sparks-ai-lab-logo.png)
@@ -374,3 +375,7 @@ Version set: application 0.2.0 · specification 1.6 · fictional policy 1.1 · g
 ## 14. For developers and coding assistants
 
 Before changing code, read [MODEL_HANDOFF.txt](MODEL_HANDOFF.txt), [AGENTS.md](AGENTS.md), [IMPLEMENTATION_CONTRACT.json](IMPLEMENTATION_CONTRACT.json) and [docs/BEFORE_IMPLEMENTATION.txt](docs/BEFORE_IMPLEMENTATION.txt). `CLAUDE.md` and `GEMINI.md` point to the same instructions. Every number and enumeration must come from the rule registry and reference data, never hard-coded.
+=======
+# IITKP-capstone-project-expense-assistance
+Expense Policy &amp; Travel planning assistance
+>>>>>>> 1426dc44abc0863dfe2a0e1c1e0ab18a63d63415
