@@ -1,0 +1,44 @@
+REPOSITORY AND TEAM CHECKOUT
+
+The ZIP is a portable repository snapshot. It deliberately contains no .git history, credentials, virtual environment or application implementation. Preserve dotfiles when copying. Put the extracted expense_assistant_capstone directory contents at the new repository root, not inside an unrelated existing project. Prefer a local working folder outside OneDrive/iCloud sync.
+
+FIRST OWNER
+1. Create an empty PRIVATE repository in your approved Git host. Do not initialize it with another README. Add all five teammates with appropriate access.
+2. Open a terminal inside the extracted package folder. Inspect files and .gitignore before committing. Commands below assume Git is installed and the terminal is in that folder.
+   git init -b main
+   git status --short
+   git add .
+   git diff --cached --stat
+   git diff --cached -- .env.example
+   git commit -m "Add expense assistant specification policy and golden tests"
+3. Replace REPOSITORY_URL with your own repository URL. Do not paste access tokens into a URL or commit them.
+   git remote add origin REPOSITORY_URL
+   git push -u origin main
+4. Configure pull-request review for main in your Git host. Restrict direct pushes if your host/plan supports it. This documentation package has not performed any of these external actions.
+
+EVERY TEAMMATE
+   git clone REPOSITORY_URL expense-policy-assistant
+   cd expense-policy-assistant
+   python validate_package.py
+On systems where python is not the installed command, use python3 or py. The validator needs only the Python standard library; the proposed app Python version is 3.14.10. Open START_HERE.html locally. Read README.md, docs/BEFORE_IMPLEMENTATION.txt and the assigned task. No API key is needed to review docs or validate fixtures.
+
+AFTER IMPLEMENTATION IS AUTHORIZED
+1. Check out main and pull with git pull --ff-only.
+2. Create a task branch: git switch -c docs/clarify-claim-status (or feat/policy-calculator after approval).
+3. Set up .venv using the version in TECH_STACK.json. The setup owner first resolves requirements-proposed.txt. Once requirements.lock.txt is committed, everyone installs that file and runs python -m pip check. Record differences rather than silently changing versions.
+4. Copy .env.example to .env locally and fill only credentials needed for your milestone. Mock-only work should use DEMO fixtures. Never share a teammate’s .env via Git.
+5. Edit one task, run documentation checks and relevant implemented tests, inspect git diff, commit and push your branch.
+6. Open a pull request using the template. An outside-pair reviewer checks behavior, test evidence, traceability and secret handling. Merge only after review. Pull main before starting the next task.
+
+CONFLICTS AND CHANGE CONTROL
+Coordinate schema/policy changes first. Resolve merge conflicts locally, rerun checks and ask the reviewer to recheck affected expectations. Never use a force push on main. Do not rewrite golden answers simply to make an implementation pass. A policy change requires an explanation, version update, affected test/trace changes and human review. Keep golden-case IDs stable.
+
+WHAT TO COMMIT
+Documentation, schemas, versioned fictional policy, synthetic fixtures, test definitions, dependency inputs and (later) reviewed source code and a validated lockfile.
+Do not commit .env, tokens, real receipts, database files, runtime uploads, caches, .venv, raw provider dumps or evaluation traces with personal data. .gitignore helps prevent accidents; git diff review is still necessary.
+
+AUTOMATION
+The optional GitHub Actions workflow runs only package/traceability checks. GitLab and other hosts can run the same python validate_package.py command in their own CI. This is not an assistant test runner. For a docs-only checkout, all included links and test fixtures are repository-relative.
+
+CONTAINER WORKFLOW AFTER IMPLEMENTATION
+Docker build targets, compose.yaml and environment overrides are planned artifacts, not files already implemented here. Add them in M2; a teammate should then run the documented docker compose local startup against fixture settings. Build on the target Linux architecture, use the shared lock, keep state outside images, and exclude .env, test answer keys and uploads from runtime builds. Commit release/IaC definitions; deploy pinned image digests through ECR rather than editing code on the AWS host. See AWS_DEPLOYMENT_PLAN.txt for promotion and rollback.

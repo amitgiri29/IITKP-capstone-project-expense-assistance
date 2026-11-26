@@ -1,0 +1,56 @@
+LANGSMITH OBSERVABILITY AND EVALUATION PLAN
+Specification 1.6 | 7 November 2026 | Implementation NOT_STARTED
+Proposed Python SDK: langsmith==0.14.17. Release verified; joint dependency resolution with the proposed LangChain/LangGraph pins remains a setup task.
+
+Purpose and ownership
+LangSmith is the planned shared platform for tracing, performance analysis, dataset experiments and reviewed feedback. Pair C owns instrumentation and workspace setup; Pair A owns datasets, score definitions and evaluation review. Pair B supplies retrieval and calculation measurements. Plain Python business logic and the local evaluator remain independent of the telemetry adapter. All model calls continue to use the course-supplied fixed small-model API. No extra judge model or LangSmith deployment service is required.
+
+Set up before model integration
+1. Select a LangSmith workspace/account, region, environment destination, member roles, retention and trace/evaluation budget. Verify the actual account’s included features, quota and pricing before enabling exports; do not assume unlimited free tracing. Create an API key and keep it in local .env or a secret store. Store only nonsecret choices in docs/DECISIONS.json. No workspace or key has been created by this documentation task.
+2. Add the proposed langsmith pin to dependency resolution and smoke tests. Enable tracing only after redaction and destination settings are validated. Use LANGSMITH_TRACING, LANGSMITH_API_KEY and the region-specific LANGSMITH_ENDPOINT from the account.
+3. Choose exactly one addressing mode. For an agent-based cloud workspace, use LANGSMITH_AGENT_ID and LANGSMITH_AGENT_ENVIRONMENT (local or development for this capstone). For a project-based workspace, use LANGSMITH_PROJECT such as expense-policy-dev. Remove unused destination variables, including legacy LANGCHAIN_PROJECT/LANGCHAIN_SESSION; do not configure both modes. Put evaluations in a distinct destination/environment to keep fixed-clock fixture runs out of normal demo metrics.
+4. Capture a synthetic policy question and inspect its nested trace. LangChain/LangGraph callbacks capture supported framework operations; traceable wrappers capture custom Python retrieval, calculator, parsing and provider steps. Instrument a model call once: do not create duplicate LLM spans by stacking automatic and manual wrappers. A custom supplied API may need explicit usage and pricing metadata.
+
+Trace contract
+Use one root trace per active assistant turn, with child spans for routing, planner, BM25, vector search when used, fusion, reranking, generation, vision/OCR, confirmation processing, rule resolution, Decimal calculation, provider search, offer filtering/ranking, critic and repairs. Simple questions should show only their actual short path. Never invent spans for skipped work. Link resumed turns through a pseudonymous conversation/thread ID; use independent span IDs for each retry.
+Allowlisted metadata: request/run correlation ID, pseudonymous thread ID, route, environment, app commit, spec/policy/suite version, model ID, prompt version/hash, dependency-lock hash, retrieval mode, evidence IDs returned by retrieval, cache hit, repair/attempt counts and structured error type. Include case_id, split and experiment label only for evaluator runs. No employee identifiers, raw file paths or credentials. Attach thread metadata consistently on child runs for conversation-level aggregation.
+
+Metrics and dashboards
+Measure active application wall time and step time separately; human waiting for receipt confirmation is recorded separately and excluded from execution p50/p95. Group by route, environment, prompt/app version and retrieval mode. Log errors and unavailable capabilities visibly.
+Latency: p50/p95 active milliseconds by policy/receipt/search route and node; measure tracing overhead against an otherwise identical tracing-disabled synthetic run.
+Quality: core/supplemental totals by split and category; exact arithmetic pass rate; required-rule recall@6 on applicable cases; supported-answer and citation-validity scores; readable image critical-field accuracy; search top-k order correctness; missing-data abstention and no-booking/isolation outcomes.
+Reliability: tool/provider error rate, retries, invalid JSON, format repairs, executor repairs, cache hits, tracing export failures and queue/drop counts. Monitor one repair limits and provider attempt limits without allowing telemetry to change them.
+Usage and cost: input/output tokens and model call count from actual provider responses; model charges from configured provider pricing or explicit reported costs. Unsupported usage stays unknown, never zero. Record image/OCR, embedding and travel-provider charges separately when available. Avoid summing inclusive parent cost together with the same child cost. Cost per successful task uses total measured spend for all attempted tasks divided by successful tasks; show failures and unknown-cost cases. LangSmith platform charges are a separate budget item. Do not call a second model just to estimate tokens.
+
+Golden datasets and experiments
+Keep repository JSON as the source of truth. Create a core-100 dataset and supplemental-20 dataset in the approved workspace, or equivalent versioned datasets with explicit tier/split metadata. Preserve every GT ID, split, fixed clock, fixture reference, suite version and source-file hash. Store expected assertions as reference outputs for evaluators; the target function receives only user input and authorized setup, never those reference outputs. Keep answer keys out of RAG and application prompts.
+Run the evaluation target locally through the documented entrypoints so image/provider fixtures resolve from the checkout. Upload only approved synthetic dataset content and fixture references. Do not auto-upload receipt images, base64 content, PDFs, private uploads or canary secrets. Seed canaries and fault setup locally in the evaluation harness. Image extraction still uses actual PNG bytes in the application’s permitted parser path.
+Map automatic_checks to code evaluators using the TEST_PROTOCOL operators. Keep exact Decimal checks for money and harness-derived observations for side effects, call counts and data leakage. Use human review/feedback for action meaning, citation support and ambiguous prose. Do not enable a hosted/default judge that could select a larger model. Optional later LLM scoring must use the same permitted small model and cannot replace deterministic checks or independent review.
+Compare three prompting baselines, simple RAG versus agent workflows, BM25 versus permitted hybrid retrieval, and prompt/app revisions under the same fixtures, clock, dataset hash and model snapshot. Use names such as expense-s1.1-core100-COMMIT-PROMPT; record separate experiment IDs for repetitions and development/held_out runs. Start with concurrency one, then raise it within course/API quotas. Keep reference outputs unavailable to the target. Report blocked/not-run/error cases explicitly; do not report a partial dataset as a complete 100-case result.
+
+Redaction, export failures and portability
+Default LANGSMITH_HIDE_INPUTS=true and LANGSMITH_HIDE_OUTPUTS=true. Mask metadata, exception text, provider payloads, prompts and nested spans before any cloud export; hiding inputs/outputs alone does not sanitize other fields. Log sanitized error codes, not raw API responses. Verify redaction on every automatic and custom instrumentation path. To inspect synthetic text in traces, deliberately scope an opt-in synthetic-debug mode after the masking tests pass. Keep reference answers within private evaluator datasets; no raw personal receipts belong there.
+Sampling: proposed 100 percent for authorized synthetic evaluation/debug runs and 10 percent for routine demo traffic, adjustable within budget. Preserve all local evaluation results even when cloud traces are sampled. A required observability acceptance run must use 100 percent sampling or an explicit force-trace context. Probabilistic sampling does not guarantee that every error is exported; use bounded local error logs for complete error accounting.
+Tracing is not a dependency of correct policy answers or calculations. Export/authentication/quota failures must not break the user task or retry business tools; use bounded telemetry queues/timeouts and redacted local logs. Mark monitoring status DEGRADED and report failed exports. The LangSmith delivery milestone cannot be marked complete while cloud integration is unverified. Local offline work may continue.
+
+Acceptance checks (planned, NOT_RUN)
+OBS01: a synthetic policy request creates exactly one root with actual retrieval/generation children and its app/policy/model metadata; no duplicate model span.
+OBS02: a receipt clarification pauses, resumes under the same pseudonymous thread, and shows separate extraction/calculation/critic spans; human waiting is excluded from active latency.
+OBS03: a provider fault exposes actual retries and terminal error in spans; one format/executor repair limit remains enforced. Reconcile instrumented calls with harness observations.
+OBS04: seeded fake secret and employee-data canaries are absent from all exported root/child inputs, outputs, metadata, exceptions and attachments. No image/base64 upload occurs by default.
+OBS05: core dataset contains exactly the 100 specified IDs with split/hash/version; supplemental dataset the other 20. The target cannot read reference outputs. A controlled experiment displays exact code scores, reviewed feedback and explicit incomplete/error status. This check itself can use a small synthetic subset before the full 100-case release run.
+OBS06: tracing-disabled, invalid-key and exporter-timeout cases preserve the application result; status shows degraded observability. Compare active-latency overhead, identify unknown usage/cost, and verify sampling/destination settings.
+
+Implementation milestones
+M1/M2: decide workspace and schema, add SDK to the shared proposed dependency baseline, implement a replaceable telemetry adapter and redaction tests after implementation is authorized. No cloud calls during documentation/package CI.
+M3: instrument the first policy RAG baseline and record its trace/latency/tokens before tuning. Pair A prepares versioned synthetic datasets and code evaluators.
+M4/M5/M6: extend spans to actual image processing, provider calls, graph checkpoints and bounded repairs; run OBS01–OBS04 and OBS06.
+M7: run all 100 core and 20 supplemental cases, record LangSmith experiment links and redacted local result summaries, review failures, compare baselines and complete OBS05. A dataset upload alone is not a successful experiment.
+
+Official references checked 7 November 2026
+https://pypi.org/project/langsmith/0.14.17/
+https://docs.langchain.com/langsmith/observability-quickstart
+https://docs.langchain.com/langsmith/evaluation
+https://docs.langchain.com/langsmith/mask-inputs-outputs
+https://docs.langchain.com/langsmith/cost-tracking
+https://docs.langchain.com/langsmith/sample-traces

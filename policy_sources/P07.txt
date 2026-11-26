@@ -1,0 +1,5 @@
+SPARKS AI Lab | FICTIONAL | Policy 1.1
+Rule P07 | International local transport
+Effective 2026-01-01 to 2026-12-31
+
+Business taxis, airport transfers and public transport share a daily cap per traveler: US USD 70 E or 100 M; UK GBP 55 E or 80 M; Singapore SGD 90 E or 130 M. Aggregate eligible charges by local service date. Other countries require human review. Personal transport, normal commuting, fines and tips are excluded.

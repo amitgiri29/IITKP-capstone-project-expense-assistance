@@ -1,0 +1,1432 @@
+{
+  "spec_version": "1.6",
+  "updated": "2026-11-07",
+  "policy_version": "1.1",
+  "test_suite_version": "1.1",
+  "purpose": "Implementation specification readable by Claude, Gemini, Codex and humans. Not an implemented app.",
+  "sources": {
+    "application_spec": "SPECIFICATION.txt",
+    "business_rules": "policy_sources/policy.json",
+    "golden_cases": "tests/golden_cases.json",
+    "diagrams": [
+      "architecture/01_policy_preparation.mmd",
+      "architecture/02_request_processing.mmd",
+      "architecture/03_aws_deployment.mmd"
+    ],
+    "technology_stack": "TECH_STACK.json",
+    "requirements": "docs/REQUIREMENTS.json",
+    "test_protocol": "docs/TEST_PROTOCOL.txt",
+    "traceability": "tests/TRACEABILITY.json",
+    "domain_schema": "schemas/domain.schema.json",
+    "evaluation_schema": "schemas/evaluation.schema.json",
+    "core_golden_cases": "tests/golden_100.json",
+    "supplemental_cases": "tests/supplemental_20.json",
+    "corpus_manifest": "policy_sources/corpus_manifest.json",
+    "observability_guide": "docs/LANGSMITH_PLAN.txt",
+    "observability_contract": "docs/LANGSMITH_CONTRACT.json",
+    "deployment_plan": "docs/AWS_DEPLOYMENT_PLAN.txt",
+    "deployment_contract": "docs/DEPLOYMENT_CONTRACT.json",
+    "rule_registry": "policy_sources/rule_registry.json",
+    "reference_data": "policy_sources/reference_data.json",
+    "rule_registry_schema": "schemas/rule_registry.schema.json",
+    "reference_data_schema": "schemas/reference_data.schema.json",
+    "spec_outline": "docs/spec_outline.json",
+    "package_builder": "build_package.py"
+  },
+  "routing": {
+    "policy_simple": [
+      "validate_session",
+      "clarify_applicability_if_needed",
+      "retrieve_policy",
+      "generate_cited_answer",
+      "validate_citations",
+      "respond"
+    ],
+    "receipt_review": [
+      "validate_session",
+      "planner",
+      "parse_receipt",
+      "await_user_confirmation",
+      "retrieve_policy",
+      "resolve_reviewed_rules",
+      "calculate_claim",
+      "critic",
+      "respond_or_one_repair_or_clarify"
+    ],
+    "travel_search": [
+      "validate_session",
+      "planner",
+      "clarify_search_criteria",
+      "search_provider",
+      "retrieve_policy",
+      "resolve_reviewed_rules",
+      "filter_and_rank",
+      "critic",
+      "respond_or_one_repair_or_clarify"
+    ]
+  },
+  "retrieval_pipeline": [
+    "server_access_filters",
+    "applicability_filters",
+    "bm25_and_optional_vectors",
+    "reciprocal_rank_fusion",
+    "deduplicate",
+    "same_model_rerank",
+    "evidence_package"
+  ],
+  "constraints": {
+    "hosted_model": "course supplied fixed small model",
+    "larger_model_fallback": false,
+    "fine_tuning": false,
+    "max_executor_repairs": 1,
+    "booking_tools_allowed": false,
+    "gold_answers_in_rag": false,
+    "private_receipts_in_shared_index": false,
+    "user_confirmation_for_image_fields": true
+  },
+  "dependencies": {
+    "images": "supplied vision capability OR course-permitted OCR; typed transcription is interim only",
+    "hybrid_retrieval": "Embeddings via config [embeddings]. User-approved local FastEmbed stand-in (Option B, 2026-11-10) until the hosted OpenAI-compatible endpoint arrives; BM25-only remains the disclosed fallback.",
+    "live_search": "approved provider credentials, coverage, terms and budget"
+  },
+  "ports": {
+    "retrieve_policy": {
+      "inputs": [
+        "query",
+        "server_authorization_context",
+        "applicability"
+      ],
+      "output": "Evidence[]"
+    },
+    "parse_receipt": {
+      "inputs": [
+        "authorized_file_id"
+      ],
+      "output": "ReceiptExtraction"
+    },
+    "calculate_claim": {
+      "inputs": [
+        "confirmed_items",
+        "reviewed_rule_ids",
+        "documented_fx",
+        "budget_inr",
+        "coverage_complete"
+      ],
+      "output": "Assessment"
+    },
+    "search_flights": {
+      "inputs": [
+        "origin",
+        "destination",
+        "departure_date",
+        "return_date_if_applicable",
+        "grade",
+        "travelers",
+        "cabin"
+      ],
+      "output": "TravelOffer[]"
+    },
+    "search_hotels": {
+      "inputs": [
+        "country",
+        "city",
+        "checkin",
+        "checkout",
+        "grade",
+        "rooms",
+        "travelers"
+      ],
+      "output": "TravelOffer[]"
+    },
+    "receipt_store": {
+      "inputs": [
+        "server_authorization_context",
+        "authorized_file_id"
+      ],
+      "output": "receipt bytes from tenant-scoped private storage; no arbitrary S3 object access"
+    }
+  },
+  "schemas": {
+    "Evidence": {
+      "required": [
+        "rule_id",
+        "document_id",
+        "version",
+        "section",
+        "text",
+        "source_location"
+      ]
+    },
+    "ReceiptExtraction": {
+      "required": [
+        "image_id",
+        "merchant",
+        "receipt_id",
+        "category",
+        "service_dates",
+        "currency",
+        "components",
+        "payable_total",
+        "uncertainties",
+        "user_confirmed"
+      ],
+      "unknown_values": "null, never guessed"
+    },
+    "Assessment": {
+      "required": [
+        "claimed_total_inr",
+        "eligible_total_inr",
+        "excluded_total_inr",
+        "over_cap_total_inr",
+        "budget_status",
+        "compliance_status",
+        "readiness",
+        "evidence_ids",
+        "reasons",
+        "rounding_adjustment_inr",
+        "missing_fields",
+        "provisional_amounts"
+      ],
+      "money": "decimal strings with 2 places in implementation; compare numerically to existing numeric gold fixtures"
+    },
+    "TravelOffer": {
+      "required": [
+        "id",
+        "provider",
+        "mode",
+        "retrieved_at",
+        "expires_at",
+        "currency",
+        "price_basis",
+        "total",
+        "taxes_included",
+        "mandatory_fees_included",
+        "policy_status"
+      ],
+      "conditional": [
+        "baggage_kg for flights",
+        "nightly_totals for hotels"
+      ],
+      "unknown_values": "null; classify provisional when price completeness affects compliance"
+    },
+    "Critique": {
+      "required": [
+        "decision",
+        "issues",
+        "evidence_ids"
+      ],
+      "decision": [
+        "PASS",
+        "REPAIR",
+        "CLARIFY"
+      ]
+    },
+    "WorkflowState": {
+      "required": [
+        "session_id",
+        "intent",
+        "confirmed_facts",
+        "missing_fields",
+        "evidence_ids",
+        "tool_results",
+        "draft",
+        "critique",
+        "repair_count"
+      ]
+    }
+  },
+  "state_rules": [
+    "clarification pauses until user input",
+    "corrections invalidate affected outputs",
+    "critic cannot mutate authoritative tool amounts",
+    "terminal result after one unsuccessful repair"
+  ],
+  "fallbacks": {
+    "invalid_rerank": "validated fused ranking",
+    "no_vector_service": "BM25 plus disclosed degraded mode",
+    "unreadable_receipt": "clarification with null unresolved values",
+    "search_outage": "disclose unavailable; no invented offers",
+    "policy_conflict": "human review"
+  },
+  "acceptance": {
+    "golden_cases": 120,
+    "development_cases": 72,
+    "held_out_cases": 48,
+    "existing_execution_status": "NOT_RUN",
+    "deterministic_arithmetic_target": 1.0,
+    "retrieval_required_rule_recall_at_6_target": 0.9,
+    "supported_answer_target": 0.9,
+    "no_booking_tests": "all pass",
+    "core_golden_cases": 100,
+    "supplemental_golden_cases": 20,
+    "observability": "OBS01-OBS06 pass; inspect actual trace and golden experiment results before delivery",
+    "deployment": "DEP01-DEP08 pass before authorized production promotion"
+  },
+  "implementation_order": [
+    "plain Python schemas and policy tools",
+    "shared retrieval service and cited simple Q&A",
+    "image extraction plus confirmation",
+    "fixture search plus rule-based ranking",
+    "LangGraph orchestration and persistence",
+    "approved live provider integrations",
+    "golden evaluation and failure handling"
+  ],
+  "conflict_handling": "Report inconsistent spec, policy or gold assertions; do not silently alter them to force passing tests.",
+  "technology_stack": {
+    "spec_version": "1.6",
+    "checked_date": "2026-11-07",
+    "status": "PROPOSED_RELEASES_VERIFIED_NOT_RESOLVED_OR_INTEGRATION_TESTED",
+    "python": {
+      "version": "3.14.10",
+      "source": "https://www.python.org/downloads/release/python-31410/"
+    },
+    "packages": [
+      {
+        "name": "langchain",
+        "version": "1.4.9",
+        "scope": "core",
+        "source": "https://pypi.org/project/langchain/1.4.9/",
+        "purpose": "langchain-core interfaces used in retrieval/: BaseLoader, Document, BaseRetriever, Embeddings and InMemoryVectorStore. Model calls stay in provider adapters."
+      },
+      {
+        "name": "langgraph",
+        "version": "1.2.20",
+        "scope": "core",
+        "source": "https://pypi.org/project/langgraph/1.2.20/",
+        "purpose": "Routing, planner/executor/critic nodes, confirmation pauses, resumed conversations and the one-repair limit."
+      },
+      {
+        "name": "langgraph-checkpoint-sqlite",
+        "version": "3.1.3",
+        "scope": "core",
+        "source": "https://pypi.org/project/langgraph-checkpoint-sqlite/3.1.3/",
+        "purpose": "Persists graph checkpoints for follow-ups and confirmation pauses. Use a separate checkpoint database and server-authorized thread IDs."
+      },
+      {
+        "name": "fastapi",
+        "version": "0.162.0",
+        "scope": "core",
+        "source": "https://pypi.org/project/fastapi/0.162.0/",
+        "purpose": "Backend routes for sessions, chat, receipt extraction, claim review and travel search. Enforces authorization and input limits."
+      },
+      {
+        "name": "streamlit",
+        "version": "1.67.0",
+        "scope": "core",
+        "source": "https://pypi.org/project/streamlit/1.67.0/",
+        "purpose": "Python UI for policy chat, receipt upload and confirmation, and travel search. Calls FastAPI; keeps provider secrets out of browser responses."
+      },
+      {
+        "name": "pydantic",
+        "version": "2.14.3",
+        "scope": "core",
+        "source": "https://pypi.org/project/pydantic/2.14.3/",
+        "purpose": "Validates request, tool and model-output schemas. Rejects malformed fields; it does not verify policy truth."
+      },
+      {
+        "name": "uvicorn",
+        "version": "0.54.0",
+        "scope": "core",
+        "source": "https://pypi.org/project/uvicorn/0.54.0/",
+        "purpose": "Runs the FastAPI service. Start with one worker for the prototype so local state and rate limits have a clear owner."
+      },
+      {
+        "name": "httpx",
+        "version": "0.28.1",
+        "scope": "core",
+        "source": "https://pypi.org/project/httpx/0.28.1/",
+        "purpose": "HTTP calls to the supplied model and read-only travel APIs through replaceable adapters; explicit timeouts and bounded retries."
+      },
+      {
+        "name": "rank-bm25",
+        "version": "0.2.2",
+        "scope": "core",
+        "source": "https://pypi.org/project/rank-bm25/0.2.2/",
+        "purpose": "Keyword ranking over policy chunks. Normalize aliases; apply authorization and applicability filters before scoring. No local model is required."
+      },
+      {
+        "name": "qdrant-client",
+        "version": "1.20.0",
+        "scope": "conditional_vector",
+        "source": "https://pypi.org/project/qdrant-client/1.20.0/",
+        "purpose": "Not installed. Superseded 2026-11-10 by the LangChain InMemoryVectorStore rebuilt at startup from an SQLite embedding cache (corpus is small); keep as the option for a persistent vector store."
+      },
+      {
+        "name": "pillow",
+        "version": "13.0.0",
+        "scope": "core",
+        "source": "https://pypi.org/project/pillow/13.0.0/",
+        "purpose": "Decode and validate PNG/JPEG uploads, inspect dimensions and reject invalid image bytes. This library does not perform OCR."
+      },
+      {
+        "name": "python-multipart",
+        "version": "0.0.33",
+        "scope": "core",
+        "source": "https://pypi.org/project/python-multipart/0.0.33/",
+        "purpose": "Parses FastAPI image uploads. Enforce file count, size and decoded-image limits in application code."
+      },
+      {
+        "name": "pytest",
+        "version": "9.2.0",
+        "scope": "development",
+        "source": "https://pypi.org/project/pytest/9.2.0/",
+        "purpose": "Development-only test runner for deterministic tools, adapters, API behavior and the golden evaluation harness."
+      },
+      {
+        "name": "python-dotenv",
+        "version": "1.2.4",
+        "scope": "core",
+        "source": "https://pypi.org/project/python-dotenv/1.2.4/",
+        "purpose": "Loads local development configuration. Commit .env.example with placeholders; keep .env and secrets out of Git."
+      },
+      {
+        "name": "langsmith",
+        "version": "0.14.17",
+        "scope": "core",
+        "source": "https://pypi.org/project/langsmith/0.14.17/",
+        "purpose": "Shared tracing, performance dashboards, golden dataset experiments and reviewed feedback; export failures do not alter business results."
+      },
+      {
+        "name": "boto3",
+        "version": "1.43.126",
+        "scope": "aws_deployment",
+        "source": "https://pypi.org/project/boto3/1.43.126/",
+        "purpose": "AWS-specific S3 receipt storage and Secrets Manager adapters using temporary role credentials; proposed compatibility untested."
+      },
+      {
+        "name": "anthropic",
+        "version": "2.6.0",
+        "scope": "core",
+        "source": "https://pypi.org/project/anthropic/2.6.0/",
+        "purpose": "Official Claude API SDK used by adapters/model.py AnthropicModel (claude-sonnet-5-5 by default). Replaceable through config/settings.toml [model].provider."
+      },
+      {
+        "name": "langchain-text-splitters",
+        "version": "1.1.3",
+        "scope": "core",
+        "source": "https://pypi.org/project/langchain-text-splitters/1.1.3/",
+        "purpose": "Chunks admin policy uploads: MarkdownHeaderTextSplitter for headings, then RecursiveCharacterTextSplitter (1800 chars, 200 overlap, start_index)."
+      },
+      {
+        "name": "pypdf",
+        "version": "7.0.0",
+        "scope": "core",
+        "source": "https://pypi.org/project/pypdf/7.0.0/",
+        "purpose": "Text-layer extraction for uploaded PDF policies inside a LangChain BaseLoader (one Document per page). No OCR; encrypted and >200-page PDFs are rejected."
+      },
+      {
+        "name": "docx2txt",
+        "version": "0.9",
+        "scope": "core",
+        "source": "https://pypi.org/project/docx2txt/0.9/",
+        "purpose": "Text extraction for uploaded Word (.docx) policies inside a LangChain BaseLoader."
+      },
+      {
+        "name": "fastembed",
+        "version": "0.9.1",
+        "scope": "core",
+        "source": "https://pypi.org/project/fastembed/0.9.1/",
+        "purpose": "Local CPU ONNX embeddings (BAAI/bge-small-en-v1.5, 384-d) as a user-approved stand-in (Option B, 2026-11-10) until the hosted embedding API arrives; switch with [embeddings].provider = \"openai_compatible\". Model cache ~200 MB under runtime/models."
+      }
+    ],
+    "sqlite": "Bundled engine; record sqlite3.sqlite_version at setup",
+    "provider_versions": {
+      "model": "COURSE_SUPPLIED_PENDING",
+      "embeddings": "LOCAL_FASTEMBED_STANDIN_BAAI_bge-small-en-v1.5 (user-approved 2026-11-10); hosted OpenAI-compatible endpoint pending",
+      "ocr": "VISION_OR_PERMITTED_API_PENDING",
+      "travel": "PROVIDER_AND_API_REVISION_PENDING",
+      "fx": "PROVIDER_AND_API_REVISION_PENDING"
+    },
+    "lockfile": "requirements.lock.txt regenerated 2026-11-10 from the tested .venv (pip check clean, 273 tests)",
+    "details": "TECH_STACK.txt",
+    "deployment_tools": {
+      "host_os": "Ubuntu Server 24.04 LTS x86_64; exact patched AMI/build recorded before provisioning",
+      "docker_engine": "29.9.3",
+      "docker_compose": "5.7.0",
+      "python": "3.14.10",
+      "boto3": "1.43.126",
+      "base_image": "Resolve tag and pin tested digest during M2",
+      "reverse_proxy": "NGINX image tag/digest to be selected and pinned during M2",
+      "verification": "Release existence checked; joint runtime and host compatibility not tested."
+    }
+  },
+  "stage": "IMPLEMENTATION_M0_M8",
+  "repository": {
+    "layout_document": "docs/REPOSITORY_WORKFLOW.txt",
+    "preimplementation_checklist": "docs/BEFORE_IMPLEMENTATION.txt",
+    "decisions": "docs/DECISIONS.json",
+    "backlog": "docs/IMPLEMENTATION_BACKLOG.txt",
+    "documentation_check": "python validate_package.py",
+    "application_implemented": false,
+    "dependency_lock_validated": false
+  },
+  "schema_precedence": "Typed field definitions in schemas/domain.schema.json clarify these required-field summaries. Cross-field rules remain normative in SPECIFICATION.txt and policy. Evaluation projections may be partial and preserve legacy golden names; see TEST_PROTOCOL.txt.",
+  "retry_contract": {
+    "format_repairs": 1,
+    "executor_repairs": 1,
+    "provider_attempts_per_operation": 3,
+    "total_model_call_cap": "Required configuration before live calls",
+    "run_deadline": "Required configuration before live calls",
+    "invalid_rerank": "Fall back to validated fused order without another executor repair",
+    "provider_attempt_definition": "One initial attempt plus at most two retries equals at most three total attempts. GT099 asserts the observed attempt count is <= 3."
+  },
+  "api_contract": {
+    "POST /sessions": {
+      "request": "No caller-supplied authorization overrides; server derives authenticated scope and seeds the traveler profile including grade",
+      "response": "session_id, organization_id and an opaque bearer token derived by the server"
+    },
+    "POST /chat": {
+      "request": "session_id, message, optional applicability",
+      "response": "answer, evidence[], missing_fields[], run_status"
+    },
+    "POST /receipts": {
+      "request": "multipart session_id and files[]; max five JPEG/PNG, 10 MiB each",
+      "response": "extractions[], missing_fields[]; no final approval"
+    },
+    "POST /claims/review": {
+      "request": "session_id, ClaimContext, ExpenseLine[]",
+      "response": "Assessment plus evidence[]"
+    },
+    "POST /travel/search": {
+      "request": "session_id and TravelSearchRequest",
+      "response": "offers[], recommended_ids[], provisional_ids[], noncompliant_ids[], evidence[], limitations[]"
+    },
+    "common": "401/403 unauthorized access, 400/422 invalid structured request, 413 size/count limit, 415 unsupported image. Domain clarification is a normal response. Tool/provider errors are bounded and disclosed. No booking routes.",
+    "GET /health": {
+      "request": "Unauthenticated liveness probe; performs no database, index, model or provider call",
+      "response": "200 {status, app_version, commit}. Used by the Compose healthcheck and the ALB target group"
+    },
+    "GET /ready": {
+      "request": "Unauthenticated readiness probe",
+      "response": "200 when the policy index version, rule registry, checkpoint store and model configuration all resolve; 503 with the failing component otherwise. Never returns secrets"
+    },
+    "DELETE /sessions/{session_id}": {
+      "request": "Authorized owner only",
+      "response": "204 after deleting session state, checkpoints, cached offers and every upload owned by the session"
+    },
+    "DELETE /receipts/{image_id}": {
+      "request": "Authorized owner only",
+      "response": "204 after deleting the stored image and its extraction; assessments that depended on it are invalidated and recomputed as incomplete"
+    },
+    "error_envelope": {
+      "shape": "{error_code, message, field, request_id, retry_after_seconds}",
+      "codes": "policy_sources/reference_data.json vocabularies.error_code",
+      "rule": "Domain clarification is a normal 200 response carrying missing_fields, not an error. Error bodies never contain credentials, file system paths or another session record."
+    },
+    "openapi": "api/openapi.json is generated from FastAPI in M2 and committed as a derived artifact.",
+    "POST /admin/policies": {
+      "request": "Administrator only. Multipart form: title, version, authority policy|guidance, geography, effective_from, effective_to, and exactly one of file (.txt/.md, at most 2 MiB) or text",
+      "response": "201 document metadata and section count; 403 FORBIDDEN_ROLE for other roles; 413/415/422 for limits"
+    },
+    "GET /admin/policies": {
+      "request": "Administrator only",
+      "response": "documents[] for the caller's organization"
+    },
+    "DELETE /admin/policies/{document_id}": {
+      "request": "Administrator only, same organization",
+      "response": "204; the index is rebuilt"
+    },
+    "GET /policy/library": {
+      "request": "Any authenticated session",
+      "response": "core policy sections and added library documents"
+    }
+  },
+  "entrypoints": [
+    {
+      "name": "aggregate_local_transport",
+      "test_layer": "component",
+      "route": null,
+      "maps_to": "domain.assessment.aggregate_local_transport",
+      "input_fields": [
+        "amounts_inr",
+        "budget_inr",
+        "business_purpose",
+        "category",
+        "confirmed",
+        "country",
+        "coverage_complete",
+        "currency",
+        "evidence_complete",
+        "excluded_amount",
+        "grade",
+        "service_dates",
+        "submitted_on",
+        "trip_end"
+      ],
+      "result_fields": [
+        "budget_status",
+        "claimed_total_inr",
+        "compliance_status",
+        "eligible_total_inr",
+        "over_cap_total_inr"
+      ],
+      "observation_fields": [],
+      "requirement_ids": [
+        "AC03",
+        "AC04"
+      ],
+      "golden_case_count": 1
+    },
+    {
+      "name": "answer_policy_question",
+      "test_layer": "workflow",
+      "route": "policy_simple",
+      "maps_to": "workflows.policy_qa.answer_policy_question",
+      "input_fields": [
+        "message",
+        "service_date"
+      ],
+      "result_fields": [
+        "action",
+        "aggregation",
+        "allowed_automatically",
+        "cabin",
+        "currency",
+        "daily_cap_applies",
+        "day_30_timely",
+        "days",
+        "eligible_category",
+        "invent_rate",
+        "limit",
+        "readiness",
+        "receipt_required",
+        "required_documents",
+        "separate_allowance",
+        "taxes_inside_cap",
+        "unit"
+      ],
+      "observation_fields": [
+        "booking_performed"
+      ],
+      "requirement_ids": [
+        "AC01",
+        "AC02",
+        "AC03",
+        "AC06",
+        "AC09",
+        "AC11",
+        "AC17"
+      ],
+      "golden_case_count": 30
+    },
+    {
+      "name": "assess_confirmed_claim",
+      "test_layer": "component",
+      "route": null,
+      "maps_to": "domain.assessment.assess_confirmed_claim",
+      "input_fields": [
+        "amount",
+        "baggage_20kg_included",
+        "budget_inr",
+        "business_purpose",
+        "cabin",
+        "category",
+        "city",
+        "country",
+        "coverage_complete",
+        "currency",
+        "fx_rate",
+        "fx_reference",
+        "grade",
+        "journeys",
+        "nights",
+        "required_documents_present",
+        "service_date",
+        "submitted_on",
+        "taxes_and_fees_included",
+        "transaction_date",
+        "trip_end",
+        "user_confirmed"
+      ],
+      "result_fields": [
+        "budget_status",
+        "claimed_total_inr",
+        "compliance_status",
+        "eligible_total_inr",
+        "excluded_total_inr",
+        "over_cap_total_inr",
+        "readiness"
+      ],
+      "observation_fields": [],
+      "requirement_ids": [
+        "AC03",
+        "AC04",
+        "AC11"
+      ],
+      "golden_case_count": 30
+    },
+    {
+      "name": "authorize_session",
+      "test_layer": "component",
+      "route": null,
+      "maps_to": "api.security.authorize_session",
+      "input_fields": [
+        "active_session",
+        "message",
+        "requested_session",
+        "server_authorized_sessions"
+      ],
+      "result_fields": [
+        "access"
+      ],
+      "observation_fields": [
+        "leaked_records"
+      ],
+      "requirement_ids": [
+        "AC13"
+      ],
+      "golden_case_count": 1
+    },
+    {
+      "name": "calculate_budget",
+      "test_layer": "component",
+      "route": null,
+      "maps_to": "domain.budget.calculate_budget",
+      "input_fields": [
+        "budget_inr",
+        "confirmed_total_inr",
+        "coverage_complete"
+      ],
+      "result_fields": [
+        "action",
+        "budget_status",
+        "display_label"
+      ],
+      "observation_fields": [],
+      "requirement_ids": [
+        "AC04"
+      ],
+      "golden_case_count": 2
+    },
+    {
+      "name": "check_image_capability",
+      "test_layer": "component",
+      "route": null,
+      "maps_to": "adapters.vision.check_image_capability",
+      "input_fields": [
+        "model_supports_vision",
+        "ocr_permitted",
+        "uploaded_image"
+      ],
+      "result_fields": [
+        "action",
+        "run_status"
+      ],
+      "observation_fields": [
+        "claim_image_parsed"
+      ],
+      "requirement_ids": [
+        "AC16"
+      ],
+      "golden_case_count": 1
+    },
+    {
+      "name": "convert_currency_lines",
+      "test_layer": "component",
+      "route": null,
+      "maps_to": "domain.fx.convert_currency_lines",
+      "input_fields": [
+        "confirmed",
+        "documented_fx_rate",
+        "fx_reference",
+        "lines",
+        "transaction_date"
+      ],
+      "result_fields": [
+        "claimed_total_inr",
+        "converted_lines_inr"
+      ],
+      "observation_fields": [],
+      "requirement_ids": [
+        "AC11"
+      ],
+      "golden_case_count": 1
+    },
+    {
+      "name": "correct_claim",
+      "test_layer": "workflow",
+      "route": "receipt_review",
+      "maps_to": "workflows.receipt_review.correct_claim",
+      "input_fields": [
+        "correction",
+        "initial"
+      ],
+      "result_fields": [
+        "budget_status",
+        "claimed_total_inr",
+        "compliance_status",
+        "eligible_total_inr"
+      ],
+      "observation_fields": [],
+      "requirement_ids": [
+        "AC03",
+        "AC04",
+        "AC12"
+      ],
+      "golden_case_count": 1
+    },
+    {
+      "name": "detect_duplicates",
+      "test_layer": "component",
+      "route": null,
+      "maps_to": "domain.duplicates.detect_duplicates",
+      "input_fields": [
+        "receipts"
+      ],
+      "result_fields": [
+        "final_total_inr",
+        "potential_duplicate",
+        "readiness"
+      ],
+      "observation_fields": [],
+      "requirement_ids": [
+        "AC17"
+      ],
+      "golden_case_count": 1
+    },
+    {
+      "name": "handle_secret_request",
+      "test_layer": "workflow",
+      "route": "policy_simple",
+      "maps_to": "workflows.policy_qa.handle_secret_request",
+      "input_fields": [
+        "message"
+      ],
+      "result_fields": [
+        "action"
+      ],
+      "observation_fields": [
+        "disclose_secrets"
+      ],
+      "requirement_ids": [
+        "AC10"
+      ],
+      "golden_case_count": 1
+    },
+    {
+      "name": "parse_image_then_review",
+      "test_layer": "workflow",
+      "route": "receipt_review",
+      "maps_to": "workflows.receipt_review.parse_image_then_review",
+      "input_fields": [
+        "boarding_pass_present",
+        "budget_inr",
+        "business_purpose",
+        "city",
+        "confirmation_step",
+        "country",
+        "coverage_complete",
+        "fx_rates",
+        "fx_reference",
+        "grade",
+        "image",
+        "message",
+        "other_same_day_claims",
+        "submitted_on",
+        "trip_end"
+      ],
+      "result_fields": [
+        "assessment",
+        "extraction"
+      ],
+      "observation_fields": [
+        "assessment/injection_followed"
+      ],
+      "requirement_ids": [
+        "AC03",
+        "AC04",
+        "AC05",
+        "AC06",
+        "AC10",
+        "AC11"
+      ],
+      "golden_case_count": 20
+    },
+    {
+      "name": "parse_planner_output",
+      "test_layer": "component",
+      "route": null,
+      "maps_to": "workflows.planner.parse_planner_output",
+      "input_fields": [
+        "injected_model_outputs",
+        "stage"
+      ],
+      "result_fields": [
+        "run_status"
+      ],
+      "observation_fields": [
+        "format_repair_attempts",
+        "tool_side_effects"
+      ],
+      "requirement_ids": [
+        "AC15"
+      ],
+      "golden_case_count": 1
+    },
+    {
+      "name": "resolve_fx",
+      "test_layer": "component",
+      "route": null,
+      "maps_to": "domain.fx.resolve_fx",
+      "input_fields": [
+        "amount",
+        "currency",
+        "fx_rate",
+        "service_date"
+      ],
+      "result_fields": [
+        "ask_for",
+        "final_amounts",
+        "readiness"
+      ],
+      "observation_fields": [],
+      "requirement_ids": [
+        "AC11"
+      ],
+      "golden_case_count": 1
+    },
+    {
+      "name": "resolve_policy_conflict",
+      "test_layer": "component",
+      "route": null,
+      "maps_to": "domain.policy_rules.resolve_policy_conflict",
+      "input_fields": [
+        "injected_policy_passages",
+        "same_applicability"
+      ],
+      "result_fields": [
+        "action",
+        "chosen_limit",
+        "readiness"
+      ],
+      "observation_fields": [],
+      "requirement_ids": [
+        "AC14"
+      ],
+      "golden_case_count": 1
+    },
+    {
+      "name": "resume_conversation",
+      "test_layer": "workflow",
+      "route": "receipt_review",
+      "maps_to": "workflows.session.resume_conversation",
+      "input_fields": [
+        "service_dates",
+        "turns"
+      ],
+      "result_fields": [
+        "budget_status",
+        "eligible_total_inr",
+        "readiness"
+      ],
+      "observation_fields": [],
+      "requirement_ids": [
+        "AC06",
+        "AC12"
+      ],
+      "golden_case_count": 1
+    },
+    {
+      "name": "search_and_assess_offers",
+      "test_layer": "workflow",
+      "route": "travel_search",
+      "maps_to": "workflows.travel_search.search_and_assess_offers",
+      "input_fields": [
+        "cabin",
+        "checkin",
+        "checkout",
+        "city",
+        "country",
+        "departure_date",
+        "destination",
+        "fx_rate",
+        "grade",
+        "injected_error",
+        "journey_type",
+        "message",
+        "origin",
+        "refresh_result",
+        "rooms",
+        "search_type",
+        "travelers"
+      ],
+      "result_fields": [
+        "action",
+        "noncompliant_ids",
+        "provisional_ids",
+        "recommended_ids"
+      ],
+      "observation_fields": [
+        "booking_performed",
+        "injection_followed",
+        "maximum_provider_attempts",
+        "provider_calls"
+      ],
+      "requirement_ids": [
+        "AC07",
+        "AC08",
+        "AC09",
+        "AC10",
+        "AC11",
+        "AC15"
+      ],
+      "golden_case_count": 20
+    },
+    {
+      "name": "validate_amount",
+      "test_layer": "component",
+      "route": null,
+      "maps_to": "domain.validation.validate_amount",
+      "input_fields": [
+        "amount",
+        "currency"
+      ],
+      "result_fields": [
+        "final_amounts",
+        "readiness"
+      ],
+      "observation_fields": [],
+      "requirement_ids": [
+        "AC18"
+      ],
+      "golden_case_count": 1
+    },
+    {
+      "name": "validate_and_repair_citations",
+      "test_layer": "component",
+      "route": null,
+      "maps_to": "retrieval.citations.validate_and_repair_citations",
+      "input_fields": [
+        "city",
+        "draft",
+        "grade",
+        "repair_output",
+        "retrieved_ids"
+      ],
+      "result_fields": [
+        "final_evidence_ids",
+        "final_limit_inr"
+      ],
+      "observation_fields": [
+        "invalid_citation_detected"
+      ],
+      "requirement_ids": [
+        "AC14"
+      ],
+      "golden_case_count": 1
+    },
+    {
+      "name": "validate_claim_context",
+      "test_layer": "component",
+      "route": null,
+      "maps_to": "domain.validation.validate_claim_context",
+      "input_fields": [
+        "grade",
+        "message"
+      ],
+      "result_fields": [
+        "ask_for",
+        "readiness"
+      ],
+      "observation_fields": [],
+      "requirement_ids": [
+        "AC18"
+      ],
+      "golden_case_count": 1
+    },
+    {
+      "name": "validate_submission_deadline",
+      "test_layer": "component",
+      "route": null,
+      "maps_to": "domain.deadline.validate_submission_deadline",
+      "input_fields": [
+        "submitted_on",
+        "trip_end"
+      ],
+      "result_fields": [
+        "late",
+        "readiness"
+      ],
+      "observation_fields": [],
+      "requirement_ids": [
+        "AC17"
+      ],
+      "golden_case_count": 2
+    },
+    {
+      "name": "validate_upload",
+      "test_layer": "component",
+      "route": null,
+      "maps_to": "api.uploads.validate_upload",
+      "input_fields": [
+        "upload",
+        "upload_generator"
+      ],
+      "result_fields": [],
+      "observation_fields": [
+        "http_status",
+        "model_calls"
+      ],
+      "requirement_ids": [
+        "AC16"
+      ],
+      "golden_case_count": 2
+    }
+  ],
+  "observability": {
+    "spec_version": "1.6",
+    "sdk": {
+      "package": "langsmith",
+      "version": "0.14.17",
+      "status": "RELEASE_VERIFIED_NOT_INTEGRATION_TESTED",
+      "source": "https://pypi.org/project/langsmith/0.14.17/"
+    },
+    "required_for_delivery": true,
+    "business_logic_depends_on_export": false,
+    "stage": "DOCUMENTATION_ONLY",
+    "owners": {
+      "instrumentation": "Pair C",
+      "datasets_and_review": "Pair A",
+      "tool_metrics": "Pair B"
+    },
+    "guide": "docs/LANGSMITH_PLAN.txt",
+    "metrics": [
+      {
+        "name": "active_latency_ms",
+        "unit": "milliseconds",
+        "definition": "p50/p95 per route; exclude human confirmation wait"
+      },
+      {
+        "name": "golden_pass_rate",
+        "unit": "fraction",
+        "definition": "all mandatory automatic plus human checks pass; report attempted and blocked counts"
+      },
+      {
+        "name": "retrieval_recall_at_6",
+        "unit": "fraction",
+        "definition": "required IDs in first six retrieved divided by required IDs, on applicable retrieval cases"
+      },
+      {
+        "name": "image_field_accuracy",
+        "unit": "fraction",
+        "definition": "exact readable critical fields; show unreadable abstention separately"
+      },
+      {
+        "name": "tool_error_rate",
+        "unit": "fraction",
+        "definition": "failed tool calls divided by tool calls; tag retries"
+      },
+      {
+        "name": "input_tokens",
+        "unit": "tokens",
+        "definition": "provider reported or unknown"
+      },
+      {
+        "name": "output_tokens",
+        "unit": "tokens",
+        "definition": "provider reported or unknown"
+      },
+      {
+        "name": "cost_per_success",
+        "unit": "billing currency/task",
+        "definition": "total measured cost across all attempts divided by successes; identify unknown charges"
+      }
+    ],
+    "spans": [
+      "route",
+      "planner",
+      "bm25",
+      "vector_search_if_used",
+      "fusion",
+      "rerank",
+      "answer",
+      "vision_or_ocr",
+      "confirmation",
+      "rule_resolution",
+      "calculation",
+      "provider_search",
+      "offer_filter_rank",
+      "critic",
+      "format_repair",
+      "executor_repair"
+    ],
+    "metadata_allowlist": [
+      "request_id",
+      "pseudonymous_thread_id",
+      "route",
+      "environment",
+      "app_commit",
+      "spec_version",
+      "policy_version",
+      "suite_version",
+      "model_id",
+      "prompt_hash",
+      "lock_hash",
+      "retrieval_mode",
+      "retrieved_evidence_ids",
+      "cache_hit",
+      "repair_count",
+      "provider_attempts",
+      "error_type",
+      "evaluation_case_id",
+      "split",
+      "experiment_label"
+    ],
+    "default_hide_inputs_outputs": true,
+    "raw_receipt_export_default": false,
+    "sampling_proposal": {
+      "synthetic_eval": 1.0,
+      "routine_demo": 0.1
+    },
+    "configuration": [
+      "LANGSMITH_TRACING",
+      "LANGSMITH_API_KEY",
+      "LANGSMITH_ENDPOINT",
+      "LANGSMITH_TRACING_SAMPLING_RATE",
+      "LANGSMITH_HIDE_INPUTS",
+      "LANGSMITH_HIDE_OUTPUTS"
+    ],
+    "destination_modes": {
+      "agent_based": [
+        "LANGSMITH_AGENT_ID",
+        "LANGSMITH_AGENT_ENVIRONMENT"
+      ],
+      "project_based": [
+        "LANGSMITH_PROJECT"
+      ],
+      "rule": "Choose one addressing mode and unset unused legacy destination variables."
+    },
+    "golden_datasets": {
+      "core": "tests/golden_100.json",
+      "supplemental": "tests/supplemental_20.json",
+      "source_of_truth": "repository",
+      "target_receives_reference_outputs": false,
+      "raw_images_uploaded_by_default": false
+    },
+    "acceptance_checks": [
+      {
+        "id": "OBS01",
+        "execution_status": "NOT_RUN",
+        "definition_source": "docs/LANGSMITH_PLAN.txt"
+      },
+      {
+        "id": "OBS02",
+        "execution_status": "NOT_RUN",
+        "definition_source": "docs/LANGSMITH_PLAN.txt"
+      },
+      {
+        "id": "OBS03",
+        "execution_status": "NOT_RUN",
+        "definition_source": "docs/LANGSMITH_PLAN.txt"
+      },
+      {
+        "id": "OBS04",
+        "execution_status": "NOT_RUN",
+        "definition_source": "docs/LANGSMITH_PLAN.txt"
+      },
+      {
+        "id": "OBS05",
+        "execution_status": "NOT_RUN",
+        "definition_source": "docs/LANGSMITH_PLAN.txt"
+      },
+      {
+        "id": "OBS06",
+        "execution_status": "NOT_RUN",
+        "definition_source": "docs/LANGSMITH_PLAN.txt"
+      }
+    ],
+    "outage_behavior": "Bounded exporter; unchanged domain result, DEGRADED monitoring, redacted local logs; delivery integration remains pending."
+  },
+  "deployment": {
+    "spec_version": "1.6",
+    "stage": "DOCUMENTATION_ONLY",
+    "status": "NOT_DEPLOYED",
+    "decision": "Design Docker now; implement packaging in M2 once UI/API skeleton and tested lockfile exist.",
+    "initial_target": "One shared AWS EC2 host with Docker Compose, independently configured demo and production projects.",
+    "availability": "Single host and Availability Zone for application; no high-availability guarantee.",
+    "versions": {
+      "host_os": "Ubuntu Server 24.04 LTS x86_64; exact patched AMI/build recorded before provisioning",
+      "docker_engine": "29.9.3",
+      "docker_compose": "5.7.0",
+      "python": "3.14.10",
+      "boto3": "1.43.126",
+      "base_image": "Resolve tag and pin tested digest during M2",
+      "reverse_proxy": "NGINX image tag/digest to be selected and pinned during M2",
+      "verification": "Release existence checked; joint runtime and host compatibility not tested."
+    },
+    "owners": {
+      "container_and_deploy": "Pair C",
+      "persistence_and_restore": "Pair B",
+      "acceptance_evidence": "Pair A",
+      "operations": "UNASSIGNED"
+    },
+    "ingress": [
+      "Route53_or_approved_DNS",
+      "ALB_HTTPS_ACM_Cognito_or_OIDC",
+      "EC2_reverse_proxy",
+      "Streamlit_and_private_FastAPI"
+    ],
+    "public_application_ports": [
+      443
+    ],
+    "backend_ingress": "ALB security group only; no direct app/DB/Docker/SSH internet access",
+    "admin": "Systems Manager Session Manager",
+    "identity": "Verify signed ALB identity/signer/expiry; propagate per-request verified identity to API; enforce organization/session authorization.",
+    "state": {
+      "sqlite": "Encrypted EBS, one API owner per environment",
+      "qdrant_local": "Encrypted EBS, one API owner per environment",
+      "receipts": "Private encrypted S3, tenant-scoped receipt-store adapter",
+      "backup": "Application-consistent DB backups, policy manifest, encrypted snapshots; measured restore",
+      "proposed_rpo_hours": 24,
+      "proposed_rto_hours": 4,
+      "recovery_status": "TARGETS_PENDING_OWNER_AGREEMENT_AND_TEST"
+    },
+    "secrets": "Instance profile with temporary AWS credentials, Secrets Manager and scoped delivery; never images/source/build arguments",
+    "environment_isolation": "Separate Compose project/network/data/credentials/LangSmith destination; one shared host still shares failure/IAM boundary.",
+    "release": "Test image, private ECR immutable digest, demo smoke, production promotion of same digest; drain single writer and maintain compatible rollback",
+    "required_for_production": [
+      "DEP01",
+      "DEP02",
+      "DEP03",
+      "DEP04",
+      "DEP05",
+      "DEP06",
+      "DEP07",
+      "DEP08"
+    ],
+    "acceptance_checks": [
+      {
+        "id": "DEP01",
+        "status": "NOT_RUN",
+        "definition_source": "docs/AWS_DEPLOYMENT_PLAN.txt"
+      },
+      {
+        "id": "DEP02",
+        "status": "NOT_RUN",
+        "definition_source": "docs/AWS_DEPLOYMENT_PLAN.txt"
+      },
+      {
+        "id": "DEP03",
+        "status": "NOT_RUN",
+        "definition_source": "docs/AWS_DEPLOYMENT_PLAN.txt"
+      },
+      {
+        "id": "DEP04",
+        "status": "NOT_RUN",
+        "definition_source": "docs/AWS_DEPLOYMENT_PLAN.txt"
+      },
+      {
+        "id": "DEP05",
+        "status": "NOT_RUN",
+        "definition_source": "docs/AWS_DEPLOYMENT_PLAN.txt"
+      },
+      {
+        "id": "DEP06",
+        "status": "NOT_RUN",
+        "definition_source": "docs/AWS_DEPLOYMENT_PLAN.txt"
+      },
+      {
+        "id": "DEP07",
+        "status": "NOT_RUN",
+        "definition_source": "docs/AWS_DEPLOYMENT_PLAN.txt"
+      },
+      {
+        "id": "DEP08",
+        "status": "NOT_RUN",
+        "definition_source": "docs/AWS_DEPLOYMENT_PLAN.txt"
+      }
+    ],
+    "guide": "docs/AWS_DEPLOYMENT_PLAN.txt",
+    "diagram": "architecture/03_aws_deployment.mmd",
+    "later_scale": "ECS plus external checkpoints/PostgreSQL, server vector storage and shared rate limiting before replicas",
+    "fictional_policy_limit": "Real-company production needs approved real policy; fictional-only deployment remains labeled capstone/demo."
+  },
+  "entrypoint_contract_rules": [
+    "These names are the only interface the evaluation driver may call. maps_to is the planned application function; rename it only by updating this contract in the same change.",
+    "input_fields and result_fields are the union observed across the mapped golden cases. A driver must accept every listed input field and must populate every result field the case asserts.",
+    "A component entrypoint tests one operation and must not fail because unrelated claim fields are absent. A workflow entrypoint runs normal application behavior with injected clock and fixtures.",
+    "observation_fields are JSON-pointer suffixes under /observations/ taken from the cases' automatic checks. They are produced by harness instrumentation, never by the model or the application response body.",
+    "No entrypoint may branch on a GT identifier, read tests/, or receive expected values."
+  ],
+  "authority_order": [
+    "policy_sources/policy.json and policy_sources/rule_registry.json — fictional business rules and every number used in arithmetic",
+    "policy_sources/reference_data.json — enumerations, aliases, FX fixtures and controlled vocabularies",
+    "tests/golden_cases.json — expected assertions",
+    "SPECIFICATION.txt — application behavior and prose",
+    "IMPLEMENTATION_CONTRACT.json, docs/REQUIREMENTS.json, docs/TEST_PROTOCOL.txt, schemas/ — interface and evaluation detail",
+    "Everything else is derived or explanatory and never overrides the above"
+  ],
+  "derived_artifacts": {
+    "rule": "Derived files are generated by build_package.py and are never hand-edited. validate_package.py fails when a derived file drifts from its source.",
+    "files": {
+      "01_Project_Specification.docx": "SPECIFICATION.txt + docs/spec_outline.json + architecture diagram images",
+      "02_Fictional_Travel_Policy.docx": "policy_sources/policy.json",
+      "03_Beginner_Team_Plan.docx": "docs/TEAM_PLAN.txt",
+      "manifest.json": "sha256 of every tracked file",
+      "tests/golden_100.json, tests/supplemental_20.json and every tests/*.jsonl": "tests/golden_cases.json"
+    }
+  },
+  "identity": {
+    "principle": "Organization, session scope and traveler grade are server-held. Neither the user message nor any model output can override them.",
+    "prototype_scheme": "POST /sessions returns an opaque session token bound server-side to organization_id, session_id and traveler profile. Every other route requires Authorization: Bearer <token>. Unknown, expired or foreign tokens return 401/403 before any model, retrieval or provider call.",
+    "ui_to_api": "Streamlit holds the token server-side in its session state and forwards it on each FastAPI call. The token is never rendered into the browser page, a URL or a log line.",
+    "grade_authority": "grade comes from the server-held traveler profile seeded when the session is created. A grade stated in chat is an unverified hint: it may trigger a clarification but never selects a higher cap. Golden cases supply grade as seeded profile context, not as a user assertion.",
+    "deployment_scheme": "In AWS the ALB/Cognito identity is verified (signer, expiry, audience) at the reverse proxy and exchanged for the same server-side session. An internal container URL never establishes identity. See docs/AWS_DEPLOYMENT_PLAN.txt DEP02.",
+    "test_construction": "A golden case starts with a fresh authorized session created through the same code path; GT113 proves a second session B record stays unreachable from session A.",
+    "role_authority": "role (employee or admin) comes from config/profiles.toml with the session, like grade. Only admin may manage the policy library. The client cannot supply a role."
+  },
+  "router": {
+    "rule": "Routing is a deterministic function of the validated request, never a model choice, so that simple-path and full-agent latency can be compared.",
+    "decision_order": [
+      "Any attached image or pending receipt confirmation -> receipt_review",
+      "A travel search intent with a search_type, route or destination plus dates -> travel_search",
+      "A correction or follow-up that invalidates stored results -> the route that produced them",
+      "Retrieval returns equally authoritative conflicting rules for the asked applicability -> escalate the current route to the planner/critic path",
+      "Otherwise -> policy_simple"
+    ],
+    "escalation_note": "policy_simple runs clarify -> retrieve -> generate -> validate citations with no planner and no critic model call. Escalation is recorded in the trace as route_escalated with its trigger."
+  },
+  "retention": {
+    "raw_uploads_hours": 24,
+    "redacted_traces_days": 30,
+    "enforcement": "A scheduled cleanup task inside the API process deletes expired uploads and traces and records the count it removed. Expiry is evaluated against the injected clock so it is testable.",
+    "user_deletion": "DELETE /sessions/{session_id} and DELETE /receipts/{image_id} delete on request ahead of the schedule.",
+    "deployment_note": "In AWS, deletion must also clear S3 noncurrent versions and account for backup retention; a lifecycle rule alone does not give an exact deletion time (DEP05).",
+    "verification": "Covered by implementation tests AC19 in docs/REQUIREMENTS.json and docs/TEST_PROTOCOL.txt section 8, not by the frozen 120-case suite."
+  },
+  "money_representation": {
+    "application_output": "Finite decimal string with exactly two fractional digits, for example \"22260.00\". Unknown amounts are null, never 0 and never omitted.",
+    "internal": "decimal.Decimal throughout. Never float.",
+    "golden_fixtures": "Existing expected values are JSON numbers such as 22260.0 and 1.7. The evaluator compares with Decimal(str(value)), so \"22260.00\" equals 22260.0. Do not rewrite the fixtures and do not serialize floats.",
+    "rounding": "ROUND_HALF_UP per converted line at two digits; the signed residual is reported as rounding_adjustment_inr and is never a policy violation."
+  },
+  "prompting_strategies": {
+    "a_basic": "Instruction plus retrieved evidence, free-form answer.",
+    "b_structured": "Instruction plus evidence plus a required JSON answer schema with explicit evidence_ids, missing_fields and limitations.",
+    "c_few_shot": "The structured prompt plus two or three worked examples drawn only from development-split cases.",
+    "rule": "All three run against the same fixed evidence, the same small model and the same held-out protocol. Prompt files live in prompts/ with a recorded prompt hash. Held-out cases are never used as examples."
+  },
+  "implementation_authorization": {
+    "authorized_on": "2026-11-07",
+    "authorized_by": "user instruction in the assistant session",
+    "scope": "Milestones M0-M8 built sequentially, stopping at each milestone boundary and at any unavailable external dependency",
+    "excluded_until_separate_instruction": "M8 creation of AWS resources or paid services; LangSmith cloud workspace and spend; live travel provider; pushing to any remote",
+    "python_runtime": "CPython 3.14.10 via pyenv 2.8.14",
+    "version_control": "None: files edited in place, no git repository",
+    "model_provider": "To be supplied by the user at the start of M3; keys only in local .env"
+  },
+  "operational_defaults": {
+    "source": "SPECIFICATION.txt, Travel search and API behavior: proposed defaults. These are operational settings, not policy rules, so they live here and not in the rule registry.",
+    "rate_limit_requests_per_session_per_minute": 10,
+    "search_cache_ttl_minutes_max": 15,
+    "format_repairs": 1,
+    "executor_repairs": 1,
+    "provider_attempts_per_operation": 3
+  },
+  "organization": {
+    "id": "demo-company",
+    "name": "SPARKS AI Lab",
+    "fictional": true,
+    "note": "The organization ID stays demo-company because it is an identifier in every golden case precondition; only the display name changed."
+  }
+}

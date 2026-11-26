@@ -1,0 +1,12 @@
+flowchart TD
+    P[Versioned fictional policy documents] --> X[Extract and clean text]
+    X --> C[Section chunks with IDs and metadata]
+    C --> B[BM25 keyword index]
+    C --> E[Permitted embedding API]
+    E --> V[Vector index]
+    B --> S[Publish matching index versions]
+    V --> S
+    P --> H[Human review of numeric rules]
+    H --> N[Versioned rule registry for Python tools]
+    S --> R[Shared policy retrieval service]
+    N --> T[Calculation and offer validation tools]

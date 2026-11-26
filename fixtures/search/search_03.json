@@ -1,0 +1,48 @@
+{
+  "clock": "2026-11-15T12:00:00Z",
+  "mode": "DEMO",
+  "offers": [
+    {
+      "id": "F1",
+      "type": "flight",
+      "provider": "DEMO",
+      "origin": "BLR",
+      "destination": "DEL",
+      "departure_date": "2026-11-20",
+      "travelers": 1,
+      "cabin": "economy",
+      "currency": "INR",
+      "total": 12500,
+      "taxes_included": true,
+      "mandatory_fees_included": true,
+      "baggage_kg": 20,
+      "baggage_fee_included": true,
+      "duration_minutes": 150,
+      "retrieved_at": "2026-11-15T11:55:00Z",
+      "expires_at": "2026-11-15T12:10:00Z",
+      "cancellation_terms": "Not provided"
+    },
+    {
+      "id": "F2",
+      "type": "flight",
+      "provider": "DEMO",
+      "origin": "BLR",
+      "destination": "DEL",
+      "departure_date": "2026-11-20",
+      "travelers": 1,
+      "cabin": "economy",
+      "currency": "INR",
+      "total": 14000,
+      "taxes_included": true,
+      "mandatory_fees_included": true,
+      "baggage_kg": 20,
+      "baggage_fee_included": true,
+      "duration_minutes": 150,
+      "retrieved_at": "2026-11-15T11:55:00Z",
+      "expires_at": "2026-11-15T12:10:00Z",
+      "cancellation_terms": "Not provided"
+    }
+  ],
+  "fault": null,
+  "refresh_result": null
+}

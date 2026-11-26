@@ -1,0 +1,450 @@
+{
+  "description": "Heading levels and page layout for the flattened text documents that build_package.py renders into Word. A heading line present in the text but absent here is an error: add it in the same change. These Word files are derived artifacts and must never be hand-edited.",
+  "documents": {
+    "SPECIFICATION.txt": {
+      "derived": "01_Project_Specification.docx",
+      "layout": {
+        "title_line": 4,
+        "subtitle_line": 6,
+        "body_start": 7,
+        "note": "Lines 1-3 are a plain-text banner that the Word copy does not carry. Rendering stops at the EDITABLE DIAGRAM appendix."
+      },
+      "images": [
+        {
+          "path": "architecture/01_policy_preparation.png",
+          "width_emu": 6080760
+        },
+        {
+          "path": "architecture/02_request_processing.png",
+          "width_emu": 6080760
+        },
+        {
+          "path": "architecture/03_aws_deployment.png",
+          "width_emu": 6080760
+        }
+      ],
+      "headings": [
+        {
+          "text": "Authority and derived artifacts",
+          "level": 1
+        },
+        {
+          "text": "Scope and user outcomes",
+          "level": 1
+        },
+        {
+          "text": "Completion depends on three external capabilities",
+          "level": 2
+        },
+        {
+          "text": "Functional requirements and acceptance",
+          "level": 1
+        },
+        {
+          "text": "Example result using fictional policy",
+          "level": 2
+        },
+        {
+          "text": "Architecture and portability",
+          "level": 1
+        },
+        {
+          "text": "Tool contracts",
+          "level": 2
+        },
+        {
+          "text": "How RAG BM25 and agents work together",
+          "level": 1
+        },
+        {
+          "text": "Tasks performed by ordinary tools",
+          "level": 2
+        },
+        {
+          "text": "BM25 and semantic search",
+          "level": 2
+        },
+        {
+          "text": "Architecture for policy preparation",
+          "level": 1
+        },
+        {
+          "text": "Architecture for user request processing",
+          "level": 1
+        },
+        {
+          "text": "Deterministic request routing",
+          "level": 1
+        },
+        {
+          "text": "Execution steps for the three use cases",
+          "level": 1
+        },
+        {
+          "text": "UC01 Answer a policy question",
+          "level": 2
+        },
+        {
+          "text": "UC02 Review an expense image",
+          "level": 2
+        },
+        {
+          "text": "UC03 Recommend flights and hotels",
+          "level": 2
+        },
+        {
+          "text": "Portable implementation contract",
+          "level": 1
+        },
+        {
+          "text": "Source authority and conflicts",
+          "level": 2
+        },
+        {
+          "text": "Shared retrieval contract",
+          "level": 2
+        },
+        {
+          "text": "State and agent boundaries",
+          "level": 2
+        },
+        {
+          "text": "Verification additions",
+          "level": 2
+        },
+        {
+          "text": "Retrieval and policy management",
+          "level": 1
+        },
+        {
+          "text": "Rule governance",
+          "level": 2
+        },
+        {
+          "text": "Generation contract",
+          "level": 2
+        },
+        {
+          "text": "Reference data and the reviewed rule registry",
+          "level": 1
+        },
+        {
+          "text": "Receipt processing and budget calculation",
+          "level": 1
+        },
+        {
+          "text": "Travel search and API behavior",
+          "level": 1
+        },
+        {
+          "text": "Identity, authorization and traveler grade",
+          "level": 1
+        },
+        {
+          "text": "Operational endpoints, error envelope and retention",
+          "level": 1
+        },
+        {
+          "text": "User interface screens",
+          "level": 1
+        },
+        {
+          "text": "Policy library administration",
+          "level": 1
+        },
+        {
+          "text": "Evaluation and delivery gates",
+          "level": 1
+        },
+        {
+          "text": "Three prompting strategies",
+          "level": 2
+        },
+        {
+          "text": "Documentation references checked on 3 November 2026",
+          "level": 2
+        },
+        {
+          "text": "Technology stack and version baseline",
+          "level": 1
+        },
+        {
+          "text": "Retrieval storage and supporting packages",
+          "level": 1
+        },
+        {
+          "text": "Features implemented without another service",
+          "level": 2
+        },
+        {
+          "text": "External services and development setup",
+          "level": 1
+        },
+        {
+          "text": "Provider versions to record before integration",
+          "level": 2
+        },
+        {
+          "text": "Repository and local runtime",
+          "level": 2
+        },
+        {
+          "text": "Locking and deployment gate",
+          "level": 2
+        },
+        {
+          "text": "Version sources and dependency artifacts",
+          "level": 1
+        },
+        {
+          "text": "Files added to the package",
+          "level": 2
+        },
+        {
+          "text": "Golden test suite and traceability",
+          "level": 1
+        },
+        {
+          "text": "Normative annexes",
+          "level": 2
+        },
+        {
+          "text": "Coverage limits and change control",
+          "level": 2
+        },
+        {
+          "text": "Precise assessment and interface behavior",
+          "level": 1
+        },
+        {
+          "text": "Typed contracts",
+          "level": 2
+        },
+        {
+          "text": "Currency and partial results",
+          "level": 2
+        },
+        {
+          "text": "Golden execution and scoring contract",
+          "level": 1
+        },
+        {
+          "text": "Input and fixture rules",
+          "level": 2
+        },
+        {
+          "text": "Expected result comparison",
+          "level": 2
+        },
+        {
+          "text": "Result and retry discipline",
+          "level": 2
+        },
+        {
+          "text": "Repository handoff and implementation entry gate",
+          "level": 1
+        },
+        {
+          "text": "Before the first implementation milestone",
+          "level": 2
+        },
+        {
+          "text": "Portable coding assistant instructions",
+          "level": 2
+        },
+        {
+          "text": "LangSmith tracing and performance monitoring",
+          "level": 1
+        },
+        {
+          "text": "Trace actual application work",
+          "level": 2
+        },
+        {
+          "text": "Dashboard measurements",
+          "level": 2
+        },
+        {
+          "text": "Team ownership",
+          "level": 2
+        },
+        {
+          "text": "LangSmith golden datasets and experiments",
+          "level": 1
+        },
+        {
+          "text": "Code evaluation and independent review",
+          "level": 2
+        },
+        {
+          "text": "Configuration and operating cost",
+          "level": 2
+        },
+        {
+          "text": "Privacy and exporter behavior",
+          "level": 2
+        },
+        {
+          "text": "LangSmith acceptance and implementation gates",
+          "level": 1
+        },
+        {
+          "text": "OBS01 Trace structure",
+          "level": 2
+        },
+        {
+          "text": "OBS02 Receipt and follow up",
+          "level": 2
+        },
+        {
+          "text": "OBS03 Bounded faults",
+          "level": 2
+        },
+        {
+          "text": "OBS04 Redaction",
+          "level": 2
+        },
+        {
+          "text": "OBS05 Evaluation mapping",
+          "level": 2
+        },
+        {
+          "text": "OBS06 Degraded telemetry",
+          "level": 2
+        },
+        {
+          "text": "Docker timing and shared AWS hosting",
+          "level": 1
+        },
+        {
+          "text": "Container state access and release contracts",
+          "level": 1
+        },
+        {
+          "text": "Runtime baseline and architecture",
+          "level": 2
+        },
+        {
+          "text": "Persistence and secrets",
+          "level": 2
+        },
+        {
+          "text": "Build once and promote by digest",
+          "level": 2
+        },
+        {
+          "text": "AWS production gates and later scaling",
+          "level": 1
+        },
+        {
+          "text": "Recovery and live policy requirements",
+          "level": 2
+        },
+        {
+          "text": "Deployment acceptance checks",
+          "level": 2
+        }
+      ]
+    },
+    "docs/TEAM_PLAN.txt": {
+      "derived": "03_Beginner_Team_Plan.docx",
+      "layout": {
+        "title_line": 0,
+        "subtitle_line": 2,
+        "body_start": 3,
+        "note": null
+      },
+      "images": [],
+      "headings": [
+        {
+          "text": "Scope tiers and what a complete delivery means",
+          "level": 1
+        },
+        {
+          "text": "Week one establish the foundation",
+          "level": 1
+        },
+        {
+          "text": "Initial setup",
+          "level": 2
+        },
+        {
+          "text": "Weeks two and three build the workflows",
+          "level": 1
+        },
+        {
+          "text": "Week four validate and deliver",
+          "level": 1
+        },
+        {
+          "text": "Daily collaboration",
+          "level": 2
+        },
+        {
+          "text": "Demonstration script",
+          "level": 2
+        },
+        {
+          "text": "Deliverables",
+          "level": 2
+        },
+        {
+          "text": "Repository and testing instructions",
+          "level": 1
+        },
+        {
+          "text": "Using the supplied tests",
+          "level": 2
+        },
+        {
+          "text": "Budget and dependency decisions",
+          "level": 2
+        },
+        {
+          "text": "Maintain portability",
+          "level": 2
+        },
+        {
+          "text": "LangSmith monitoring and evaluation work plan",
+          "level": 1
+        },
+        {
+          "text": "Week one prepare and record the baseline",
+          "level": 2
+        },
+        {
+          "text": "Weeks two and three instrument the workflows",
+          "level": 2
+        },
+        {
+          "text": "Week four compare and deliver evidence",
+          "level": 2
+        },
+        {
+          "text": "Delivery gate",
+          "level": 2
+        },
+        {
+          "text": "Docker and AWS implementation work plan",
+          "level": 1
+        },
+        {
+          "text": "Week one package the skeleton",
+          "level": 2
+        },
+        {
+          "text": "Weeks two and three preserve deployability",
+          "level": 2
+        },
+        {
+          "text": "Week four deploy the demo and collect readiness evidence",
+          "level": 2
+        },
+        {
+          "text": "Production promotion after the gates",
+          "level": 2
+        }
+      ]
+    }
+  }
+}

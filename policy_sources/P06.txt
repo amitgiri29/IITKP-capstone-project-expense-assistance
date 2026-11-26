@@ -1,0 +1,5 @@
+SPARKS AI Lab | FICTIONAL | Policy 1.1
+Rule P06 | Domestic local transport
+Effective 2026-01-01 to 2026-12-31
+
+Business taxis, airport transfers and public transport share one daily cap per traveler: E INR 1500 and M INR 2000. Aggregate all eligible local transport on the same local service date before applying the cap. Commuting from home to the normal office, personal sightseeing and traffic fines are excluded. Tips are excluded.

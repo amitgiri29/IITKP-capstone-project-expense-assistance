@@ -1,0 +1,5 @@
+SPARKS AI Lab | FICTIONAL | Policy 1.1
+Rule P02 | Domestic hotel limits
+Effective 2026-01-01 to 2026-12-31
+
+All inclusive nightly room caps in INR for one room and one traveler: Bengaluru, Delhi and Mumbai are metro cities, with E 5000 and M 7000; all other Indian cities have E 3500 and M 5000. Hotel nights are checkout date minus checkin date in local calendar days. Dates must define a positive number of nights. Each night is capped independently; underspending on one night cannot offset another night. Taxes and mandatory room fees are inside the cap. Itemized personal extras are excluded before applying room caps. Bengaluru and Bangalore are aliases. Unknown mandatory hotel costs make domestic offers provisional, just as international offers are. A receipt that states a service date and an explicit positive night count can establish the stay length; when checkin and checkout are supplied they must agree with that count.

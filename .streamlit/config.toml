@@ -1,0 +1,28 @@
+# SPARKS AI Lab theme: dark-first, brand indigo with amber/magenta accents.
+[theme]
+# SPARKS AI Lab light enterprise theme (DESIGN.md). Fonts are self-hosted in ui/static/fonts.
+base = "light"
+primaryColor = "#E11D48"
+backgroundColor = "#F8FAFC"
+secondaryBackgroundColor = "#FFFFFF"   # white form fields (DESIGN.md inputs); grey layers come from CSS
+textColor = "#0F172A"
+linkColor = "#BE123C"
+borderColor = "#E2E8F0"
+baseRadius = "0.625rem"
+font = "sans-serif"
+showSidebarBorder = true
+
+[theme.sidebar]
+backgroundColor = "#FFFFFF"
+secondaryBackgroundColor = "#F8FAFC"
+
+[client]
+toolbarMode = "minimal"
+showErrorDetails = "none"   # never show tracebacks or file paths to users
+
+[browser]
+gatherUsageStats = false
+
+[server]
+enableStaticServing = true   # self-hosted fonts in ui/static (no third-party font requests)
+maxUploadSize = 10           # MB per file; matches the API limits for receipt images and policy documents

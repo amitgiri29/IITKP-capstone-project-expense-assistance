@@ -1,0 +1,1 @@
+No project license has been selected. Before public publication, the repository owner must confirm the course/team policy and select an appropriate license. No license terms for third-party packages are changed by this package. Synthetic assets are labeled fictional; no real employer policy is included.

@@ -1,0 +1,223 @@
+{
+  "documentation_version": "1.6",
+  "implementation_authorized": true,
+  "decisions": [
+    {
+      "id": "scope",
+      "decision_needed": "All members accept the documented MVP",
+      "owner": "All pairs",
+      "due": "Before M1",
+      "status": "PENDING",
+      "value": null
+    },
+    {
+      "id": "model",
+      "decision_needed": "Provider, endpoint, exact model ID, API revision and capabilities",
+      "owner": "Pair C",
+      "due": "Before M3",
+      "status": "DECIDED_BY_USER",
+      "value": "Current default: provider claude_code, which calls the local Claude Code CLI in print mode with the user's existing sign-in, model claude-sonnet-5-5, tools disabled, no session saved (user instruction 2026-11-07, for testing until the user adds their own model API). Alternatives already built: anthropic (official SDK with ANTHROPIC_API_KEY) and openai_compatible (hosted endpoint). Switch in config/settings.toml [model]. The claude_code provider is not available inside Docker.",
+      "hosted_option": "2026-11-17 user instruction: host Qwen on the user's own Colab Pro+ GPU and use it for the agents. colab/qwen_vllm_server.ipynb serves Qwen/Qwen3-4B-Instruct-2507 with vLLM (OpenAI-compatible, json_schema structured output, hermes tool-call parser) behind an API-key gateway and a cloudflared quick tunnel. Selected per machine through EXPENSE_MODEL_* overrides in .env (provider openai_compatible); settings.toml keeps claude_code as the default. There is no 5B Qwen; the 4B Instruct-2507 model matches the course notebook. Text-only: supports_vision=false, so M4 receipt reading needs a separate vision decision."
+    },
+    {
+      "id": "vision",
+      "decision_needed": "Supplied vision or permitted OCR API and version",
+      "owner": "Pair C",
+      "due": "Before M4",
+      "status": "DECIDED_BY_USER",
+      "value": "Claude Sonnet vision through the same model adapter; capability flag model.supports_vision.",
+      "update_2026_11_18": "User decision: no vision model. Receipts are reviewed from TEXT only (typed or pasted, text files, digital PDFs read with pypdf, which is not OCR). Receipt images are stored but never read; image requests return UNSUPPORTED_CAPABILITY/CAPABILITY_UNAVAILABLE and offer transcription. The corpus likewise uses only documents with a text layer."
+    },
+    {
+      "id": "embeddings",
+      "decision_needed": "Course permission, endpoint, model/revision and dimension",
+      "owner": "Pair B",
+      "due": "Before dense retrieval in M3",
+      "status": "DECIDED_BY_USER",
+      "value": "Option B: local FastEmbed BAAI/bge-small-en-v1.5 (384-d, ONNX on CPU, no API cost) as a stand-in. Hybrid retrieval = BM25 + vectors fused with reciprocal rank fusion; filters run before both. Switch to the hosted embedding API by setting [embeddings].provider = \"openai_compatible\", base_url and model_id in config/settings.toml and the key named by api_key_env in .env. Spec deviation (no local models/embeddings) approved by the user. If vectors fail, retrieval degrades to disclosed bm25_only.",
+      "decided": "2026-11-10",
+      "hosted_option": "2026-11-17 user instruction: when the Colab-hosted embeddings endpoint (BAAI/bge-small-en-v1.5 on GPU, same model as the local stand-in) is configured through EXPENSE_EMBEDDINGS_* overrides, it is probed once at API startup; if it does not answer, [embeddings].fallback_provider = \"fastembed\" uses the local model for that run and /ready reports fallback_reason. No mid-run switching, because vectors from different providers are not mixed in one index."
+    },
+    {
+      "id": "corpus",
+      "decision_needed": "Approved route to corpus size requirement or documented waiver",
+      "owner": "Pair A",
+      "due": "Before retrieval acceptance",
+      "status": "PENDING",
+      "value": null
+    },
+    {
+      "id": "travel",
+      "decision_needed": "Live provider, API revision, coverage and terms",
+      "owner": "Pair C",
+      "due": "Before live M5",
+      "status": "DECIDED_BY_USER",
+      "value": "The user enters trip details in the UI and the assistant calls an external travel search API whose base URL and key are configured in config/settings.toml [travel]. The fixture provider stays only for tests, golden runs and offline demos. Specific provider and terms still to be chosen."
+    },
+    {
+      "id": "fx",
+      "decision_needed": "Documented transaction-date source and provider version",
+      "owner": "Pair B",
+      "due": "Before live FX",
+      "status": "PENDING",
+      "value": null
+    },
+    {
+      "id": "budget",
+      "decision_needed": "Per-run call cap, total deadline, daily spend and alert owner",
+      "owner": "All pairs",
+      "due": "Before live API calls",
+      "status": "PENDING",
+      "value": null
+    },
+    {
+      "id": "golden_review",
+      "decision_needed": "Second reviewer checks expected answers and change log",
+      "owner": "Pair A",
+      "due": "Before final evaluation",
+      "status": "PENDING",
+      "value": null
+    },
+    {
+      "id": "repo",
+      "decision_needed": "Private repository URL, all teammate access and license decision",
+      "owner": "Repo owner",
+      "due": "Before first commit",
+      "status": "PENDING",
+      "value": null
+    },
+    {
+      "id": "lock",
+      "decision_needed": "Resolved dependencies, OS/Python report and second-machine validation",
+      "owner": "Setup owner",
+      "due": "Before concurrent implementation",
+      "status": "RESOLVED_SINGLE_MACHINE",
+      "value": "requirements.lock.txt from CPython 3.14.10 on macOS arm64; all 14 direct pins resolved and pip check clean; smoke imports, FastAPI TestClient, LangGraph SqliteSaver and Pillow decode passed. Second-machine validation NOT_RUN. See artifacts/environment.txt."
+    },
+    {
+      "id": "langsmith",
+      "decision_needed": "Workspace/region, one addressing mode, API key owner, team access, retention, quota and trace/evaluation spend limit",
+      "owner": "Pair C with Pair A",
+      "due": "Before tracing the M3 baseline",
+      "status": "PENDING",
+      "value": null
+    },
+    {
+      "id": "aws_deployment",
+      "decision_needed": "AWS account/region, approved infrastructure budget, DNS/IdP, host AMI and CPU/RAM, data/backup configuration and operations owner",
+      "owner": "Pair C with all pairs",
+      "due": "Before AWS provisioning",
+      "status": "PENDING",
+      "value": null
+    },
+    {
+      "id": "production_readiness",
+      "decision_needed": "Shared-host risk acceptance, real policy/data approval, expected concurrency, RPO/RTO and measured restore/rollback evidence",
+      "owner": "Operations owner and project owner",
+      "due": "Before production access",
+      "status": "PENDING",
+      "value": null
+    },
+    {
+      "id": "rule_registry_review",
+      "decision_needed": "Second reviewer signs off policy_sources/rule_registry.json and reference_data.json against policy 1.1, then review_status becomes REVIEWED",
+      "owner": "Pair A with Pair B",
+      "due": "Before M1",
+      "status": "AWAITING_SECOND_REVIEWER",
+      "value": "Checklist prepared in docs/M0_REGISTRY_REVIEW.txt; automated cross-check matched 22 of 22 caps to policy text. One defect fixed: a rate-limit parameter wrongly cited P18 and moved to operational_defaults."
+    },
+    {
+      "id": "identity_scheme",
+      "decision_needed": "Confirm the prototype bearer-token session scheme and how the traveler profile, including grade, is seeded for demos and tests",
+      "owner": "Pair C",
+      "due": "Before M2",
+      "status": "PENDING",
+      "value": null
+    },
+    {
+      "id": "scope_tiers",
+      "decision_needed": "Agree the must-deliver, access-dependent and stretch tiers in docs/TEAM_PLAN.txt so a blocked capability is reported, not hidden",
+      "owner": "All pairs",
+      "due": "Before M1",
+      "status": "PENDING",
+      "value": null
+    },
+    {
+      "id": "policy_2027_window",
+      "decision_needed": "Either publish a reviewed policy 1.2 with 2027 effective dates or run demonstrations against a documented fixed clock; policy 1.1 expires 31 December 2026",
+      "owner": "Pair A",
+      "due": "Before any demonstration after 31 December 2026",
+      "status": "PENDING",
+      "value": null
+    }
+  ],
+  "note": "No secrets. A later explicit user/team instruction authorizing implementation supersedes the documentation-stage flag; update the flag as part of that handoff.",
+  "implementation_authorization": {
+    "authorized_on": "2026-11-07",
+    "authorized_by": "user instruction in the assistant session",
+    "scope": "Milestones M0-M8 built sequentially, stopping at each milestone boundary and at any unavailable external dependency",
+    "excluded_until_separate_instruction": "M8 creation of AWS resources or paid services; LangSmith cloud workspace and spend; live travel provider; pushing to any remote",
+    "python_runtime": "CPython 3.14.10 via pyenv 2.8.14",
+    "version_control": "None: files edited in place, no git repository",
+    "model_provider": "To be supplied by the user at the start of M3; keys only in local .env"
+  },
+  "milestone_status": {
+    "M0": "PREPARED_AWAITING_SECOND_REVIEWER",
+    "M1": "COMPLETE_AUTOMATIC_CHECKS_PASS",
+    "M2": "COMPLETE",
+    "M3": "COMPLETE_LIVE_30_OF_31_AUTOMATIC",
+    "M4": "TEXT_ONLY_COMPLETE (2026-11-18, user decision: no vision model). Text receipts (pasted, .txt/.md/.docx, digital PDFs with a text layer) -> model extraction (always unconfirmed) -> traveler confirms or edits -> Python assessment. GT112 and GT119 pass offline; GT111 passes live (needs the model). The 20 image cases GT061-GT080 report BLOCKED_CAPABILITY: reading receipt photos needs a vision model and OCR is not permitted.",
+    "M5": "FIXTURE_PROVIDER_COMPLETE_20_OF_20_AUTOMATIC (2026-11-18; live read-only provider and FX adapter not started)",
+    "M6": "IN_PROGRESS: travel_search planner/executor/writer/critic graph, checkpointing, one format and one executor repair, bounded provider retries, retention of agent checkpoints and GT116 done (2026-11-18). Remaining: receipt_review agents (blocked on M4 vision), conflict escalation, search-cache invalidation, LangSmith spans (OBS01-OBS04/OBS06).",
+    "M7": "NOT_STARTED",
+    "M8": "NOT_STARTED"
+  },
+  "standing_requirements": [
+    "The final deliverable is a fully functional app, not fixtures or a demo shell.",
+    "Model provider, endpoint, model ID and key are configuration, so an externally hosted model can replace Claude Sonnet.",
+    "Travel search takes user-entered details in the UI and calls a configurable external travel API.",
+    "Administrators can add policy documents that are searchable and queryable through RAG; the feature is limited to the admin role."
+  ],
+  "open_items": [
+    "GT028 (held-out) fails: retrieval misses P09, so receipt_required is not stated. Left untuned to protect the held-out split.",
+    "Add ANTHROPIC_API_KEY and TRAVEL_API_KEY placeholder lines to .env.example (assistant has no read access to that file).",
+    "Docker base image pinned to python:3.14.10-slim@sha256:af8a5aa14780025dbfbcfbc81bd8a91ebd87711dd5b0f48ed71090949dd7cb1d (linux/arm64 build verified; amd64 not built).",
+    "Hosted embedding endpoint not yet supplied; local FastEmbed stand-in in use. Re-embedding happens automatically on provider/model change (cache key includes the model).",
+    "Colab-hosted Qwen endpoint (colab/qwen_vllm_server.ipynb) is built and its gateway is tested offline only; it has not yet been run on a Colab GPU or measured against the M3 policy cases. The tunnel URL changes every Colab session, so .env must be updated and the API restarted each time.",
+    "FIXED 2026-11-18 (user approved; see CHANGELOG: Government of India questions now use only GoI references). Defect (2026-11-18):questions about another organisation's rules (Government of India references, now ingested) are answered with SPARKS registry facts. Example: central government TA claim deadline answered as 30 days (SPARKS P13) instead of sixty days (GoI order R03). Proposed fix: the policy answer must scope SPARKS registry facts to SPARKS employees and answer other-organisation questions only from reference evidence, clearly labelled as not SPARKS policy; then re-run the M3 policy cases live.",
+    "Library ingested by user instruction (2026-11-18): 1 core policy + 4 SPARKS guidance + 8 GoI text references = 13 documents, 76 sections (scripts/ingest_documents.py, corpus/ingest_plan.json); conference guidance left for manual upload.",
+    "Corpus: user decision 2026-11-18, text-only. The 8 Government of India orders with a text layer are kept in corpus/india_references; the 18 scans are marked excluded and their PDFs were moved to runtime/corpus_excluded (not shipped). Nothing is ingested until the 'corpus' decision is approved.",
+    "Windows machine with Smart App Control: requirements.lock.txt pins pandas 3.1.1, pyarrow 26.0.1 and a jiter build whose DLLs are blocked; the local .venv uses pandas 3.0.2, pyarrow 22.0.0 and jiter 0.11.1 instead (lockfile unchanged; setup owner to decide).",
+    "Scanned (image-only) PDFs are rejected: OCR is not permitted, so uploads need a text layer."
+  ],
+  "branding": {
+    "company": "SPARKS AI Lab (fictional)",
+    "decided": "2026-11-08 by user instruction",
+    "logo": "assets/brand/ (fictitious mark and wordmark generated by scripts/make_brand.py)",
+    "identifier": "organization_id stays demo-company: it is an identifier in every golden case, not a display name"
+  },
+  "ui_design": {
+    "source": "User mock-ups (code.html, code2.html, three screenshots) and DESIGN.md, approved 2026-11-08 for theme, navigation, layout and iconography only",
+    "approved_defaults": "Group A: placeholder or false claims replaced with real information (no SOC-2/ISO/GDPR, SSO, region or engine-version claims; real policy name, library count, grade and role). Group B: out-of-spec features excluded (quarterly allowance, persona switcher, command palette and shortcuts, notifications, submit for approval, case IDs, export PDF, AI auto-adjust, exception drafting, partner hotels, AI confidence, OCR bounding boxes, rail and car rental, chat attachments, dietary and accessibility fields, per-diem and alcohol content). Group C: mock-up radii and pill badges; coral primary buttons with icon-labelled violation badges.",
+    "accessibility_adjustments": "Badge text uses darker steps of the DESIGN.md hues (#047857, #B45309, #BE123C) so each badge clears 4.5:1; primary buttons use #E11D48 to #BE123C because white on #F43F5E is 3.67:1; placeholders use #64748B.",
+    "fonts": "Inter and JetBrains Mono (SIL OFL 1.1, from Fontsource 5.3.0) self-hosted under ui/static/fonts; no third-party font requests"
+  },
+  "policy_upload_rag": {
+    "decided": "2026-11-10 by user instruction (\"the moment policy document is uploaded it should chunk the document & create vectors\")",
+    "formats": [
+      "pdf",
+      "docx",
+      "txt",
+      "md"
+    ],
+    "pipeline": "LangChain BaseLoader (pypdf/docx2txt) -> MarkdownHeaderTextSplitter + RecursiveCharacterTextSplitter (1800/200, start_index) -> SQLite chunks -> embeddings (cached per model) -> InMemoryVectorStore + BM25 -> RRF",
+    "limits": {
+      "max_bytes": 10485760,
+      "max_pdf_pages": 200,
+      "max_chunks": 300
+    },
+    "langchain_community": "Not used: archived (read-only) June 2026. Loaders are our own classes on langchain-core BaseLoader.",
+    "out_of_scope": "Retrieval preview/debug view not added (not in spec).",
+    "caps": "Uploaded documents are searchable and citable only; calculation caps always come from the rule registry (AC21)."
+  }
+}

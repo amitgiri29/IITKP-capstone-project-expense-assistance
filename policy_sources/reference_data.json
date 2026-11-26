@@ -1,0 +1,503 @@
+{
+  "reference_data_version": "1.0",
+  "spec_version": "1.6",
+  "policy_version": "1.1",
+  "purpose": "Normative enumerations for the expense assistant. Country codes, city tiers, currencies, categories, fixture FX rates and controlled vocabularies are defined here once. Prose in SPECIFICATION.txt explains them; this file is the machine-readable authority.",
+  "countries": [
+    {
+      "code": "IN",
+      "name": "India",
+      "currency": "INR",
+      "is_home": true,
+      "supported": true,
+      "iso_3166_alpha_2": "IN",
+      "notes": "Travel entirely within India is domestic (P01)."
+    },
+    {
+      "code": "US",
+      "name": "United States",
+      "currency": "USD",
+      "is_home": false,
+      "supported": true,
+      "iso_3166_alpha_2": "US",
+      "notes": null
+    },
+    {
+      "code": "UK",
+      "name": "United Kingdom",
+      "currency": "GBP",
+      "is_home": false,
+      "supported": true,
+      "iso_3166_alpha_2": "GB",
+      "notes": "UK is the package-local code used by policy 1.1 and every golden case. It is NOT ISO 3166; the ISO code is GB. Accept GB as an input alias, emit UK."
+    },
+    {
+      "code": "SG",
+      "name": "Singapore",
+      "currency": "SGD",
+      "is_home": false,
+      "supported": true,
+      "iso_3166_alpha_2": "SG",
+      "notes": null
+    }
+  ],
+  "unsupported_country_behavior": "Any country outside this list has no defined cap. Return HUMAN_REVIEW citing P03 or P07. Never interpolate or infer a rate.",
+  "city_tiers": {
+    "applies_to": "IN",
+    "metro": [
+      "Bengaluru",
+      "Delhi",
+      "Mumbai"
+    ],
+    "default_tier": "other",
+    "notes": "Tier selects the P02 domestic hotel cap. Cities outside the metro list use the \"other\" tier; this is not a scope limit, only a rate tier."
+  },
+  "city_aliases": {
+    "Bangalore": "Bengaluru",
+    "Bengaluru": "Bengaluru",
+    "New Delhi": "Delhi",
+    "Delhi": "Delhi",
+    "Mumbai": "Mumbai",
+    "Bombay": "Mumbai"
+  },
+  "city_alias_rule": "Normalize aliases to the canonical name before BM25 scoring, cap lookup and cache keys (P02). Matching is case-insensitive on the normalized form.",
+  "currencies": [
+    {
+      "code": "INR",
+      "minor_units": 2,
+      "symbol_hint": "Rs"
+    },
+    {
+      "code": "USD",
+      "minor_units": 2,
+      "symbol_hint": "$"
+    },
+    {
+      "code": "GBP",
+      "minor_units": 2,
+      "symbol_hint": "GBP"
+    },
+    {
+      "code": "SGD",
+      "minor_units": 2,
+      "symbol_hint": "S$"
+    }
+  ],
+  "expense_categories": [
+    "hotel",
+    "flight",
+    "local_transport",
+    "out_of_scope"
+  ],
+  "category_notes": "Meals are out_of_scope in release 1 (P08). out_of_scope lines never receive a cap and never silently become eligible.",
+  "fx": {
+    "rate_convention": "INR per one unit of the foreign currency, on the transaction date (P11).",
+    "rounding_mode": "ROUND_HALF_UP",
+    "scale": 2,
+    "fixtures": [
+      {
+        "fx_reference": "FX-DEMO-2026",
+        "date": "2026-11-15",
+        "fictional": true,
+        "rates": {
+          "USD": "84",
+          "GBP": "106",
+          "SGD": "63",
+          "INR": "1"
+        },
+        "notes": "Deterministic test rates only. Not market quotes. Any other currency or date requires a supplied documented rate."
+      },
+      {
+        "fx_reference": "CARD-DEMO-ROUNDING-2026-11-15",
+        "date": "2026-11-15",
+        "fictional": true,
+        "rates": {
+          "USD": "84.5"
+        },
+        "notes": "Documented card statement rate used by GT110. It intentionally differs from FX-DEMO-2026; a card rate supplied with the claim takes precedence (P11)."
+      }
+    ]
+  },
+  "routes": [
+    "policy_simple",
+    "receipt_review",
+    "travel_search"
+  ],
+  "vocabularies": {
+    "readiness": [
+      "INPUT_ERROR",
+      "NEEDS_CLARIFICATION",
+      "NEEDS_EVIDENCE",
+      "HUMAN_REVIEW",
+      "READY_FOR_REVIEW"
+    ],
+    "readiness_precedence_note": "Listed in precedence order; the first applicable value wins (P20).",
+    "compliance_status": [
+      "WITHIN_POLICY",
+      "EXCEEDS_POLICY",
+      "HAS_EXCLUSIONS",
+      "MIXED",
+      "UNKNOWN"
+    ],
+    "budget_status": [
+      "WITHIN_BUDGET",
+      "OVER_BUDGET",
+      "UNKNOWN"
+    ],
+    "offer_policy_status": [
+      "COMPLIANT",
+      "NONCOMPLIANT",
+      "PROVISIONAL",
+      "UNKNOWN"
+    ],
+    "offer_price_basis": [
+      "per_traveler_one_way",
+      "per_room_stay"
+    ],
+    "offer_mode": [
+      "DEMO",
+      "LIVE"
+    ],
+    "critic_decision": [
+      "PASS",
+      "REPAIR",
+      "CLARIFY"
+    ],
+    "run_status": [
+      "OK",
+      "FAILED_VALIDATION",
+      "UNSUPPORTED_CAPABILITY",
+      "PROVIDER_UNAVAILABLE",
+      "DEGRADED_RETRIEVAL"
+    ],
+    "run_status_note": "FAILED_VALIDATION and UNSUPPORTED_CAPABILITY are asserted by GT116 and GT119 respectively. Extend this list only through a documented revision.",
+    "case_execution_status": [
+      "NOT_RUN",
+      "PASS",
+      "PENDING_REVIEW",
+      "FAIL",
+      "ERROR",
+      "BLOCKED_CAPABILITY"
+    ],
+    "reason_code": [
+      {
+        "code": "OVER_CATEGORY_CAP",
+        "applies_to": "assessment",
+        "display": "Amount exceeds the applicable category cap."
+      },
+      {
+        "code": "EXCLUDED_ITEM",
+        "applies_to": "assessment",
+        "display": "Itemized personal or non-reimbursable amount excluded before caps."
+      },
+      {
+        "code": "LATE_SUBMISSION",
+        "applies_to": "assessment",
+        "display": "Submitted more than 30 calendar days after trip end."
+      },
+      {
+        "code": "UNSUPPORTED_DESTINATION",
+        "applies_to": "assessment",
+        "display": "No policy rate is defined for this destination."
+      },
+      {
+        "code": "OUT_OF_SCOPE_CATEGORY",
+        "applies_to": "assessment",
+        "display": "Category is outside release 1 scope."
+      },
+      {
+        "code": "POTENTIAL_DUPLICATE",
+        "applies_to": "assessment",
+        "display": "Repeated issuer, receipt number and transaction date held for confirmation."
+      },
+      {
+        "code": "SUSPECTED_DUPLICATE",
+        "applies_to": "assessment",
+        "display": "Matching merchant, date and amount without a shared receipt number."
+      },
+      {
+        "code": "COMPONENT_TOTAL_MISMATCH",
+        "applies_to": "assessment",
+        "display": "Readable components do not reconcile with the payable total."
+      },
+      {
+        "code": "UNDOCUMENTED_FX",
+        "applies_to": "assessment",
+        "display": "A documented transaction-date rate is required before conversion."
+      },
+      {
+        "code": "POLICY_CONFLICT",
+        "applies_to": "assessment",
+        "display": "Equally authoritative applicable rules conflict."
+      },
+      {
+        "code": "PARTIAL_TRIP_COVERAGE",
+        "applies_to": "assessment",
+        "display": "Upload does not cover the whole trip; a subtotal is shown."
+      },
+      {
+        "code": "ROUNDING_RESIDUAL",
+        "applies_to": "assessment",
+        "display": "Signed difference between independently rounded components and the rounded total."
+      },
+      {
+        "code": "PROVISIONAL_PRICE",
+        "applies_to": "offer",
+        "display": "Taxes, mandatory fees, baggage or FX are unknown."
+      },
+      {
+        "code": "OFFER_STALE",
+        "applies_to": "offer",
+        "display": "Offer is older than the freshness window or explicitly expired."
+      },
+      {
+        "code": "CABIN_NOT_PERMITTED",
+        "applies_to": "offer",
+        "display": "Cabin above economy without a recorded exception."
+      },
+      {
+        "code": "OVER_CAP_OFFER",
+        "applies_to": "offer",
+        "display": "All-in offer price exceeds the applicable cap."
+      },
+      {
+        "code": "INVALID_AMOUNT",
+        "applies_to": "assessment",
+        "display": "An amount is negative, non-numeric or not finite."
+      },
+      {
+        "code": "MISSING_CRITICAL_FIELD",
+        "applies_to": "assessment",
+        "display": "A field needed for a final decision is missing or unreadable."
+      },
+      {
+        "code": "UNCONFIRMED_FIELDS",
+        "applies_to": "assessment",
+        "display": "Extracted fields have not been confirmed by the user."
+      },
+      {
+        "code": "MISSING_EVIDENCE",
+        "applies_to": "assessment",
+        "display": "Required supporting documents are not present."
+      },
+      {
+        "code": "INCONSISTENT_DATES",
+        "applies_to": "assessment",
+        "display": "Dates are missing, reversed or disagree with each other."
+      },
+      {
+        "code": "CURRENCY_MISMATCH",
+        "applies_to": "assessment",
+        "display": "Amounts sharing one cap have no documented common-currency basis."
+      },
+      {
+        "code": "UNKNOWN_GRADE",
+        "applies_to": "assessment",
+        "display": "Traveler grade is missing or not E or M."
+      },
+      {
+        "code": "NO_APPLICABLE_POLICY",
+        "applies_to": "assessment",
+        "display": "The service date is outside every published policy window."
+      },
+      {
+        "code": "INCOMPLETE_PRICE",
+        "applies_to": "assessment",
+        "display": "Taxes or mandatory fees are not confirmed inside the amount."
+      }
+    ],
+    "reason_code_note": "Machine-readable reason codes carry the decision; response prose is generated separately and is what human review grades. No golden case asserts on reasons, so adopting these codes does not change any expected answer.",
+    "missing_field_code": [
+      "grade",
+      "country",
+      "city",
+      "service_date",
+      "transaction_date",
+      "trip_start",
+      "trip_end",
+      "submitted_on",
+      "budget_inr",
+      "currency",
+      "amount",
+      "nights",
+      "checkin",
+      "checkout",
+      "origin",
+      "destination",
+      "departure_date",
+      "return_date",
+      "cabin",
+      "journey_id",
+      "receipt_id",
+      "merchant",
+      "payable_total",
+      "fx_rate",
+      "fx_reference",
+      "business_purpose",
+      "boarding_pass",
+      "itemized_invoice",
+      "transport_receipt",
+      "applicable_policy_version"
+    ],
+    "missing_field_note": "A clarification names the specific field using one of these codes plus prose. Never silently default a country, grade, currency or date.",
+    "error_code": [
+      {
+        "code": "UNAUTHENTICATED",
+        "http_status": 401,
+        "display": "No verified identity on the request."
+      },
+      {
+        "code": "FORBIDDEN_SESSION",
+        "http_status": 403,
+        "display": "Session or organization is outside the authorized scope."
+      },
+      {
+        "code": "FORBIDDEN_ROLE",
+        "http_status": 403,
+        "display": "The signed-in role is not allowed to perform this action."
+      },
+      {
+        "code": "NOT_FOUND",
+        "http_status": 404,
+        "display": "The route or the requested resource does not exist in the caller's scope."
+      },
+      {
+        "code": "INVALID_REQUEST",
+        "http_status": 400,
+        "display": "Malformed request body or query."
+      },
+      {
+        "code": "VALIDATION_FAILED",
+        "http_status": 422,
+        "display": "Structurally valid request that fails field or cross-field rules."
+      },
+      {
+        "code": "PAYLOAD_TOO_LARGE",
+        "http_status": 413,
+        "display": "Image exceeds 10 MiB or the five-image limit. Asserted by GT118."
+      },
+      {
+        "code": "UNSUPPORTED_MEDIA_TYPE",
+        "http_status": 415,
+        "display": "Upload is not a decodable JPEG or PNG. Asserted by GT117."
+      },
+      {
+        "code": "RATE_LIMITED",
+        "http_status": 429,
+        "display": "More than ten requests for one session inside a minute."
+      },
+      {
+        "code": "PROVIDER_UNAVAILABLE",
+        "http_status": 503,
+        "display": "Bounded provider failure after the permitted attempts. No invented data."
+      },
+      {
+        "code": "CAPABILITY_UNAVAILABLE",
+        "http_status": 503,
+        "display": "A required external capability (vision, embeddings, live search) is not configured."
+      },
+      {
+        "code": "DEADLINE_EXCEEDED",
+        "http_status": 504,
+        "display": "Total run deadline or call budget reached."
+      },
+      {
+        "code": "INTERNAL_ERROR",
+        "http_status": 500,
+        "display": "Unexpected server error. Details are logged with the request_id, never returned."
+      }
+    ],
+    "error_envelope": {
+      "shape": {
+        "error_code": "string from error_code",
+        "message": "human readable, no secrets and no other session data",
+        "field": "JSON pointer to the offending field or null",
+        "request_id": "string",
+        "retry_after_seconds": "integer or null"
+      },
+      "rule": "Domain clarification is a normal 200 response with missing_fields, not an error. Errors never echo provider credentials, file paths or another session record."
+    },
+    "role": [
+      "employee",
+      "admin"
+    ],
+    "library_authority": [
+      "policy",
+      "guidance"
+    ]
+  },
+  "change_control": "Adding a value to any vocabulary, country, city tier or FX fixture is a documented revision: update this file, docs/CHANGELOG.txt and any affected schema in the same change.",
+  "city_gazetteer": {
+    "purpose": "Maps common city names to package country codes so a question like \"hotel cap in Boston\" resolves without a model call. Not a policy table: it carries no caps. Unknown cities fall back to model interpretation or a clarification.",
+    "IN": [
+      "Bengaluru",
+      "Bangalore",
+      "Delhi",
+      "New Delhi",
+      "Mumbai",
+      "Bombay",
+      "Jaipur",
+      "Kochi",
+      "Cochin",
+      "Chennai",
+      "Hyderabad",
+      "Pune",
+      "Kolkata",
+      "Ahmedabad",
+      "Goa",
+      "Lucknow",
+      "Chandigarh",
+      "Noida",
+      "Gurugram",
+      "Gurgaon"
+    ],
+    "US": [
+      "New York",
+      "Boston",
+      "San Francisco",
+      "Chicago",
+      "Seattle",
+      "Los Angeles",
+      "Washington",
+      "Austin",
+      "Dallas",
+      "Atlanta"
+    ],
+    "UK": [
+      "London",
+      "Manchester",
+      "Edinburgh",
+      "Birmingham",
+      "Glasgow"
+    ],
+    "SG": [
+      "Singapore"
+    ]
+  },
+  "country_names": {
+    "purpose": "Words that name a supported country. Any other country name resolves to UNSUPPORTED through model interpretation.",
+    "IN": [
+      "India",
+      "Indian",
+      "domestic"
+    ],
+    "US": [
+      "United States",
+      "USA",
+      "U.S.",
+      "US",
+      "America"
+    ],
+    "UK": [
+      "United Kingdom",
+      "UK",
+      "Britain",
+      "England",
+      "Scotland",
+      "GB"
+    ],
+    "SG": [
+      "Singapore"
+    ]
+  }
+}

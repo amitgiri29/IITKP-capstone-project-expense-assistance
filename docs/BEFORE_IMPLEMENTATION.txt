@@ -1,0 +1,46 @@
+BEFORE IMPLEMENTATION
+Specification 1.6 | Documentation stage | 7 November 2026
+
+The repository contains specifications, fictional policy, test definitions and fixtures. It does not contain a working assistant. Do not start application implementation until the team explicitly chooses the first implementation milestone. Package validation is a documentation/data check, not an application test.
+
+1. Review the scope together (all six members, 45–60 minutes).
+Read SPECIFICATION.txt, the policy and GOLDEN_100.txt. Agree that the MVP is one adult traveler, one hotel room, India domestic travel and US/UK/Singapore international policy, hotel/flight/local transport, and search without booking. Use only synthetic data during the capstone. The policy dates are fixed in 2026; golden tests use a frozen clock, not today.
+Completion evidence: record scope acceptance in docs/DECISIONS.json. Keep meals, reimbursement approval and booking outside scope.
+
+2. Assign three pairs and a rotating reviewer.
+Pair A: policy, expected answers and evaluation. Pair B: deterministic tools and retrieval. Pair C: UI, providers and graph integration. One person owns dependency setup, one owns the final evaluation run, and one teammate from another pair reviews each pull request. Reserve shared schema changes for an agreed task rather than simultaneous edits.
+Completion evidence: fill the six member names and owners in docs/TEAM_ROLES.txt.
+
+2b. Review and sign off the reviewed rule registry (Pair A with Pair B, M0).
+Read policy_sources/rule_registry.json and policy_sources/reference_data.json against the policy text. The registry is the authority for every number the application calculates with, and twelve of its twenty-two caps have no boundary case in the golden suite, so check those against P02-P07 rather than against a test. Confirm the enumerations, the city tiers and aliases and the FX fixtures.
+Completion evidence: review_status in rule_registry.json becomes REVIEWED and the second reviewer is named in docs/DECISIONS.json under rule_registry_review. Until then no implementation milestone should rely on those numbers.
+
+3. Obtain the course API details before choosing an SDK.
+Record provider, endpoint, model ID/snapshot, API revision, authentication method, rate/token quotas, image support, structured output and tool-call behavior. Keep credentials in a local .env or a deployment secret store, never in the decision file. Confirm whether hosted embeddings and a separate hosted OCR service are permitted. No local model, fine tuning or larger-model fallback is assumed.
+Completion evidence: complete model/vision/embedding decisions in docs/DECISIONS.json. Missing model access blocks live model milestones, not document review. No vision plus no permitted OCR blocks the image requirement; transcription is only interim.
+
+4. Decide the policy corpus route and review expected answers.
+The supplied 20 sections are one starter policy, not 500–2000 distinct source documents. Ask the course whether a smaller corpus is acceptable or obtain distinct approved policy references and historical cases. Preserve authority and service-date metadata; historical examples cannot override rules. Do not pad document counts by copying or splitting the policy. Have Pair A and a second reviewer verify the fictional caps, FX, exclusions, dates and all test expectations; record disputed cases before changing them.
+Completion evidence: corpus decision and golden-suite review date. Gold answers, tests, screenshots and private claims must never enter shared RAG.
+
+5. Choose the live travel and FX path.
+Verify provider credentials, permitted regions, actual flight/hotel search access, sandbox/live distinction, costs and terms. Record API versions and what constitutes an all-in price. Start implementation later with DEMO fixtures; do not claim those are live inventory. If no live provider is available, flag the live-search milestone as unresolved to the course.
+Completion evidence: provider decision and a documented cost ceiling. No booking capability is needed.
+
+6. Choose the repository and access policy.
+Create an empty private repository on GitHub, GitLab or another approved Git host. Grant all six members access; decide whether course submission later needs a public copy. Select a project license only if the team/course authorizes it. Extract this package so README.md is at repository root. Follow docs/REPOSITORY_WORKFLOW.txt; no repository has been created or pushed by this documentation task.
+Completion evidence: repository URL and access check for every teammate. Credentials, real receipts and generated databases stay local.
+
+7. Agree on the development baseline, then perform setup as a separate task.
+The proposed baseline is CPython 3.14.10 with requirements-proposed.txt. Exact releases were checked; dependency resolution and provider integration have not been run. The first implementation/setup task must install in a clean virtual environment, run pip check and smoke checks, resolve conflicts visibly, then commit a tested lockfile. Teammates recreate it rather than choosing separate versions. Until that lock exists, checkout is reproducible for documentation and fixture validation only.
+Completion evidence: requirements.lock.txt, environment report and successful second-machine setup. No global package installs or GPU are required by the proposed design.
+
+8. Freeze evaluation and start one small milestone.
+Use core_100 for the required evaluation and supplemental_20 for extra regression coverage. Retain development/held_out labels; the package exposes all answer keys, so this is a team convention rather than a secret benchmark. Do not tune to held-out results. Separate tests into deterministic, mocked integration and model-backed runs. Assign a human reviewer for prose and citations. Capture latency, cost and failures; never record not-run cases as passes.
+Completion evidence: agreed protocol, baseline scope and explicit authorization to begin milestone M1 from docs/IMPLEMENTATION_BACKLOG.txt. Do not ask a coding assistant to build the entire application in one unreviewed change.
+
+9. Prepare LangSmith observability before the first model baseline.
+Pair C selects the workspace, region and one addressing mode, obtains credentials and sets quotas/retention; Pair A prepares the synthetic golden dataset mapping and review process. Read docs/LANGSMITH_PLAN.txt. Keep exports disabled until masking and routing are checked; this preparation does not authorize starting application implementation.
+
+10. Agree on the AWS hosting profile and Docker milestone.
+Use Docker packaging from M2, then a shared EC2/Compose demo. Confirm AWS account/region/budget, DNS and authentication, expected traffic, operations owner and recovery goals. Read AWS_DEPLOYMENT_PLAN.txt. Shared-host production is conditional on DEP01–DEP08 and an approved real policy; do not treat a deployed fictional-policy demo as real company reimbursement guidance. No AWS resources are created by these documents.

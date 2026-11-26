@@ -1,0 +1,30 @@
+flowchart TD
+    U[User question or receipt or travel request] --> I[Validate input and load authorized session]
+    I --> ROUTE{Route by request type}
+    ROUTE -->|Simple policy question| Q[Clarify applicability if needed]
+    Q --> QR[Shared policy retrieval service]
+    QR --> QA[Generate answer and validate citations]
+    QA --> OUT[Answer or clarification with evidence]
+    ROUTE -->|Receipt review| RP[Planner and executor]
+    RP --> PARSE[Vision or permitted OCR]
+    PARSE --> CONF[Pause for critical field confirmation]
+    CONF --> RR[Shared policy retrieval service]
+    RR --> CALC[Python policy and budget calculator]
+    CALC --> CRITIC[Critic checks evidence and tool outputs]
+    ROUTE -->|Travel recommendation| SP[Planner and executor]
+    SP --> API[Live flight or hotel search adapter]
+    API --> SR[Shared policy retrieval service]
+    SR --> FILTER[Python policy filtering and ranking]
+    FILTER --> CRITIC
+    CRITIC -->|Pass| OUT
+    CRITIC -->|One repair allowed| REPAIR[Executor repairs identified issue]
+    REPAIR --> CRITIC
+    CRITIC -->|Unresolved or missing facts| OUT
+    subgraph RETRIEVAL[Inside the shared retrieval service]
+        F[Access and applicability filters] --> BM[BM25 keyword matching]
+        F --> VS[Optional semantic vector search]
+        BM --> MERGE[Rank fusion and deduplication]
+        VS --> MERGE
+        MERGE --> RE[Bounded same model reranking]
+        RE --> EV[Evidence text and source IDs]
+    end

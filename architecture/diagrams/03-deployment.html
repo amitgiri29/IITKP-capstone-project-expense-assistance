@@ -1,0 +1,31 @@
+<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="diagram.css"><title>Deployment</title>
+<style>.lane{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.svc{display:flex;flex-direction:column;gap:10px}.port{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:#4F46E5}</style></head><body>
+<div class="head">
+  <div><h1>Deployment views</h1><p>The same code runs locally, in Docker Compose, and later on AWS. Only configuration changes.</p></div>
+  <div class="brand"><img src="/assets/brand/sparks-ai-lab-mark.png" alt="">SPARKS <span class="chip-ai">AI LAB</span></div>
+</div>
+<div class="lane">
+  <div class="layer"><div class="layer-h"><b>A · Local workstation</b><span class="tag t-app">In use</span></div>
+    <div class="svc">
+      <div class="box"><h4>Browser</h4><ul><li>http://127.0.0.1:8501</li></ul></div><div class="arrow"></div>
+      <div class="box"><h4>Streamlit UI <span class="port">:8501</span></h4><ul><li>python -m streamlit run ui/app.py</li></ul></div><div class="arrow"></div>
+      <div class="box"><h4>FastAPI <span class="port">:8000</span></h4><ul><li>python -m uvicorn api.main:app</li><li>SQLite + uploads in runtime/</li></ul></div><div class="arrow"></div>
+      <div class="box" style="border-color:#C7D2FE"><h4>Model provider</h4><ul><li><b>claude_code</b>: local Claude Code CLI, existing sign-in, tools disabled</li><li>→ Claude Sonnet 5.5</li></ul></div>
+    </div></div>
+  <div class="layer"><div class="layer-h"><b>B · Docker Compose</b><span class="tag t-app">Built &amp; verified</span></div>
+    <div class="svc">
+      <div class="box"><h4>ui container <span class="port">127.0.0.1:8501</span></h4><ul><li>Same image, Streamlit command</li><li>Talks to http://api:8000</li></ul></div><div class="arrow"></div>
+      <div class="box"><h4>api container <span class="port">127.0.0.1:8000</span></h4><ul><li>python:3.14.10-slim, digest-pinned</li><li>Non-root uid 10001, health check</li><li>No tests/ (answer keys) or .env in image</li></ul></div><div class="arrow"></div>
+      <div class="box"><h4>app-data volume</h4><ul><li>SQLite, uploads, traces</li></ul></div>
+      <div class="box" style="border-color:#C7D2FE"><h4>Model provider</h4><ul><li><b>anthropic</b> SDK with ANTHROPIC_API_KEY, or a hosted endpoint</li><li>Claude Code CLI is not available in containers</li></ul></div>
+    </div></div>
+  <div class="layer dash"><div class="layer-h"><b>C · AWS (planned, M8)</b><span class="tag t-data">Not deployed</span></div>
+    <div class="svc">
+      <div class="box dash"><h4>ALB + ACM + Cognito/OIDC</h4><ul><li>HTTPS only; verified identity</li></ul></div><div class="arrow"></div>
+      <div class="box dash"><h4>EC2 host · Docker Compose</h4><ul><li>Separate demo and production projects</li><li>Images from private ECR, promoted by digest</li></ul></div><div class="arrow"></div>
+      <div class="box dash"><h4>State &amp; secrets</h4><ul><li>Encrypted EBS for SQLite</li><li>Private S3 for receipts</li><li>Secrets Manager / IAM role</li></ul></div>
+      <div class="box dash"><h4>Gates</h4><ul><li>DEP01–DEP08 before production</li></ul></div>
+    </div></div>
+</div>
+<div class="foot"><span>Figure 3 · Architecture & Implementation Overview v1.1 · 10 November 2026</span><span>Model and travel providers are switched in config/settings.toml</span></div>
+</body></html>

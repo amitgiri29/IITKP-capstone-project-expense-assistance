@@ -1,0 +1,5 @@
+SPARKS AI Lab | FICTIONAL | Policy 1.1
+Rule P19 | Conflicts and abstention
+Effective 2026-01-01 to 2026-12-31
+
+Use the authoritative policy version applicable to the service date. A FAQ cannot override the policy. If equally authoritative applicable rules conflict, return HUMAN_REVIEW and identify the conflict. If evidence is missing, clarify or abstain rather than inventing a rate. Cite rule IDs and source sections for policy conclusions.

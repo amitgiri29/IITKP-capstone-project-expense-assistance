@@ -1,0 +1,263 @@
+SUPPLEMENTAL 20 TEST CASES
+Policy 1.1 | Specification 1.6 | Suite 1.1
+All cases NOT_RUN. Full protocol: docs/TEST_PROTOCOL.txt. Expected results are partial assertions.
+
+GT002 — Metro hotel manager
+Category policy_qa | Split held_out | Entry answer_policy_question
+Requirements: AC01
+Policy: P02
+Fixtures: inline
+Preconditions: {"policy_version": "1.1", "organization_id": "demo-company", "clock": "2026-11-15T12:00:00Z", "isolation": "Fresh authorized session and empty per-case cache unless setup explicitly supplies prior state.", "network": "No live travel or FX calls. Model calls are allowed only in designated model/image evaluation runs; injected model-output tests use a stub."}
+Setup: {}
+Input: {"message": "What is the hotel cap for grade M in Mumbai?", "service_date": "2026-11-15"}
+Expected: {"limit": 7000, "currency": "INR", "unit": "night"}
+Steps: 1. Load policy version 1.1 and this case’s authorized session; freeze the clock from preconditions. 2. Apply setup fixtures and explicit overrides, if any. Never fill deliberately missing inputs from defaults. 3. Call the named evaluation entrypoint with input and fixture paths only; do not pass expected results or rule answer keys to the assistant. 4. Capture normalized result, response text, citations and harness-observed tool/network/storage events. Apply automatic checks and human rubric; record actual results separately.
+Automatic checks: [{"path": "/result/limit", "operator": "decimal_equal", "expected": 7000}, {"path": "/result/currency", "operator": "equal", "expected": "INR"}, {"path": "/result/unit", "operator": "equal", "expected": "night"}]
+Human checks: [{"criterion": "Every policy claim is supported by an applicable cited passage; no unsupported facts, fabricated offers or approval claims."}]
+
+GT004 — Other city manager
+Category policy_qa | Split development | Entry answer_policy_question
+Requirements: AC01
+Policy: P02
+Fixtures: inline
+Preconditions: {"policy_version": "1.1", "organization_id": "demo-company", "clock": "2026-11-15T12:00:00Z", "isolation": "Fresh authorized session and empty per-case cache unless setup explicitly supplies prior state.", "network": "No live travel or FX calls. Model calls are allowed only in designated model/image evaluation runs; injected model-output tests use a stub."}
+Setup: {}
+Input: {"message": "What hotel limit applies to a manager in Kochi?", "service_date": "2026-11-15"}
+Expected: {"limit": 5000, "currency": "INR", "unit": "night"}
+Steps: 1. Load policy version 1.1 and this case’s authorized session; freeze the clock from preconditions. 2. Apply setup fixtures and explicit overrides, if any. Never fill deliberately missing inputs from defaults. 3. Call the named evaluation entrypoint with input and fixture paths only; do not pass expected results or rule answer keys to the assistant. 4. Capture normalized result, response text, citations and harness-observed tool/network/storage events. Apply automatic checks and human rubric; record actual results separately.
+Automatic checks: [{"path": "/result/limit", "operator": "decimal_equal", "expected": 5000}, {"path": "/result/currency", "operator": "equal", "expected": "INR"}, {"path": "/result/unit", "operator": "equal", "expected": "night"}]
+Human checks: [{"criterion": "Every policy claim is supported by an applicable cited passage; no unsupported facts, fabricated offers or approval claims."}]
+
+GT006 — US hotel manager
+Category policy_qa | Split development | Entry answer_policy_question
+Requirements: AC01
+Policy: P03
+Fixtures: inline
+Preconditions: {"policy_version": "1.1", "organization_id": "demo-company", "clock": "2026-11-15T12:00:00Z", "isolation": "Fresh authorized session and empty per-case cache unless setup explicitly supplies prior state.", "network": "No live travel or FX calls. Model calls are allowed only in designated model/image evaluation runs; injected model-output tests use a stub."}
+Setup: {}
+Input: {"message": "What is the manager hotel cap in Boston?", "service_date": "2026-11-15"}
+Expected: {"limit": 250, "currency": "USD", "unit": "night"}
+Steps: 1. Load policy version 1.1 and this case’s authorized session; freeze the clock from preconditions. 2. Apply setup fixtures and explicit overrides, if any. Never fill deliberately missing inputs from defaults. 3. Call the named evaluation entrypoint with input and fixture paths only; do not pass expected results or rule answer keys to the assistant. 4. Capture normalized result, response text, citations and harness-observed tool/network/storage events. Apply automatic checks and human rubric; record actual results separately.
+Automatic checks: [{"path": "/result/limit", "operator": "decimal_equal", "expected": 250}, {"path": "/result/currency", "operator": "equal", "expected": "USD"}, {"path": "/result/unit", "operator": "equal", "expected": "night"}]
+Human checks: [{"criterion": "Every policy claim is supported by an applicable cited passage; no unsupported facts, fabricated offers or approval claims."}]
+
+GT008 — UK hotel manager
+Category policy_qa | Split held_out | Entry answer_policy_question
+Requirements: AC01
+Policy: P03
+Fixtures: inline
+Preconditions: {"policy_version": "1.1", "organization_id": "demo-company", "clock": "2026-11-15T12:00:00Z", "isolation": "Fresh authorized session and empty per-case cache unless setup explicitly supplies prior state.", "network": "No live travel or FX calls. Model calls are allowed only in designated model/image evaluation runs; injected model-output tests use a stub."}
+Setup: {}
+Input: {"message": "What is the M hotel cap in London?", "service_date": "2026-11-15"}
+Expected: {"limit": 210, "currency": "GBP", "unit": "night"}
+Steps: 1. Load policy version 1.1 and this case’s authorized session; freeze the clock from preconditions. 2. Apply setup fixtures and explicit overrides, if any. Never fill deliberately missing inputs from defaults. 3. Call the named evaluation entrypoint with input and fixture paths only; do not pass expected results or rule answer keys to the assistant. 4. Capture normalized result, response text, citations and harness-observed tool/network/storage events. Apply automatic checks and human rubric; record actual results separately.
+Automatic checks: [{"path": "/result/limit", "operator": "decimal_equal", "expected": 210}, {"path": "/result/currency", "operator": "equal", "expected": "GBP"}, {"path": "/result/unit", "operator": "equal", "expected": "night"}]
+Human checks: [{"criterion": "Every policy claim is supported by an applicable cited passage; no unsupported facts, fabricated offers or approval claims."}]
+
+GT010 — Singapore hotel manager
+Category policy_qa | Split development | Entry answer_policy_question
+Requirements: AC01
+Policy: P03
+Fixtures: inline
+Preconditions: {"policy_version": "1.1", "organization_id": "demo-company", "clock": "2026-11-15T12:00:00Z", "isolation": "Fresh authorized session and empty per-case cache unless setup explicitly supplies prior state.", "network": "No live travel or FX calls. Model calls are allowed only in designated model/image evaluation runs; injected model-output tests use a stub."}
+Setup: {}
+Input: {"message": "What is the M hotel cap in Singapore?", "service_date": "2026-11-15"}
+Expected: {"limit": 300, "currency": "SGD", "unit": "night"}
+Steps: 1. Load policy version 1.1 and this case’s authorized session; freeze the clock from preconditions. 2. Apply setup fixtures and explicit overrides, if any. Never fill deliberately missing inputs from defaults. 3. Call the named evaluation entrypoint with input and fixture paths only; do not pass expected results or rule answer keys to the assistant. 4. Capture normalized result, response text, citations and harness-observed tool/network/storage events. Apply automatic checks and human rubric; record actual results separately.
+Automatic checks: [{"path": "/result/limit", "operator": "decimal_equal", "expected": 300}, {"path": "/result/currency", "operator": "equal", "expected": "SGD"}, {"path": "/result/unit", "operator": "equal", "expected": "night"}]
+Human checks: [{"criterion": "Every policy claim is supported by an applicable cited passage; no unsupported facts, fabricated offers or approval claims."}]
+
+GT012 — Domestic flight manager
+Category policy_qa | Split held_out | Entry answer_policy_question
+Requirements: AC01
+Policy: P04
+Fixtures: inline
+Preconditions: {"policy_version": "1.1", "organization_id": "demo-company", "clock": "2026-11-15T12:00:00Z", "isolation": "Fresh authorized session and empty per-case cache unless setup explicitly supplies prior state.", "network": "No live travel or FX calls. Model calls are allowed only in designated model/image evaluation runs; injected model-output tests use a stub."}
+Setup: {}
+Input: {"message": "What is the M one-way domestic flight cap?", "service_date": "2026-11-15"}
+Expected: {"limit": 18000, "currency": "INR", "cabin": "economy"}
+Steps: 1. Load policy version 1.1 and this case’s authorized session; freeze the clock from preconditions. 2. Apply setup fixtures and explicit overrides, if any. Never fill deliberately missing inputs from defaults. 3. Call the named evaluation entrypoint with input and fixture paths only; do not pass expected results or rule answer keys to the assistant. 4. Capture normalized result, response text, citations and harness-observed tool/network/storage events. Apply automatic checks and human rubric; record actual results separately.
+Automatic checks: [{"path": "/result/limit", "operator": "decimal_equal", "expected": 18000}, {"path": "/result/currency", "operator": "equal", "expected": "INR"}, {"path": "/result/cabin", "operator": "equal", "expected": "economy"}]
+Human checks: [{"criterion": "Every policy claim is supported by an applicable cited passage; no unsupported facts, fabricated offers or approval claims."}]
+
+GT014 — International flight manager
+Category policy_qa | Split development | Entry answer_policy_question
+Requirements: AC01
+Policy: P05
+Fixtures: inline
+Preconditions: {"policy_version": "1.1", "organization_id": "demo-company", "clock": "2026-11-15T12:00:00Z", "isolation": "Fresh authorized session and empty per-case cache unless setup explicitly supplies prior state.", "network": "No live travel or FX calls. Model calls are allowed only in designated model/image evaluation runs; injected model-output tests use a stub."}
+Setup: {}
+Input: {"message": "What is the M international one-way flight cap?", "service_date": "2026-11-15"}
+Expected: {"limit": 120000, "currency": "INR", "cabin": "economy"}
+Steps: 1. Load policy version 1.1 and this case’s authorized session; freeze the clock from preconditions. 2. Apply setup fixtures and explicit overrides, if any. Never fill deliberately missing inputs from defaults. 3. Call the named evaluation entrypoint with input and fixture paths only; do not pass expected results or rule answer keys to the assistant. 4. Capture normalized result, response text, citations and harness-observed tool/network/storage events. Apply automatic checks and human rubric; record actual results separately.
+Automatic checks: [{"path": "/result/limit", "operator": "decimal_equal", "expected": 120000}, {"path": "/result/currency", "operator": "equal", "expected": "INR"}, {"path": "/result/cabin", "operator": "equal", "expected": "economy"}]
+Human checks: [{"criterion": "Every policy claim is supported by an applicable cited passage; no unsupported facts, fabricated offers or approval claims."}]
+
+GT021 — Taxes inside hotel cap
+Category policy_qa | Split development | Entry answer_policy_question
+Requirements: AC01
+Policy: P02, P03
+Fixtures: inline
+Preconditions: {"policy_version": "1.1", "organization_id": "demo-company", "clock": "2026-11-15T12:00:00Z", "isolation": "Fresh authorized session and empty per-case cache unless setup explicitly supplies prior state.", "network": "No live travel or FX calls. Model calls are allowed only in designated model/image evaluation runs; injected model-output tests use a stub."}
+Setup: {}
+Input: {"message": "Are hotel taxes extra above the room limit?", "service_date": "2026-11-15"}
+Expected: {"taxes_inside_cap": true}
+Steps: 1. Load policy version 1.1 and this case’s authorized session; freeze the clock from preconditions. 2. Apply setup fixtures and explicit overrides, if any. Never fill deliberately missing inputs from defaults. 3. Call the named evaluation entrypoint with input and fixture paths only; do not pass expected results or rule answer keys to the assistant. 4. Capture normalized result, response text, citations and harness-observed tool/network/storage events. Apply automatic checks and human rubric; record actual results separately.
+Automatic checks: [{"path": "/result/taxes_inside_cap", "operator": "equal", "expected": true}]
+Human checks: [{"criterion": "Every policy claim is supported by an applicable cited passage; no unsupported facts, fabricated offers or approval claims."}]
+
+GT049 — flight_int_E below cap
+Category calculation | Split development | Entry assess_confirmed_claim
+Requirements: AC03, AC04, AC11
+Policy: P05, P11, P12, P20
+Fixtures: inline
+Preconditions: {"policy_version": "1.1", "organization_id": "demo-company", "clock": "2026-11-15T12:00:00Z", "isolation": "Fresh authorized session and empty per-case cache unless setup explicitly supplies prior state.", "network": "No live travel or FX calls. Model calls are allowed only in designated model/image evaluation runs; injected model-output tests use a stub."}
+Setup: {}
+Input: {"category": "flight", "country": "US", "city": "New York", "grade": "E", "currency": "INR", "amount": 64000.0, "service_date": "2026-11-15", "submitted_on": "2026-11-16", "trip_end": "2026-11-15", "budget_inr": 80000.0, "coverage_complete": true, "user_confirmed": true, "required_documents_present": true, "fx_rate": 1, "fx_reference": null, "nights": 1, "cabin": "economy", "journeys": 1, "taxes_and_fees_included": true, "baggage_20kg_included": true, "business_purpose": true, "transaction_date": "2026-11-15"}
+Expected: {"claimed_total_inr": 64000.0, "eligible_total_inr": 64000.0, "excluded_total_inr": 0, "over_cap_total_inr": 0.0, "budget_status": "WITHIN_BUDGET", "compliance_status": "WITHIN_POLICY", "readiness": "READY_FOR_REVIEW"}
+Steps: 1. Load policy version 1.1 and this case’s authorized session; freeze the clock from preconditions. 2. Apply setup fixtures and explicit overrides, if any. Never fill deliberately missing inputs from defaults. 3. Call the named evaluation entrypoint with input and fixture paths only; do not pass expected results or rule answer keys to the assistant. 4. Capture normalized result, response text, citations and harness-observed tool/network/storage events. Apply automatic checks and human rubric; record actual results separately.
+Automatic checks: [{"path": "/result/claimed_total_inr", "operator": "decimal_equal", "expected": 64000.0}, {"path": "/result/eligible_total_inr", "operator": "decimal_equal", "expected": 64000.0}, {"path": "/result/excluded_total_inr", "operator": "decimal_equal", "expected": 0}, {"path": "/result/over_cap_total_inr", "operator": "decimal_equal", "expected": 0.0}, {"path": "/result/budget_status", "operator": "equal", "expected": "WITHIN_BUDGET"}, {"path": "/result/compliance_status", "operator": "equal", "expected": "WITHIN_POLICY"}, {"path": "/result/readiness", "operator": "equal", "expected": "READY_FOR_REVIEW"}]
+Human checks: [{"criterion": "Every policy claim is supported by an applicable cited passage; no unsupported facts, fabricated offers or approval claims."}]
+
+GT050 — flight_int_E at cap
+Category calculation | Split development | Entry assess_confirmed_claim
+Requirements: AC03, AC04, AC11
+Policy: P05, P11, P12, P20
+Fixtures: inline
+Preconditions: {"policy_version": "1.1", "organization_id": "demo-company", "clock": "2026-11-15T12:00:00Z", "isolation": "Fresh authorized session and empty per-case cache unless setup explicitly supplies prior state.", "network": "No live travel or FX calls. Model calls are allowed only in designated model/image evaluation runs; injected model-output tests use a stub."}
+Setup: {}
+Input: {"category": "flight", "country": "US", "city": "New York", "grade": "E", "currency": "INR", "amount": 80000, "service_date": "2026-11-15", "submitted_on": "2026-11-16", "trip_end": "2026-11-15", "budget_inr": 80000.0, "coverage_complete": true, "user_confirmed": true, "required_documents_present": true, "fx_rate": 1, "fx_reference": null, "nights": 1, "cabin": "economy", "journeys": 1, "taxes_and_fees_included": true, "baggage_20kg_included": true, "business_purpose": true, "transaction_date": "2026-11-15"}
+Expected: {"claimed_total_inr": 80000.0, "eligible_total_inr": 80000.0, "excluded_total_inr": 0, "over_cap_total_inr": 0.0, "budget_status": "WITHIN_BUDGET", "compliance_status": "WITHIN_POLICY", "readiness": "READY_FOR_REVIEW"}
+Steps: 1. Load policy version 1.1 and this case’s authorized session; freeze the clock from preconditions. 2. Apply setup fixtures and explicit overrides, if any. Never fill deliberately missing inputs from defaults. 3. Call the named evaluation entrypoint with input and fixture paths only; do not pass expected results or rule answer keys to the assistant. 4. Capture normalized result, response text, citations and harness-observed tool/network/storage events. Apply automatic checks and human rubric; record actual results separately.
+Automatic checks: [{"path": "/result/claimed_total_inr", "operator": "decimal_equal", "expected": 80000.0}, {"path": "/result/eligible_total_inr", "operator": "decimal_equal", "expected": 80000.0}, {"path": "/result/excluded_total_inr", "operator": "decimal_equal", "expected": 0}, {"path": "/result/over_cap_total_inr", "operator": "decimal_equal", "expected": 0.0}, {"path": "/result/budget_status", "operator": "equal", "expected": "WITHIN_BUDGET"}, {"path": "/result/compliance_status", "operator": "equal", "expected": "WITHIN_POLICY"}, {"path": "/result/readiness", "operator": "equal", "expected": "READY_FOR_REVIEW"}]
+Human checks: [{"criterion": "Every policy claim is supported by an applicable cited passage; no unsupported facts, fabricated offers or approval claims."}]
+
+GT051 — flight_int_E above cap
+Category calculation | Split development | Entry assess_confirmed_claim
+Requirements: AC03, AC04, AC11
+Policy: P05, P11, P12, P20
+Fixtures: inline
+Preconditions: {"policy_version": "1.1", "organization_id": "demo-company", "clock": "2026-11-15T12:00:00Z", "isolation": "Fresh authorized session and empty per-case cache unless setup explicitly supplies prior state.", "network": "No live travel or FX calls. Model calls are allowed only in designated model/image evaluation runs; injected model-output tests use a stub."}
+Setup: {}
+Input: {"category": "flight", "country": "US", "city": "New York", "grade": "E", "currency": "INR", "amount": 80001, "service_date": "2026-11-15", "submitted_on": "2026-11-16", "trip_end": "2026-11-15", "budget_inr": 80000.0, "coverage_complete": true, "user_confirmed": true, "required_documents_present": true, "fx_rate": 1, "fx_reference": null, "nights": 1, "cabin": "economy", "journeys": 1, "taxes_and_fees_included": true, "baggage_20kg_included": true, "business_purpose": true, "transaction_date": "2026-11-15"}
+Expected: {"claimed_total_inr": 80001.0, "eligible_total_inr": 80000.0, "excluded_total_inr": 0, "over_cap_total_inr": 1.0, "budget_status": "OVER_BUDGET", "compliance_status": "EXCEEDS_POLICY", "readiness": "HUMAN_REVIEW"}
+Steps: 1. Load policy version 1.1 and this case’s authorized session; freeze the clock from preconditions. 2. Apply setup fixtures and explicit overrides, if any. Never fill deliberately missing inputs from defaults. 3. Call the named evaluation entrypoint with input and fixture paths only; do not pass expected results or rule answer keys to the assistant. 4. Capture normalized result, response text, citations and harness-observed tool/network/storage events. Apply automatic checks and human rubric; record actual results separately.
+Automatic checks: [{"path": "/result/claimed_total_inr", "operator": "decimal_equal", "expected": 80001.0}, {"path": "/result/eligible_total_inr", "operator": "decimal_equal", "expected": 80000.0}, {"path": "/result/excluded_total_inr", "operator": "decimal_equal", "expected": 0}, {"path": "/result/over_cap_total_inr", "operator": "decimal_equal", "expected": 1.0}, {"path": "/result/budget_status", "operator": "equal", "expected": "OVER_BUDGET"}, {"path": "/result/compliance_status", "operator": "equal", "expected": "EXCEEDS_POLICY"}, {"path": "/result/readiness", "operator": "equal", "expected": "HUMAN_REVIEW"}]
+Human checks: [{"criterion": "Every policy claim is supported by an applicable cited passage; no unsupported facts, fabricated offers or approval claims."}]
+
+GT052 — local_IN_E below cap
+Category calculation | Split development | Entry assess_confirmed_claim
+Requirements: AC03, AC04, AC11
+Policy: P06, P11, P12, P20
+Fixtures: inline
+Preconditions: {"policy_version": "1.1", "organization_id": "demo-company", "clock": "2026-11-15T12:00:00Z", "isolation": "Fresh authorized session and empty per-case cache unless setup explicitly supplies prior state.", "network": "No live travel or FX calls. Model calls are allowed only in designated model/image evaluation runs; injected model-output tests use a stub."}
+Setup: {}
+Input: {"category": "local_transport", "country": "IN", "city": "Bengaluru", "grade": "E", "currency": "INR", "amount": 1200.0, "service_date": "2026-11-15", "submitted_on": "2026-11-16", "trip_end": "2026-11-15", "budget_inr": 1500.0, "coverage_complete": true, "user_confirmed": true, "required_documents_present": true, "fx_rate": 1, "fx_reference": null, "nights": 1, "cabin": "economy", "journeys": 1, "taxes_and_fees_included": true, "baggage_20kg_included": true, "business_purpose": true, "transaction_date": "2026-11-15"}
+Expected: {"claimed_total_inr": 1200.0, "eligible_total_inr": 1200.0, "excluded_total_inr": 0, "over_cap_total_inr": 0.0, "budget_status": "WITHIN_BUDGET", "compliance_status": "WITHIN_POLICY", "readiness": "READY_FOR_REVIEW"}
+Steps: 1. Load policy version 1.1 and this case’s authorized session; freeze the clock from preconditions. 2. Apply setup fixtures and explicit overrides, if any. Never fill deliberately missing inputs from defaults. 3. Call the named evaluation entrypoint with input and fixture paths only; do not pass expected results or rule answer keys to the assistant. 4. Capture normalized result, response text, citations and harness-observed tool/network/storage events. Apply automatic checks and human rubric; record actual results separately.
+Automatic checks: [{"path": "/result/claimed_total_inr", "operator": "decimal_equal", "expected": 1200.0}, {"path": "/result/eligible_total_inr", "operator": "decimal_equal", "expected": 1200.0}, {"path": "/result/excluded_total_inr", "operator": "decimal_equal", "expected": 0}, {"path": "/result/over_cap_total_inr", "operator": "decimal_equal", "expected": 0.0}, {"path": "/result/budget_status", "operator": "equal", "expected": "WITHIN_BUDGET"}, {"path": "/result/compliance_status", "operator": "equal", "expected": "WITHIN_POLICY"}, {"path": "/result/readiness", "operator": "equal", "expected": "READY_FOR_REVIEW"}]
+Human checks: [{"criterion": "Every policy claim is supported by an applicable cited passage; no unsupported facts, fabricated offers or approval claims."}]
+
+GT053 — local_IN_E at cap
+Category calculation | Split development | Entry assess_confirmed_claim
+Requirements: AC03, AC04, AC11
+Policy: P06, P11, P12, P20
+Fixtures: inline
+Preconditions: {"policy_version": "1.1", "organization_id": "demo-company", "clock": "2026-11-15T12:00:00Z", "isolation": "Fresh authorized session and empty per-case cache unless setup explicitly supplies prior state.", "network": "No live travel or FX calls. Model calls are allowed only in designated model/image evaluation runs; injected model-output tests use a stub."}
+Setup: {}
+Input: {"category": "local_transport", "country": "IN", "city": "Bengaluru", "grade": "E", "currency": "INR", "amount": 1500, "service_date": "2026-11-15", "submitted_on": "2026-11-16", "trip_end": "2026-11-15", "budget_inr": 1500.0, "coverage_complete": true, "user_confirmed": true, "required_documents_present": true, "fx_rate": 1, "fx_reference": null, "nights": 1, "cabin": "economy", "journeys": 1, "taxes_and_fees_included": true, "baggage_20kg_included": true, "business_purpose": true, "transaction_date": "2026-11-15"}
+Expected: {"claimed_total_inr": 1500.0, "eligible_total_inr": 1500.0, "excluded_total_inr": 0, "over_cap_total_inr": 0.0, "budget_status": "WITHIN_BUDGET", "compliance_status": "WITHIN_POLICY", "readiness": "READY_FOR_REVIEW"}
+Steps: 1. Load policy version 1.1 and this case’s authorized session; freeze the clock from preconditions. 2. Apply setup fixtures and explicit overrides, if any. Never fill deliberately missing inputs from defaults. 3. Call the named evaluation entrypoint with input and fixture paths only; do not pass expected results or rule answer keys to the assistant. 4. Capture normalized result, response text, citations and harness-observed tool/network/storage events. Apply automatic checks and human rubric; record actual results separately.
+Automatic checks: [{"path": "/result/claimed_total_inr", "operator": "decimal_equal", "expected": 1500.0}, {"path": "/result/eligible_total_inr", "operator": "decimal_equal", "expected": 1500.0}, {"path": "/result/excluded_total_inr", "operator": "decimal_equal", "expected": 0}, {"path": "/result/over_cap_total_inr", "operator": "decimal_equal", "expected": 0.0}, {"path": "/result/budget_status", "operator": "equal", "expected": "WITHIN_BUDGET"}, {"path": "/result/compliance_status", "operator": "equal", "expected": "WITHIN_POLICY"}, {"path": "/result/readiness", "operator": "equal", "expected": "READY_FOR_REVIEW"}]
+Human checks: [{"criterion": "Every policy claim is supported by an applicable cited passage; no unsupported facts, fabricated offers or approval claims."}]
+
+GT054 — local_IN_E above cap
+Category calculation | Split development | Entry assess_confirmed_claim
+Requirements: AC03, AC04, AC11
+Policy: P06, P11, P12, P20
+Fixtures: inline
+Preconditions: {"policy_version": "1.1", "organization_id": "demo-company", "clock": "2026-11-15T12:00:00Z", "isolation": "Fresh authorized session and empty per-case cache unless setup explicitly supplies prior state.", "network": "No live travel or FX calls. Model calls are allowed only in designated model/image evaluation runs; injected model-output tests use a stub."}
+Setup: {}
+Input: {"category": "local_transport", "country": "IN", "city": "Bengaluru", "grade": "E", "currency": "INR", "amount": 1501, "service_date": "2026-11-15", "submitted_on": "2026-11-16", "trip_end": "2026-11-15", "budget_inr": 1500.0, "coverage_complete": true, "user_confirmed": true, "required_documents_present": true, "fx_rate": 1, "fx_reference": null, "nights": 1, "cabin": "economy", "journeys": 1, "taxes_and_fees_included": true, "baggage_20kg_included": true, "business_purpose": true, "transaction_date": "2026-11-15"}
+Expected: {"claimed_total_inr": 1501.0, "eligible_total_inr": 1500.0, "excluded_total_inr": 0, "over_cap_total_inr": 1.0, "budget_status": "OVER_BUDGET", "compliance_status": "EXCEEDS_POLICY", "readiness": "HUMAN_REVIEW"}
+Steps: 1. Load policy version 1.1 and this case’s authorized session; freeze the clock from preconditions. 2. Apply setup fixtures and explicit overrides, if any. Never fill deliberately missing inputs from defaults. 3. Call the named evaluation entrypoint with input and fixture paths only; do not pass expected results or rule answer keys to the assistant. 4. Capture normalized result, response text, citations and harness-observed tool/network/storage events. Apply automatic checks and human rubric; record actual results separately.
+Automatic checks: [{"path": "/result/claimed_total_inr", "operator": "decimal_equal", "expected": 1501.0}, {"path": "/result/eligible_total_inr", "operator": "decimal_equal", "expected": 1500.0}, {"path": "/result/excluded_total_inr", "operator": "decimal_equal", "expected": 0}, {"path": "/result/over_cap_total_inr", "operator": "decimal_equal", "expected": 1.0}, {"path": "/result/budget_status", "operator": "equal", "expected": "OVER_BUDGET"}, {"path": "/result/compliance_status", "operator": "equal", "expected": "EXCEEDS_POLICY"}, {"path": "/result/readiness", "operator": "equal", "expected": "HUMAN_REVIEW"}]
+Human checks: [{"criterion": "Every policy claim is supported by an applicable cited passage; no unsupported facts, fabricated offers or approval claims."}]
+
+GT055 — local_US_M below cap
+Category calculation | Split development | Entry assess_confirmed_claim
+Requirements: AC03, AC04, AC11
+Policy: P07, P11, P12, P20
+Fixtures: inline
+Preconditions: {"policy_version": "1.1", "organization_id": "demo-company", "clock": "2026-11-15T12:00:00Z", "isolation": "Fresh authorized session and empty per-case cache unless setup explicitly supplies prior state.", "network": "No live travel or FX calls. Model calls are allowed only in designated model/image evaluation runs; injected model-output tests use a stub."}
+Setup: {}
+Input: {"category": "local_transport", "country": "US", "city": "Boston", "grade": "M", "currency": "USD", "amount": 80.0, "service_date": "2026-11-15", "submitted_on": "2026-11-16", "trip_end": "2026-11-15", "budget_inr": 8400.0, "coverage_complete": true, "user_confirmed": true, "required_documents_present": true, "fx_rate": 84, "fx_reference": "FX-DEMO-2026", "nights": 1, "cabin": "economy", "journeys": 1, "taxes_and_fees_included": true, "baggage_20kg_included": true, "business_purpose": true, "transaction_date": "2026-11-15"}
+Expected: {"claimed_total_inr": 6720.0, "eligible_total_inr": 6720.0, "excluded_total_inr": 0, "over_cap_total_inr": 0.0, "budget_status": "WITHIN_BUDGET", "compliance_status": "WITHIN_POLICY", "readiness": "READY_FOR_REVIEW"}
+Steps: 1. Load policy version 1.1 and this case’s authorized session; freeze the clock from preconditions. 2. Apply setup fixtures and explicit overrides, if any. Never fill deliberately missing inputs from defaults. 3. Call the named evaluation entrypoint with input and fixture paths only; do not pass expected results or rule answer keys to the assistant. 4. Capture normalized result, response text, citations and harness-observed tool/network/storage events. Apply automatic checks and human rubric; record actual results separately.
+Automatic checks: [{"path": "/result/claimed_total_inr", "operator": "decimal_equal", "expected": 6720.0}, {"path": "/result/eligible_total_inr", "operator": "decimal_equal", "expected": 6720.0}, {"path": "/result/excluded_total_inr", "operator": "decimal_equal", "expected": 0}, {"path": "/result/over_cap_total_inr", "operator": "decimal_equal", "expected": 0.0}, {"path": "/result/budget_status", "operator": "equal", "expected": "WITHIN_BUDGET"}, {"path": "/result/compliance_status", "operator": "equal", "expected": "WITHIN_POLICY"}, {"path": "/result/readiness", "operator": "equal", "expected": "READY_FOR_REVIEW"}]
+Human checks: [{"criterion": "Every policy claim is supported by an applicable cited passage; no unsupported facts, fabricated offers or approval claims."}]
+
+GT056 — local_US_M at cap
+Category calculation | Split development | Entry assess_confirmed_claim
+Requirements: AC03, AC04, AC11
+Policy: P07, P11, P12, P20
+Fixtures: inline
+Preconditions: {"policy_version": "1.1", "organization_id": "demo-company", "clock": "2026-11-15T12:00:00Z", "isolation": "Fresh authorized session and empty per-case cache unless setup explicitly supplies prior state.", "network": "No live travel or FX calls. Model calls are allowed only in designated model/image evaluation runs; injected model-output tests use a stub."}
+Setup: {}
+Input: {"category": "local_transport", "country": "US", "city": "Boston", "grade": "M", "currency": "USD", "amount": 100, "service_date": "2026-11-15", "submitted_on": "2026-11-16", "trip_end": "2026-11-15", "budget_inr": 8400.0, "coverage_complete": true, "user_confirmed": true, "required_documents_present": true, "fx_rate": 84, "fx_reference": "FX-DEMO-2026", "nights": 1, "cabin": "economy", "journeys": 1, "taxes_and_fees_included": true, "baggage_20kg_included": true, "business_purpose": true, "transaction_date": "2026-11-15"}
+Expected: {"claimed_total_inr": 8400.0, "eligible_total_inr": 8400.0, "excluded_total_inr": 0, "over_cap_total_inr": 0.0, "budget_status": "WITHIN_BUDGET", "compliance_status": "WITHIN_POLICY", "readiness": "READY_FOR_REVIEW"}
+Steps: 1. Load policy version 1.1 and this case’s authorized session; freeze the clock from preconditions. 2. Apply setup fixtures and explicit overrides, if any. Never fill deliberately missing inputs from defaults. 3. Call the named evaluation entrypoint with input and fixture paths only; do not pass expected results or rule answer keys to the assistant. 4. Capture normalized result, response text, citations and harness-observed tool/network/storage events. Apply automatic checks and human rubric; record actual results separately.
+Automatic checks: [{"path": "/result/claimed_total_inr", "operator": "decimal_equal", "expected": 8400.0}, {"path": "/result/eligible_total_inr", "operator": "decimal_equal", "expected": 8400.0}, {"path": "/result/excluded_total_inr", "operator": "decimal_equal", "expected": 0}, {"path": "/result/over_cap_total_inr", "operator": "decimal_equal", "expected": 0.0}, {"path": "/result/budget_status", "operator": "equal", "expected": "WITHIN_BUDGET"}, {"path": "/result/compliance_status", "operator": "equal", "expected": "WITHIN_POLICY"}, {"path": "/result/readiness", "operator": "equal", "expected": "READY_FOR_REVIEW"}]
+Human checks: [{"criterion": "Every policy claim is supported by an applicable cited passage; no unsupported facts, fabricated offers or approval claims."}]
+
+GT057 — local_US_M above cap
+Category calculation | Split development | Entry assess_confirmed_claim
+Requirements: AC03, AC04, AC11
+Policy: P07, P11, P12, P20
+Fixtures: inline
+Preconditions: {"policy_version": "1.1", "organization_id": "demo-company", "clock": "2026-11-15T12:00:00Z", "isolation": "Fresh authorized session and empty per-case cache unless setup explicitly supplies prior state.", "network": "No live travel or FX calls. Model calls are allowed only in designated model/image evaluation runs; injected model-output tests use a stub."}
+Setup: {}
+Input: {"category": "local_transport", "country": "US", "city": "Boston", "grade": "M", "currency": "USD", "amount": 101, "service_date": "2026-11-15", "submitted_on": "2026-11-16", "trip_end": "2026-11-15", "budget_inr": 8400.0, "coverage_complete": true, "user_confirmed": true, "required_documents_present": true, "fx_rate": 84, "fx_reference": "FX-DEMO-2026", "nights": 1, "cabin": "economy", "journeys": 1, "taxes_and_fees_included": true, "baggage_20kg_included": true, "business_purpose": true, "transaction_date": "2026-11-15"}
+Expected: {"claimed_total_inr": 8484.0, "eligible_total_inr": 8400.0, "excluded_total_inr": 0, "over_cap_total_inr": 84.0, "budget_status": "OVER_BUDGET", "compliance_status": "EXCEEDS_POLICY", "readiness": "HUMAN_REVIEW"}
+Steps: 1. Load policy version 1.1 and this case’s authorized session; freeze the clock from preconditions. 2. Apply setup fixtures and explicit overrides, if any. Never fill deliberately missing inputs from defaults. 3. Call the named evaluation entrypoint with input and fixture paths only; do not pass expected results or rule answer keys to the assistant. 4. Capture normalized result, response text, citations and harness-observed tool/network/storage events. Apply automatic checks and human rubric; record actual results separately.
+Automatic checks: [{"path": "/result/claimed_total_inr", "operator": "decimal_equal", "expected": 8484.0}, {"path": "/result/eligible_total_inr", "operator": "decimal_equal", "expected": 8400.0}, {"path": "/result/excluded_total_inr", "operator": "decimal_equal", "expected": 0}, {"path": "/result/over_cap_total_inr", "operator": "decimal_equal", "expected": 84.0}, {"path": "/result/budget_status", "operator": "equal", "expected": "OVER_BUDGET"}, {"path": "/result/compliance_status", "operator": "equal", "expected": "EXCEEDS_POLICY"}, {"path": "/result/readiness", "operator": "equal", "expected": "HUMAN_REVIEW"}]
+Human checks: [{"criterion": "Every policy claim is supported by an applicable cited passage; no unsupported facts, fabricated offers or approval claims."}]
+
+GT058 — local_SG_E below cap
+Category calculation | Split held_out | Entry assess_confirmed_claim
+Requirements: AC03, AC04, AC11
+Policy: P07, P11, P12, P20
+Fixtures: inline
+Preconditions: {"policy_version": "1.1", "organization_id": "demo-company", "clock": "2026-11-15T12:00:00Z", "isolation": "Fresh authorized session and empty per-case cache unless setup explicitly supplies prior state.", "network": "No live travel or FX calls. Model calls are allowed only in designated model/image evaluation runs; injected model-output tests use a stub."}
+Setup: {}
+Input: {"category": "local_transport", "country": "SG", "city": "Singapore", "grade": "E", "currency": "SGD", "amount": 72.0, "service_date": "2026-11-15", "submitted_on": "2026-11-16", "trip_end": "2026-11-15", "budget_inr": 5670.0, "coverage_complete": true, "user_confirmed": true, "required_documents_present": true, "fx_rate": 63, "fx_reference": "FX-DEMO-2026", "nights": 1, "cabin": "economy", "journeys": 1, "taxes_and_fees_included": true, "baggage_20kg_included": true, "business_purpose": true, "transaction_date": "2026-11-15"}
+Expected: {"claimed_total_inr": 4536.0, "eligible_total_inr": 4536.0, "excluded_total_inr": 0, "over_cap_total_inr": 0.0, "budget_status": "WITHIN_BUDGET", "compliance_status": "WITHIN_POLICY", "readiness": "READY_FOR_REVIEW"}
+Steps: 1. Load policy version 1.1 and this case’s authorized session; freeze the clock from preconditions. 2. Apply setup fixtures and explicit overrides, if any. Never fill deliberately missing inputs from defaults. 3. Call the named evaluation entrypoint with input and fixture paths only; do not pass expected results or rule answer keys to the assistant. 4. Capture normalized result, response text, citations and harness-observed tool/network/storage events. Apply automatic checks and human rubric; record actual results separately.
+Automatic checks: [{"path": "/result/claimed_total_inr", "operator": "decimal_equal", "expected": 4536.0}, {"path": "/result/eligible_total_inr", "operator": "decimal_equal", "expected": 4536.0}, {"path": "/result/excluded_total_inr", "operator": "decimal_equal", "expected": 0}, {"path": "/result/over_cap_total_inr", "operator": "decimal_equal", "expected": 0.0}, {"path": "/result/budget_status", "operator": "equal", "expected": "WITHIN_BUDGET"}, {"path": "/result/compliance_status", "operator": "equal", "expected": "WITHIN_POLICY"}, {"path": "/result/readiness", "operator": "equal", "expected": "READY_FOR_REVIEW"}]
+Human checks: [{"criterion": "Every policy claim is supported by an applicable cited passage; no unsupported facts, fabricated offers or approval claims."}]
+
+GT059 — local_SG_E at cap
+Category calculation | Split held_out | Entry assess_confirmed_claim
+Requirements: AC03, AC04, AC11
+Policy: P07, P11, P12, P20
+Fixtures: inline
+Preconditions: {"policy_version": "1.1", "organization_id": "demo-company", "clock": "2026-11-15T12:00:00Z", "isolation": "Fresh authorized session and empty per-case cache unless setup explicitly supplies prior state.", "network": "No live travel or FX calls. Model calls are allowed only in designated model/image evaluation runs; injected model-output tests use a stub."}
+Setup: {}
+Input: {"category": "local_transport", "country": "SG", "city": "Singapore", "grade": "E", "currency": "SGD", "amount": 90, "service_date": "2026-11-15", "submitted_on": "2026-11-16", "trip_end": "2026-11-15", "budget_inr": 5670.0, "coverage_complete": true, "user_confirmed": true, "required_documents_present": true, "fx_rate": 63, "fx_reference": "FX-DEMO-2026", "nights": 1, "cabin": "economy", "journeys": 1, "taxes_and_fees_included": true, "baggage_20kg_included": true, "business_purpose": true, "transaction_date": "2026-11-15"}
+Expected: {"claimed_total_inr": 5670.0, "eligible_total_inr": 5670.0, "excluded_total_inr": 0, "over_cap_total_inr": 0.0, "budget_status": "WITHIN_BUDGET", "compliance_status": "WITHIN_POLICY", "readiness": "READY_FOR_REVIEW"}
+Steps: 1. Load policy version 1.1 and this case’s authorized session; freeze the clock from preconditions. 2. Apply setup fixtures and explicit overrides, if any. Never fill deliberately missing inputs from defaults. 3. Call the named evaluation entrypoint with input and fixture paths only; do not pass expected results or rule answer keys to the assistant. 4. Capture normalized result, response text, citations and harness-observed tool/network/storage events. Apply automatic checks and human rubric; record actual results separately.
+Automatic checks: [{"path": "/result/claimed_total_inr", "operator": "decimal_equal", "expected": 5670.0}, {"path": "/result/eligible_total_inr", "operator": "decimal_equal", "expected": 5670.0}, {"path": "/result/excluded_total_inr", "operator": "decimal_equal", "expected": 0}, {"path": "/result/over_cap_total_inr", "operator": "decimal_equal", "expected": 0.0}, {"path": "/result/budget_status", "operator": "equal", "expected": "WITHIN_BUDGET"}, {"path": "/result/compliance_status", "operator": "equal", "expected": "WITHIN_POLICY"}, {"path": "/result/readiness", "operator": "equal", "expected": "READY_FOR_REVIEW"}]
+Human checks: [{"criterion": "Every policy claim is supported by an applicable cited passage; no unsupported facts, fabricated offers or approval claims."}]
+
+GT060 — local_SG_E above cap
+Category calculation | Split held_out | Entry assess_confirmed_claim
+Requirements: AC03, AC04, AC11
+Policy: P07, P11, P12, P20
+Fixtures: inline
+Preconditions: {"policy_version": "1.1", "organization_id": "demo-company", "clock": "2026-11-15T12:00:00Z", "isolation": "Fresh authorized session and empty per-case cache unless setup explicitly supplies prior state.", "network": "No live travel or FX calls. Model calls are allowed only in designated model/image evaluation runs; injected model-output tests use a stub."}
+Setup: {}
+Input: {"category": "local_transport", "country": "SG", "city": "Singapore", "grade": "E", "currency": "SGD", "amount": 91, "service_date": "2026-11-15", "submitted_on": "2026-11-16", "trip_end": "2026-11-15", "budget_inr": 5670.0, "coverage_complete": true, "user_confirmed": true, "required_documents_present": true, "fx_rate": 63, "fx_reference": "FX-DEMO-2026", "nights": 1, "cabin": "economy", "journeys": 1, "taxes_and_fees_included": true, "baggage_20kg_included": true, "business_purpose": true, "transaction_date": "2026-11-15"}
+Expected: {"claimed_total_inr": 5733.0, "eligible_total_inr": 5670.0, "excluded_total_inr": 0, "over_cap_total_inr": 63.0, "budget_status": "OVER_BUDGET", "compliance_status": "EXCEEDS_POLICY", "readiness": "HUMAN_REVIEW"}
+Steps: 1. Load policy version 1.1 and this case’s authorized session; freeze the clock from preconditions. 2. Apply setup fixtures and explicit overrides, if any. Never fill deliberately missing inputs from defaults. 3. Call the named evaluation entrypoint with input and fixture paths only; do not pass expected results or rule answer keys to the assistant. 4. Capture normalized result, response text, citations and harness-observed tool/network/storage events. Apply automatic checks and human rubric; record actual results separately.
+Automatic checks: [{"path": "/result/claimed_total_inr", "operator": "decimal_equal", "expected": 5733.0}, {"path": "/result/eligible_total_inr", "operator": "decimal_equal", "expected": 5670.0}, {"path": "/result/excluded_total_inr", "operator": "decimal_equal", "expected": 0}, {"path": "/result/over_cap_total_inr", "operator": "decimal_equal", "expected": 63.0}, {"path": "/result/budget_status", "operator": "equal", "expected": "OVER_BUDGET"}, {"path": "/result/compliance_status", "operator": "equal", "expected": "EXCEEDS_POLICY"}, {"path": "/result/readiness", "operator": "equal", "expected": "HUMAN_REVIEW"}]
+Human checks: [{"criterion": "Every policy claim is supported by an applicable cited passage; no unsupported facts, fabricated offers or approval claims."}]

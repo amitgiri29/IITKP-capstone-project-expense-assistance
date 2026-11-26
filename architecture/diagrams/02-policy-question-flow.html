@@ -1,0 +1,39 @@
+<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="diagram.css">
+<style>
+.flow { display:grid; grid-template-columns: repeat(5, 1fr); gap: 34px; position: relative; }
+.step { background:#fff; border:1px solid #E2E8F0; border-radius: 14px; padding: 14px; box-shadow: 0 1px 3px rgba(15,23,42,.05); position:relative; min-height: 190px; }
+.step .n { width: 30px; height: 30px; border-radius: 9px; display:grid; place-items:center; font-weight: 800; font-size: 14px; color:#fff;
+  background: linear-gradient(135deg,#E11D48,#BE123C); margin-bottom: 10px; }
+.step.ai .n { background: linear-gradient(135deg,#6366F1,#4F46E5); }
+.step h4 { font-size: 14.5px; margin-bottom: 6px; }
+.step p { font-size: 12.5px; color:#475569; line-height: 1.55; }
+.step .t { margin-top: 10px; }
+.step:not(.last):after { content:"➜"; position:absolute; right:-29px; top: 50%; transform: translateY(-50%); width: 24px; text-align:center; color:#E11D48; font-size: 20px; }
+.turn1 { height: 18px; margin: 0 calc(10% - 7px) 0 calc(12.5% - 4px); border-right: 2px solid #FDA4AF; border-bottom: 2px solid #FDA4AF; border-radius: 0 0 10px 0; border-top: 0; }
+.turn2 { position: relative; height: 16px; margin-left: calc(12.5% - 4px); border-left: 2px solid #FDA4AF; width: 2px; }
+.turn2:after { content:"▼"; position:absolute; left:-8px; bottom:-12px; color:#E11D48; font-size: 13px; }
+.short { margin-top: 10px; border-radius: 10px; padding: 8px 10px; font-size: 12px; font-weight: 600; color:#B45309; background:#FFFBEB; border:1px solid rgba(217,119,6,.25); }
+.down { text-align:right; color:#94A3B8; font-size: 20px; font-weight: 700; margin: 4px 60px; }
+</style><title>Policy question flow</title></head><body>
+<div class="head">
+  <div><h1>Use case UC01 — Answering a policy question</h1>
+  <p>One model call per question. Python owns every number and checks every citation; the model writes the explanation.</p></div>
+  <div class="brand"><img src="/assets/brand/sparks-ai-lab-mark.png" alt="">SPARKS <span class="chip-ai">AI LAB</span></div>
+</div>
+<div class="flow">
+  <div class="step"><div class="n">1</div><h4>Ask</h4><p>The traveler asks in Policy Assistant, the Home ask box or the top bar.</p><div class="t"><span class="tech">Streamlit</span></div></div>
+  <div class="step"><div class="n">2</div><h4>Authorize</h4><p>Bearer token resolves the server-held session: organization, grade, role. Rate limit applied.</p><div class="t"><span class="tech">FastAPI · SQLite</span></div></div>
+  <div class="step"><div class="n">3</div><h4>Guard</h4><p>Requests for secrets, bookings or another person's data are refused here.</p><div class="short">Refused → no model call</div></div>
+  <div class="step"><div class="n">4</div><h4>Applicability</h4><p>Grade, country, city and service date from the question, the session and a city gazetteer.</p><div class="short">Outside policy dates → answered without the model</div></div>
+  <div class="step last"><div class="n">5</div><h4>Retrieve</h4><p>Keyword (BM25) and semantic (vector) search over policy and library sections, filtered by organization, date and geography, fused by rank. Top 6 passages.</p><div class="t"><span class="tech">rank-bm25</span><span class="tech">LangChain</span><span class="tech">FastEmbed</span></div></div>
+</div>
+<div class="turn1"></div><div class="turn2"></div><div style="height:12px"></div>
+<div class="flow" style="grid-template-columns: repeat(4, 1fr)">
+  <div class="step"><div class="n">6</div><h4>Registry facts</h4><p>The exact cap, currency and unit for the grade and place come from the reviewed rule registry.</p><div class="t"><span class="tech">Domain core · Decimal</span></div></div>
+  <div class="step ai"><div class="n">7</div><h4>Structured answer</h4><p>Claude receives the question, verified facts and evidence (marked as data) and returns JSON: answer, citations, facts, missing fields.</p><div class="t"><span class="tech">Claude Sonnet 5.5 · JSON schema</span></div></div>
+  <div class="step"><div class="n">8</div><h4>Reconcile</h4><p>Registry numbers override the model's. Citations not retrieved are removed. Never approves exceptions or invents FX; unsupported destinations go to human review.</p></div>
+  <div class="step last"><div class="n">9</div><h4>Cited answer</h4><p>Answer, limit badge, clarification or review card, and expandable policy sources with rule IDs.</p><div class="t"><span class="tech">Policy evaluation summary</span></div></div>
+</div>
+<div class="legend"><span><i class="sw" style="background:linear-gradient(135deg,#E11D48,#BE123C)"></i>Deterministic step (Python)</span><span><i class="sw" style="background:linear-gradient(135deg,#6366F1,#4F46E5)"></i>Model step</span><span><i class="sw" style="background:#FFFBEB;border-color:rgba(217,119,6,.3)"></i>Short-circuit: answered or refused without the model</span></div>
+<div class="foot"><span>Figure 2 · Architecture & Implementation Overview v1.1 · 10 November 2026</span><span>Live check: 30 of 31 policy golden cases pass automatic checks</span></div>
+</body></html>

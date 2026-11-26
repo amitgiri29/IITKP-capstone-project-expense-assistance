@@ -1,0 +1,178 @@
+{
+  "spec_version": "1.6",
+  "checked_date": "2026-11-07",
+  "status": "PROPOSED_RELEASES_VERIFIED_NOT_RESOLVED_OR_INTEGRATION_TESTED",
+  "python": {
+    "version": "3.14.10",
+    "source": "https://www.python.org/downloads/release/python-31410/"
+  },
+  "packages": [
+    {
+      "name": "langchain",
+      "version": "1.4.9",
+      "scope": "core",
+      "source": "https://pypi.org/project/langchain/1.4.9/",
+      "purpose": "langchain-core interfaces used in retrieval/: BaseLoader, Document, BaseRetriever, Embeddings and InMemoryVectorStore. Model calls stay in provider adapters."
+    },
+    {
+      "name": "langgraph",
+      "version": "1.2.20",
+      "scope": "core",
+      "source": "https://pypi.org/project/langgraph/1.2.20/",
+      "purpose": "Routing, planner/executor/critic nodes, confirmation pauses, resumed conversations and the one-repair limit."
+    },
+    {
+      "name": "langgraph-checkpoint-sqlite",
+      "version": "3.1.3",
+      "scope": "core",
+      "source": "https://pypi.org/project/langgraph-checkpoint-sqlite/3.1.3/",
+      "purpose": "Persists graph checkpoints for follow-ups and confirmation pauses. Use a separate checkpoint database and server-authorized thread IDs."
+    },
+    {
+      "name": "fastapi",
+      "version": "0.162.0",
+      "scope": "core",
+      "source": "https://pypi.org/project/fastapi/0.162.0/",
+      "purpose": "Backend routes for sessions, chat, receipt extraction, claim review and travel search. Enforces authorization and input limits."
+    },
+    {
+      "name": "streamlit",
+      "version": "1.67.0",
+      "scope": "core",
+      "source": "https://pypi.org/project/streamlit/1.67.0/",
+      "purpose": "Python UI for policy chat, receipt upload and confirmation, and travel search. Calls FastAPI; keeps provider secrets out of browser responses."
+    },
+    {
+      "name": "pydantic",
+      "version": "2.14.3",
+      "scope": "core",
+      "source": "https://pypi.org/project/pydantic/2.14.3/",
+      "purpose": "Validates request, tool and model-output schemas. Rejects malformed fields; it does not verify policy truth."
+    },
+    {
+      "name": "uvicorn",
+      "version": "0.54.0",
+      "scope": "core",
+      "source": "https://pypi.org/project/uvicorn/0.54.0/",
+      "purpose": "Runs the FastAPI service. Start with one worker for the prototype so local state and rate limits have a clear owner."
+    },
+    {
+      "name": "httpx",
+      "version": "0.28.1",
+      "scope": "core",
+      "source": "https://pypi.org/project/httpx/0.28.1/",
+      "purpose": "HTTP calls to the supplied model and read-only travel APIs through replaceable adapters; explicit timeouts and bounded retries."
+    },
+    {
+      "name": "rank-bm25",
+      "version": "0.2.2",
+      "scope": "core",
+      "source": "https://pypi.org/project/rank-bm25/0.2.2/",
+      "purpose": "Keyword ranking over policy chunks. Normalize aliases; apply authorization and applicability filters before scoring. No local model is required."
+    },
+    {
+      "name": "qdrant-client",
+      "version": "1.20.0",
+      "scope": "conditional_vector",
+      "source": "https://pypi.org/project/qdrant-client/1.20.0/",
+      "purpose": "Not installed. Superseded 2026-11-10 by the LangChain InMemoryVectorStore rebuilt at startup from an SQLite embedding cache (corpus is small); keep as the option for a persistent vector store."
+    },
+    {
+      "name": "pillow",
+      "version": "13.0.0",
+      "scope": "core",
+      "source": "https://pypi.org/project/pillow/13.0.0/",
+      "purpose": "Decode and validate PNG/JPEG uploads, inspect dimensions and reject invalid image bytes. This library does not perform OCR."
+    },
+    {
+      "name": "python-multipart",
+      "version": "0.0.33",
+      "scope": "core",
+      "source": "https://pypi.org/project/python-multipart/0.0.33/",
+      "purpose": "Parses FastAPI image uploads. Enforce file count, size and decoded-image limits in application code."
+    },
+    {
+      "name": "pytest",
+      "version": "9.2.0",
+      "scope": "development",
+      "source": "https://pypi.org/project/pytest/9.2.0/",
+      "purpose": "Development-only test runner for deterministic tools, adapters, API behavior and the golden evaluation harness."
+    },
+    {
+      "name": "python-dotenv",
+      "version": "1.2.4",
+      "scope": "core",
+      "source": "https://pypi.org/project/python-dotenv/1.2.4/",
+      "purpose": "Loads local development configuration. Commit .env.example with placeholders; keep .env and secrets out of Git."
+    },
+    {
+      "name": "langsmith",
+      "version": "0.14.17",
+      "scope": "core",
+      "source": "https://pypi.org/project/langsmith/0.14.17/",
+      "purpose": "Shared tracing, performance dashboards, golden dataset experiments and reviewed feedback; export failures do not alter business results."
+    },
+    {
+      "name": "boto3",
+      "version": "1.43.126",
+      "scope": "aws_deployment",
+      "source": "https://pypi.org/project/boto3/1.43.126/",
+      "purpose": "AWS-specific S3 receipt storage and Secrets Manager adapters using temporary role credentials; proposed compatibility untested."
+    },
+    {
+      "name": "anthropic",
+      "version": "2.6.0",
+      "scope": "core",
+      "source": "https://pypi.org/project/anthropic/2.6.0/",
+      "purpose": "Official Claude API SDK used by adapters/model.py AnthropicModel (claude-sonnet-5-5 by default). Replaceable through config/settings.toml [model].provider."
+    },
+    {
+      "name": "langchain-text-splitters",
+      "version": "1.1.3",
+      "scope": "core",
+      "source": "https://pypi.org/project/langchain-text-splitters/1.1.3/",
+      "purpose": "Chunks admin policy uploads: MarkdownHeaderTextSplitter for headings, then RecursiveCharacterTextSplitter (1800 chars, 200 overlap, start_index)."
+    },
+    {
+      "name": "pypdf",
+      "version": "7.0.0",
+      "scope": "core",
+      "source": "https://pypi.org/project/pypdf/7.0.0/",
+      "purpose": "Text-layer extraction for uploaded PDF policies inside a LangChain BaseLoader (one Document per page). No OCR; encrypted and >200-page PDFs are rejected."
+    },
+    {
+      "name": "docx2txt",
+      "version": "0.9",
+      "scope": "core",
+      "source": "https://pypi.org/project/docx2txt/0.9/",
+      "purpose": "Text extraction for uploaded Word (.docx) policies inside a LangChain BaseLoader."
+    },
+    {
+      "name": "fastembed",
+      "version": "0.9.1",
+      "scope": "core",
+      "source": "https://pypi.org/project/fastembed/0.9.1/",
+      "purpose": "Local CPU ONNX embeddings (BAAI/bge-small-en-v1.5, 384-d) as a user-approved stand-in (Option B, 2026-11-10) until the hosted embedding API arrives; switch with [embeddings].provider = \"openai_compatible\". Model cache ~200 MB under runtime/models."
+    }
+  ],
+  "sqlite": "Bundled engine; record sqlite3.sqlite_version at setup",
+  "provider_versions": {
+    "model": "COURSE_SUPPLIED_PENDING",
+    "embeddings": "LOCAL_FASTEMBED_STANDIN_BAAI_bge-small-en-v1.5 (user-approved 2026-11-10); hosted OpenAI-compatible endpoint pending",
+    "ocr": "VISION_OR_PERMITTED_API_PENDING",
+    "travel": "PROVIDER_AND_API_REVISION_PENDING",
+    "fx": "PROVIDER_AND_API_REVISION_PENDING"
+  },
+  "lockfile": "requirements.lock.txt regenerated 2026-11-10 from the tested .venv (pip check clean, 273 tests)",
+  "details": "TECH_STACK.txt",
+  "deployment_tools": {
+    "host_os": "Ubuntu Server 24.04 LTS x86_64; exact patched AMI/build recorded before provisioning",
+    "docker_engine": "29.9.3",
+    "docker_compose": "5.7.0",
+    "python": "3.14.10",
+    "boto3": "1.43.126",
+    "base_image": "Resolve tag and pin tested digest during M2",
+    "reverse_proxy": "NGINX image tag/digest to be selected and pinned during M2",
+    "verification": "Release existence checked; joint runtime and host compatibility not tested."
+  }
+}

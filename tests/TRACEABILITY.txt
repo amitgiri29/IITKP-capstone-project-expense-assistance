@@ -1,0 +1,122 @@
+CASE TO SPECIFICATION AND POLICY MAP
+
+GT001 | core_100 | Metro hotel employee | AC01 | P01,P02
+GT002 | supplemental | Metro hotel manager | AC01 | P02
+GT003 | core_100 | Other Indian city | AC01 | P02
+GT004 | supplemental | Other city manager | AC01 | P02
+GT005 | core_100 | US hotel employee | AC01 | P03
+GT006 | supplemental | US hotel manager | AC01 | P03
+GT007 | core_100 | UK hotel employee | AC01 | P03
+GT008 | supplemental | UK hotel manager | AC01 | P03
+GT009 | core_100 | Singapore hotel employee | AC01 | P03
+GT010 | supplemental | Singapore hotel manager | AC01 | P03
+GT011 | core_100 | Domestic flight employee | AC01 | P04
+GT012 | supplemental | Domestic flight manager | AC01 | P04
+GT013 | core_100 | International flight employee | AC01 | P05
+GT014 | supplemental | International flight manager | AC01 | P05
+GT015 | core_100 | Long flight upgrade | AC01,AC03 | P05,P10
+GT016 | core_100 | Domestic transport employee | AC01 | P06
+GT017 | core_100 | Domestic transport manager | AC01 | P06
+GT018 | core_100 | US transport | AC01 | P07
+GT019 | core_100 | UK transport | AC01 | P07
+GT020 | core_100 | Singapore transport | AC01 | P07
+GT021 | supplemental | Taxes inside hotel cap | AC01 | P02,P03
+GT022 | core_100 | Multiple taxi rides | AC01 | P06,P07
+GT023 | core_100 | Meals scope | AC02 | P08
+GT024 | core_100 | Unsupported country | AC02 | P03,P19
+GT025 | core_100 | Future policy | AC02 | P01,P19
+GT026 | core_100 | Receipt completeness | AC06 | P09
+GT027 | core_100 | Deadline | AC17 | P13
+GT028 | core_100 | Airport taxi | AC01,AC06 | P06,P09
+GT029 | core_100 | No booking | AC09 | P18
+GT030 | core_100 | Exchange rates | AC11 | P11
+GT031 | core_100 | hotel_IN_metro_E below cap | AC03,AC04,AC11 | P02,P11,P12,P20
+GT032 | core_100 | hotel_IN_metro_E at cap | AC03,AC04,AC11 | P02,P11,P12,P20
+GT033 | core_100 | hotel_IN_metro_E above cap | AC03,AC04,AC11 | P02,P11,P12,P20
+GT034 | core_100 | hotel_IN_other_M below cap | AC03,AC04,AC11 | P02,P11,P12,P20
+GT035 | core_100 | hotel_IN_other_M at cap | AC03,AC04,AC11 | P02,P11,P12,P20
+GT036 | core_100 | hotel_IN_other_M above cap | AC03,AC04,AC11 | P02,P11,P12,P20
+GT037 | core_100 | hotel_US_E below cap | AC03,AC04,AC11 | P03,P11,P12,P20
+GT038 | core_100 | hotel_US_E at cap | AC03,AC04,AC11 | P03,P11,P12,P20
+GT039 | core_100 | hotel_US_E above cap | AC03,AC04,AC11 | P03,P11,P12,P20
+GT040 | core_100 | hotel_UK_M below cap | AC03,AC04,AC11 | P03,P11,P12,P20
+GT041 | core_100 | hotel_UK_M at cap | AC03,AC04,AC11 | P03,P11,P12,P20
+GT042 | core_100 | hotel_UK_M above cap | AC03,AC04,AC11 | P03,P11,P12,P20
+GT043 | core_100 | hotel_SG_E below cap | AC03,AC04,AC11 | P03,P11,P12,P20
+GT044 | core_100 | hotel_SG_E at cap | AC03,AC04,AC11 | P03,P11,P12,P20
+GT045 | core_100 | hotel_SG_E above cap | AC03,AC04,AC11 | P03,P11,P12,P20
+GT046 | core_100 | flight_IN_E below cap | AC03,AC04,AC11 | P04,P11,P12,P20
+GT047 | core_100 | flight_IN_E at cap | AC03,AC04,AC11 | P04,P11,P12,P20
+GT048 | core_100 | flight_IN_E above cap | AC03,AC04,AC11 | P04,P11,P12,P20
+GT049 | supplemental | flight_int_E below cap | AC03,AC04,AC11 | P05,P11,P12,P20
+GT050 | supplemental | flight_int_E at cap | AC03,AC04,AC11 | P05,P11,P12,P20
+GT051 | supplemental | flight_int_E above cap | AC03,AC04,AC11 | P05,P11,P12,P20
+GT052 | supplemental | local_IN_E below cap | AC03,AC04,AC11 | P06,P11,P12,P20
+GT053 | supplemental | local_IN_E at cap | AC03,AC04,AC11 | P06,P11,P12,P20
+GT054 | supplemental | local_IN_E above cap | AC03,AC04,AC11 | P06,P11,P12,P20
+GT055 | supplemental | local_US_M below cap | AC03,AC04,AC11 | P07,P11,P12,P20
+GT056 | supplemental | local_US_M at cap | AC03,AC04,AC11 | P07,P11,P12,P20
+GT057 | supplemental | local_US_M above cap | AC03,AC04,AC11 | P07,P11,P12,P20
+GT058 | supplemental | local_SG_E below cap | AC03,AC04,AC11 | P07,P11,P12,P20
+GT059 | supplemental | local_SG_E at cap | AC03,AC04,AC11 | P07,P11,P12,P20
+GT060 | supplemental | local_SG_E above cap | AC03,AC04,AC11 | P07,P11,P12,P20
+GT061 | core_100 | Domestic hotel below cap | AC05,AC06,AC03,AC04 | P02,P12,P15
+GT062 | core_100 | Domestic hotel above cap | AC05,AC06,AC03,AC04 | P02,P12,P15
+GT063 | core_100 | US hotel with FX | AC05,AC06,AC03,AC04,AC11 | P03,P11,P12,P15
+GT064 | core_100 | UK hotel over cap | AC05,AC06,AC03,AC04,AC11 | P03,P11,P12,P15
+GT065 | core_100 | Singapore hotel exactly at cap | AC05,AC06,AC03,AC04,AC11 | P03,P11,P12,P15
+GT066 | core_100 | Domestic flight at cap | AC05,AC06,AC03,AC04 | P04,P12,P15
+GT067 | core_100 | International flight above cap | AC05,AC06,AC03,AC04,AC11 | P05,P11,P12,P15
+GT068 | core_100 | Domestic taxi at cap | AC05,AC06,AC03,AC04 | P06,P12,P15
+GT069 | core_100 | US taxi above cap | AC05,AC06,AC03,AC04,AC11 | P07,P11,P12,P15
+GT070 | core_100 | Personal minibar excluded | AC05,AC06,AC03,AC04 | P02,P10,P12,P15
+GT071 | core_100 | Receipt instruction injection | AC05,AC06,AC03,AC04,AC10 | P02,P15,P12
+GT072 | core_100 | Currency omitted | AC05,AC06 | P15,P20,P12
+GT073 | core_100 | Total unreadable | AC05,AC06 | P15,P20,P12
+GT074 | core_100 | Components disagree with total | AC05,AC06 | P15,P20,P12
+GT075 | core_100 | Ambiguous printed date | AC05,AC06 | P15,P20,P12
+GT076 | core_100 | Rotated readable taxi | AC05,AC06,AC03,AC04 | P06,P15,P12
+GT077 | core_100 | Two nights cannot offset | AC05,AC06,AC03,AC04 | P02,P12,P15
+GT078 | core_100 | Taxi tip excluded | AC05,AC06,AC03,AC04 | P06,P10,P12,P15
+GT079 | core_100 | Extract but await confirmation | AC05,AC06 | P09,P15,P12
+GT080 | core_100 | Flight boarding pass absent | AC05,AC06 | P04,P09,P12,P15
+GT081 | core_100 | Flight compliant ranking | AC07,AC08,AC09 | P04,P16,P17,P18
+GT082 | core_100 | Hotel compliant ranking | AC07,AC08,AC09 | P02,P16,P17,P18
+GT083 | core_100 | Flight no compliant offer | AC07,AC08,AC09 | P04,P16,P17,P18
+GT084 | core_100 | Hotel no compliant offer | AC07,AC08,AC09 | P02,P16,P17,P18
+GT085 | core_100 | Reject business class | AC07,AC08,AC09 | P04,P16,P17,P18
+GT086 | core_100 | Hotel tax unknown | AC07,AC08,AC09 | P02,P16,P17,P18
+GT087 | core_100 | Flight baggage unknown | AC07,AC08,AC09 | P04,P17,P18
+GT088 | core_100 | Expired flight | AC07,AC08,AC09,AC15 | P17,P18
+GT089 | core_100 | Stale hotel | AC07,AC08,AC09,AC15 | P02,P17,P18
+GT090 | core_100 | Tie flight duration | AC07,AC08,AC09 | P16,P17,P18
+GT091 | core_100 | Tie hotel distance | AC07,AC08,AC09 | P02,P16,P17,P18
+GT092 | core_100 | No inventory | AC07,AC08,AC09 | P02,P16,P20,P17,P18
+GT093 | core_100 | Missing flight date | AC07,AC08,AC09 | P16,P17,P18
+GT094 | core_100 | Invalid hotel dates | AC07,AC08,AC09 | P02,P16,P17,P18
+GT095 | core_100 | Booking request | AC07,AC08,AC09 | P18,P17
+GT096 | core_100 | Foreign flight FX absent | AC07,AC08,AC09,AC11 | P05,P11,P17,P18
+GT097 | core_100 | US hotel within limit | AC07,AC08,AC09 | P03,P16,P17,P18
+GT098 | core_100 | Hotel nightly cap not average | AC07,AC08,AC09 | P02,P16,P17,P18
+GT099 | core_100 | Search timeout | AC07,AC08,AC09,AC15 | P20,P17,P18
+GT100 | core_100 | Offer prompt injection | AC07,AC08,AC09,AC10 | P02,P16,P18,P17
+GT101 | core_100 | Missing grade | AC18 | P01,P20
+GT102 | core_100 | No trip budget | AC04 | P12
+GT103 | core_100 | Incomplete trip | AC04 | P12
+GT104 | core_100 | Two taxis one day | AC03,AC04 | P06,P12
+GT105 | core_100 | Duplicate receipt | AC17 | P14
+GT106 | core_100 | Deadline day 30 | AC17 | P13
+GT107 | core_100 | Deadline day 31 | AC17 | P13
+GT108 | core_100 | Negative expense | AC18 | P20
+GT109 | core_100 | Missing FX | AC11 | P11
+GT110 | core_100 | FX rounding | AC11 | P11
+GT111 | core_100 | Clarification preserves context | AC12,AC06 | P02,P09,P12
+GT112 | core_100 | Correction recalculates | AC12,AC03,AC04 | P02,P12
+GT113 | core_100 | Cross session request | AC13 | P18
+GT114 | core_100 | System prompt extraction | AC10 | P18
+GT115 | core_100 | Authoritative conflict | AC14 | P19
+GT116 | core_100 | Malformed JSON twice | AC15 | P20
+GT117 | core_100 | Unsupported image format | AC16 | P15
+GT118 | core_100 | Oversized image | AC16 | P15
+GT119 | core_100 | Image capability absent | AC16 | P20
+GT120 | core_100 | Missing citation ID | AC14 | P02,P19

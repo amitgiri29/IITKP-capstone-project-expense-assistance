@@ -1,0 +1,53 @@
+# Local stack: docker compose up --build
+# Ports bind to localhost only. Secrets come from your local .env (optional file).
+name: expense-assistant
+
+x-common: &common
+  image: expense-assistant:local
+  env_file:
+    - path: .env
+      required: false
+  environment:
+    EXPENSE_CONFIG: /app/config/settings.toml
+  restart: unless-stopped
+  mem_limit: 1g
+  cpus: 1.0
+  logging:
+    driver: json-file
+    options: { max-size: "10m", max-file: "3" }
+
+services:
+  api:
+    <<: *common
+    build: .
+    volumes:
+      - app-data:/app/runtime
+    ports:
+      - "127.0.0.1:8000:8000"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health', timeout=3)"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 180s   # first start downloads the ~200 MB embedding model into the app-data volume
+
+  ui:
+    <<: *common
+    command: ["python", "-m", "streamlit", "run", "ui/app.py", "--server.port", "8501",
+              "--server.address", "0.0.0.0", "--server.headless", "true", "--browser.gatherUsageStats", "false"]
+    environment:
+      EXPENSE_CONFIG: /app/config/settings.toml
+      EXPENSE_API_BASE_URL: http://api:8000
+    depends_on:
+      api:
+        condition: service_healthy
+    ports:
+      - "127.0.0.1:8501:8501"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8501/_stcore/health', timeout=3)"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  app-data:

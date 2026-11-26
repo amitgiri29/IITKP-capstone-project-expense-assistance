@@ -1,0 +1,5 @@
+SPARKS AI Lab | FICTIONAL | Policy 1.1
+Rule P13 | Submission deadline
+Effective 2026-01-01 to 2026-12-31
+
+A claim must be submitted no later than 30 calendar days after the trip end date. Day 30 is timely; day 31 is late and requires human review. Negative elapsed time or inconsistent trip dates require clarification. This rule does not change the arithmetic of otherwise eligible amounts.

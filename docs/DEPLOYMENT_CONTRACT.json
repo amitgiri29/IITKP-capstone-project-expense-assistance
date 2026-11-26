@@ -1,0 +1,104 @@
+{
+  "spec_version": "1.6",
+  "stage": "DOCUMENTATION_ONLY",
+  "status": "NOT_DEPLOYED",
+  "decision": "Design Docker now; implement packaging in M2 once UI/API skeleton and tested lockfile exist.",
+  "initial_target": "One shared AWS EC2 host with Docker Compose, independently configured demo and production projects.",
+  "availability": "Single host and Availability Zone for application; no high-availability guarantee.",
+  "versions": {
+    "host_os": "Ubuntu Server 24.04 LTS x86_64; exact patched AMI/build recorded before provisioning",
+    "docker_engine": "29.9.3",
+    "docker_compose": "5.7.0",
+    "python": "3.14.10",
+    "boto3": "1.43.126",
+    "base_image": "Resolve tag and pin tested digest during M2",
+    "reverse_proxy": "NGINX image tag/digest to be selected and pinned during M2",
+    "verification": "Release existence checked; joint runtime and host compatibility not tested."
+  },
+  "owners": {
+    "container_and_deploy": "Pair C",
+    "persistence_and_restore": "Pair B",
+    "acceptance_evidence": "Pair A",
+    "operations": "UNASSIGNED"
+  },
+  "ingress": [
+    "Route53_or_approved_DNS",
+    "ALB_HTTPS_ACM_Cognito_or_OIDC",
+    "EC2_reverse_proxy",
+    "Streamlit_and_private_FastAPI"
+  ],
+  "public_application_ports": [
+    443
+  ],
+  "backend_ingress": "ALB security group only; no direct app/DB/Docker/SSH internet access",
+  "admin": "Systems Manager Session Manager",
+  "identity": "Verify signed ALB identity/signer/expiry; propagate per-request verified identity to API; enforce organization/session authorization.",
+  "state": {
+    "sqlite": "Encrypted EBS, one API owner per environment",
+    "qdrant_local": "Encrypted EBS, one API owner per environment",
+    "receipts": "Private encrypted S3, tenant-scoped receipt-store adapter",
+    "backup": "Application-consistent DB backups, policy manifest, encrypted snapshots; measured restore",
+    "proposed_rpo_hours": 24,
+    "proposed_rto_hours": 4,
+    "recovery_status": "TARGETS_PENDING_OWNER_AGREEMENT_AND_TEST"
+  },
+  "secrets": "Instance profile with temporary AWS credentials, Secrets Manager and scoped delivery; never images/source/build arguments",
+  "environment_isolation": "Separate Compose project/network/data/credentials/LangSmith destination; one shared host still shares failure/IAM boundary.",
+  "release": "Test image, private ECR immutable digest, demo smoke, production promotion of same digest; drain single writer and maintain compatible rollback",
+  "required_for_production": [
+    "DEP01",
+    "DEP02",
+    "DEP03",
+    "DEP04",
+    "DEP05",
+    "DEP06",
+    "DEP07",
+    "DEP08"
+  ],
+  "acceptance_checks": [
+    {
+      "id": "DEP01",
+      "status": "NOT_RUN",
+      "definition_source": "docs/AWS_DEPLOYMENT_PLAN.txt"
+    },
+    {
+      "id": "DEP02",
+      "status": "NOT_RUN",
+      "definition_source": "docs/AWS_DEPLOYMENT_PLAN.txt"
+    },
+    {
+      "id": "DEP03",
+      "status": "NOT_RUN",
+      "definition_source": "docs/AWS_DEPLOYMENT_PLAN.txt"
+    },
+    {
+      "id": "DEP04",
+      "status": "NOT_RUN",
+      "definition_source": "docs/AWS_DEPLOYMENT_PLAN.txt"
+    },
+    {
+      "id": "DEP05",
+      "status": "NOT_RUN",
+      "definition_source": "docs/AWS_DEPLOYMENT_PLAN.txt"
+    },
+    {
+      "id": "DEP06",
+      "status": "NOT_RUN",
+      "definition_source": "docs/AWS_DEPLOYMENT_PLAN.txt"
+    },
+    {
+      "id": "DEP07",
+      "status": "NOT_RUN",
+      "definition_source": "docs/AWS_DEPLOYMENT_PLAN.txt"
+    },
+    {
+      "id": "DEP08",
+      "status": "NOT_RUN",
+      "definition_source": "docs/AWS_DEPLOYMENT_PLAN.txt"
+    }
+  ],
+  "guide": "docs/AWS_DEPLOYMENT_PLAN.txt",
+  "diagram": "architecture/03_aws_deployment.mmd",
+  "later_scale": "ECS plus external checkpoints/PostgreSQL, server vector storage and shared rate limiting before replicas",
+  "fictional_policy_limit": "Real-company production needs approved real policy; fictional-only deployment remains labeled capstone/demo."
+}

@@ -1,0 +1,30 @@
+# Local environments and secrets
+.venv/
+venv/
+.playwright-cli/
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+# Python outputs
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+htmlcov/
+# Private and generated state
+runtime/
+artifacts/local/
+*.db
+*.db-*
+*.sqlite
+*.sqlite3
+*.sqlite3-*
+# Editor and OS files
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+# Local distributions
+*.zip

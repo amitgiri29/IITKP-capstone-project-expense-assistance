@@ -1,0 +1,17 @@
+* text=auto
+*.py text eol=lf
+*.md text eol=lf
+*.txt text eol=lf
+*.json text eol=lf
+*.jsonl text eol=lf
+*.yaml text eol=lf
+*.yml text eol=lf
+*.html text eol=lf
+*.mmd text eol=lf
+*.png binary
+*.docx binary
+*.sh text eol=lf
+*.command text eol=lf
+*.toml text eol=lf
+*.bat text eol=crlf
+*.ps1 text eol=crlf

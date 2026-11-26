@@ -1,0 +1,5 @@
+SPARKS AI Lab | FICTIONAL | Policy 1.1
+Rule P14 | Duplicates
+Effective 2026-01-01 to 2026-12-31
+
+A repeated issuer plus receipt number plus transaction date is a potential duplicate. Flag and hold for confirmation; never pay or automatically count it twice. Matching merchant, date and amount without a shared receipt number is only a suspected duplicate. Do not accuse the employee of fraud.

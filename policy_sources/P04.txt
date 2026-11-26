@@ -1,0 +1,5 @@
+SPARKS AI Lab | FICTIONAL | Policy 1.1
+Rule P04 | Domestic flights
+Effective 2026-01-01 to 2026-12-31
+
+Economy only. All inclusive cap per traveler per one way origin to destination journey, including connections: E INR 12000; M INR 18000. A round trip is two separately assessed journeys. One checked bag up to 20 kg, taxes and mandatory fees are inside this cap. Splitting a journey into connecting segments does not create extra caps. Premium economy, business and first class are excluded without a recorded exception; the assistant cannot approve exceptions.

@@ -1,0 +1,10 @@
+[project]
+name = "expense-policy-assistant"
+version = "0.1.0"
+description = "Capstone travel expense policy assistant (fictional SPARKS AI Lab policy)."
+requires-python = "==3.14.*"
+
+[tool.pytest.ini_options]
+testpaths = ["tests/unit", "tests/integration"]
+pythonpath = ["."]
+addopts = "-q"

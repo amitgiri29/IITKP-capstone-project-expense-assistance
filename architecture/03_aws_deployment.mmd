@@ -1,0 +1,18 @@
+flowchart TD
+    U[Users on demo and production hostnames] --> L[ALB HTTPS with ACM and Cognito or OIDC]
+    L --> P[EC2 reverse proxy restricted to ALB security group]
+    subgraph EC2[One shared EC2 host with Docker Compose]
+        P --> D[Demo UI and API project]
+        P --> R[Production UI and API project]
+        D --> DD[Demo EBS state and local vector index]
+        R --> RD[Production EBS state and local vector index]
+    end
+    D --> S[Private encrypted S3 receipts and backups with isolated scope]
+    R --> S
+    D --> API[Permitted hosted model and travel APIs]
+    R --> API
+    D -. redacted traces .-> O[LangSmith and CloudWatch]
+    R -. redacted traces .-> O
+    E[Private ECR pinned image digests] -. controlled release .-> EC2
+    M[Secrets Manager and IAM role] -. scoped secret delivery .-> EC2
+    A[Systems Manager administration] -. no public SSH .-> EC2

@@ -1,0 +1,6 @@
+Hudson Midtown Hotel, New York, NY, United States
+FICTIONAL TEST RECEIPT - synthetic data for the SPARKS AI Lab capstone.
+Folio HM-88120   Arrival 2026-11-20   Departure 2026-11-21   1 night
+Room rate                        USD 150.00
+Taxes and occupancy fees         USD  20.00
+Total due                        USD 170.00

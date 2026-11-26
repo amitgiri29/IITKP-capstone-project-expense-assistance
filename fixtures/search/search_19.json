@@ -1,0 +1,7 @@
+{
+  "clock": "2026-11-15T12:00:00Z",
+  "mode": "DEMO",
+  "offers": [],
+  "fault": "timeout on initial request and both retries",
+  "refresh_result": null
+}

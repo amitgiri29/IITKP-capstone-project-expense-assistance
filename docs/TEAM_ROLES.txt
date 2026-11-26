@@ -1,0 +1,10 @@
+TEAM OWNERSHIP
+Fill names before implementation. The owner is accountable; both people in each pair contribute and review.
+Pair A members: UNASSIGNED / UNASSIGNED — policy and test expectations.
+Pair B members: UNASSIGNED / UNASSIGNED — calculation tools and retrieval.
+Pair C members: UNASSIGNED / UNASSIGNED — UI, provider adapters and LangGraph.
+Dependency/setup owner: UNASSIGNED.
+Evaluation owner: UNASSIGNED.
+Repository/access owner: UNASSIGNED.
+Each pull request reviewer: one person outside the authoring pair.
+Shared files: schemas/, IMPLEMENTATION_CONTRACT.json, policy_sources/, requirements*.txt. Announce changes before editing and use one owner per concurrent change.

@@ -1,0 +1,136 @@
+Expense Assistant Team Build Plan
+
+Four week implementation plan for six beginners | Specification 1.6
+
+Work in three pairs and keep one functioning application throughout. Pair A owns policy and evaluation, Pair B owns retrieval and calculations, and Pair C owns the interface, model connection and integration. Rotate typing and review within each pair. The scope now includes images and live search, so settle provider dependencies during week one; extend the schedule if access is delayed.
+
+Scope tiers and what a complete delivery means
+
+Twenty working days cannot cover every milestone for six beginners, and three external dependencies are outside the team's control. Agree these tiers on day one so a blocked dependency does not look like failure at grading time.
+
+Tier | Contents | Rule
+Must deliver | M1 deterministic tools, M2 API/UI skeleton with Docker and tracing, M3 cited policy RAG, M4 receipt path, M5 fixture search, M6 bounded orchestration, M7 core 100 plus supplemental 20 executed and reported | The demonstration and the report stand on this tier alone
+Deliver if access arrives | Live vision or permitted OCR, permitted embeddings and dense hybrid retrieval, an approved live flight and hotel provider, a documented live FX source | Each one is recorded in docs/DECISIONS.json with the date access was requested
+Stretch | M8 AWS production promotion and DEP01-DEP08 beyond the demo environment | Day 19 and day 20 cover a demo deployment only; full production gates need their own week
+
+Forty of the 120 cases depend on images and search. If a capability is still unavailable at evaluation, record those cases as BLOCKED_CAPABILITY, report the count explicitly and never let a fixture or typed transcription stand in for the live requirement.
+
+Week one establish the foundation
+
+Day | Actions and completion evidence
+1 | Agree on the three user journeys and the policy. Confirm model ID, vision, JSON/tool support, embeddings, search access, usage limits and corpus rules with the course.
+2 | Install a common supported Python version, VS Code and GitHub Desktop. Create one private repository and virtual environment. Run a basic Streamlit form on every laptop. Prepare LangSmith workspace, region and team access; add the proposed SDK to setup validation. Add Docker packaging with the first UI/API skeleton and lockfile in M2.
+3 | Read policy rules together. Confirm expected calculations independently. Learn dictionaries, lists, functions, JSON, API requests and exceptions.
+4 | Connect the official supplied SDK through one model adapter. Read keys from environment variables. Get a real response and record token use without logging secrets. Capture the first synthetic model trace in LangSmith after masking checks.
+5 | Compare basic, structured and few-shot prompts using the same evidence. Review the development gold cases. Record baseline outcomes and unresolved dependencies. Store baseline experiment labels, prompt hashes and reviewed scores in LangSmith.
+
+
+Initial setup
+
+Before implementation, complete docs/BEFORE_IMPLEMENTATION.txt and record decisions. The proposed runtime is CPython 3.14.10, matching TECH_STACK.json. Create .venv in a local checkout outside cloud-sync folders. Follow the canonical commands in TECH_STACK.txt; provider SDK selection and dependency compatibility still require setup validation.
+
+After implementation is authorized, the setup owner resolves requirements-proposed.txt, runs pip check and smoke tests, and commits a tested requirements.lock.txt. Everyone recreates that environment. The planned UI command is python -m streamlit run ui/app.py; the planned API command is python -m uvicorn api.main:app --reload. Those modules do not exist yet.
+
+
+Weeks two and three build the workflows
+
+Day | Actions and completion evidence
+6 | Ingest policy text and metadata. Preserve section IDs and effective dates. Show retrieved evidence before generating answers.
+7 | Implement BM25; add permitted embeddings and fusion. Record the actual corpus document count. Resolve any shortfall against the 500–2000 requirement.
+8 | Add same-model reranking and cited responses. Measure required-rule recall before tuning answer wording.
+9 | Implement plain Python category caps, FX rounding and trip budgets. Run boundary cases and exclusions independently of agents.
+10 | Implement image extraction, critical-field confirmation and missing-evidence checks. Run the 20 supplied receipt image cases.
+11 | Wrap validated functions as LangChain tools. Use one model configuration. Keep arithmetic and policy records outside the framework.
+12 | Build LangGraph planner, executor and critic with one repair path and explicit stop conditions.
+13 | Persist session state. Add follow-up corrections, invalidation of dependent results and isolation tests.
+14 | Connect deterministic travel fixtures, normalize offers and rank eligible candidates. Prove that booking is unavailable.
+15 | Connect approved live hotel and flight search. Capture source/time/expiry; demonstrate real provider results without booking.
+
+
+Week two gate: cited policy answers, correct calculations and a working image path. Week three gate: all three workflows integrated, sessions persist and live search is demonstrated. A fixture-only or typed-transcription demo is a useful milestone but does not satisfy the respective live-search or image requirement.
+
+
+Week four validate and deliver
+
+Day | Actions and completion evidence
+16 | Add rate limits, retries, deadline handling, redacted traces and correctly scoped caches. Inject provider failures and malformed JSON. Verify LangSmith node traces, actual retries, sampling, redaction and exporter outage behavior.
+17 | Run the held-out suite once the configuration is frozen. Record actual outputs, evidence, latency and token use separately from the gold files. Run the versioned core/supplemental LangSmith experiments; apply code evaluators and human feedback.
+18 | Classify failures by extraction, retrieval, rule selection, arithmetic, generation or orchestration. Fix critical failures and disclose retesting.
+19 | Validate a fresh checkout and pinned container build. Deploy the tested digest to the authorized shared AWS demo through ECR/Compose. Begin DEP01–DEP08 and production-readiness evidence; allow extra time for access or restore/load testing.
+20 | Record the demonstration, present baseline versus final results, document limits and hand over the repository and report. Include LangSmith trace/experiment links, route latency, measured cost and quality comparisons in the handoff.
+
+
+Daily collaboration
+
+Pull current code, create a branch for one task, edit and run relevant checks, commit, then open a pull request. A person outside the pair reviews before merge. Avoid simultaneous edits to shared schemas and workflow files. Hold a 15 minute daily check on completed work, blockers and next deliverables.
+
+Demonstration script
+
+First ask a domestic hotel policy question and reveal its evidence. Next upload a receipt, confirm fields and show separate budget and policy outcomes. Correct a field to demonstrate state updates. Then search an international flight and a hotel, show source timestamps and rank reasons, and request a booking to demonstrate refusal. End with an unreadable image and a provider outage.
+
+Deliverables
+
+Working source repository, setup instructions and pinned dependencies; versioned policy corpus and source manifest; prompt versions and tool contracts; evaluated golden cases and failure report; traces with sensitive data removed; demonstration recording; architecture and team contribution summary. The files in this planning package seed these deliverables but are not the completed app.
+
+
+Repository and testing instructions
+
+Canonical planned folders: ui/, api/, domain/, retrieval/, adapters/, workflows/, prompts/, tests/unit/, tests/integration/, evaluation/ and ignored runtime/. Existing policy_sources/, fixtures/, schemas/ and docs/ are documentation and test assets. Follow docs/REPOSITORY_WORKFLOW.txt for the first commit and teammate checkout.
+
+Using the supplied tests
+
+Open START_HERE.html for the catalog. tests/golden_cases.json is the master of 120 cases; tests/golden_100.json is the required 100-case core and tests/supplemental_20.json the remaining regression cases. Traceability maps all cases to specification requirements and policy rules. Read docs/TEST_PROTOCOL.txt before building the evaluation driver.
+
+Run python validate_package.py for documentation and fixture consistency. It checks case IDs, version alignment, fixture paths, core selection, traceability and boundary arithmetic. It does not evaluate an assistant. Future evaluation must implement the documented entrypoints and normalize real results; exact money checks and human citation/prose review are both required.
+
+For image tests, load the actual PNG, compare extracted visible fields, and simulate user confirmation only when the case says so. Image-only timestamps and receipt IDs are synthetic. Search tests must use the attached provider JSON and fixed clock, not live prices. Robustness tests include explicit injected faults and session context; apply those through test adapters.
+
+Budget and dependency decisions
+
+Record API quotas and prices after access is granted. Estimate cost from actual input/output token usage plus image, embedding and travel-search charges. Put one per-run call cap and one total spend ceiling in configuration. Do not assume an inexpensive API supports vision or that a sandbox offers live inventory.
+
+Maintain portability
+
+LangChain and LangGraph reduce handwritten integration work but remain framework choices. Keep core functions and schemas plain Python; wrap them at the edge. A replacement framework should reuse the policy engine, provider ports and tests. Pin dependency versions and review upgrades deliberately.
+
+
+LangSmith monitoring and evaluation work plan
+
+Use docs/LANGSMITH_PLAN.txt and LANGSMITH_CONTRACT.json as the shared design. The SDK baseline is langsmith 0.14.17, subject to dependency resolution. The documentation task has not created an account, enabled exports or run application evaluations.
+
+Week one prepare and record the baseline
+
+Pair C chooses the workspace, region and either agent-based or project-based addressing, grants team access and creates credentials. Set trace/evaluation quotas and a cost ceiling. Keep keys local. The setup owner resolves the SDK with the other pins; implement redaction and a bounded telemetry adapter after implementation is authorized. Capture the first synthetic policy/model trace before prompt tuning. Pair A prepares dataset IDs and code evaluator mappings.
+
+Weeks two and three instrument the workflows
+
+Pair B exposes retrieval and calculator measurements; Pair C extends child spans through images, confirmation/resume, read-only provider search, ranking and critic repairs. Review actual traces together to locate slow and failing steps. Execute OBS01–OBS04 and OBS06, including canary redaction and outage behavior. Retain exact local result assertions and human review.
+
+Week four compare and deliver evidence
+
+Pair A runs the exact 100 core plus 20 supplemental cases as versioned experiments. Compare prompting/RAG/agent variants using the same model, fixture clock and dataset hash. Review citation support, action wording and failure categories. Report p50/p95 active latency, measured tokens/cost, retry/error rates and quality by route/split, with missing results visible. Complete OBS05 and attach trace/experiment links plus a redacted local summary to the capstone handoff.
+
+Delivery gate
+
+LangSmith integration is complete only when the team can inspect a real nested trace, reconcile tool counts, verify redaction and display reviewed experiment results. Use the same supplied small model for all permitted model evaluation. A telemetry outage preserves user-task results and marks monitoring degraded; it does not justify claiming that monitoring or evaluation passed.
+
+
+Docker and AWS implementation work plan
+
+Plan packaging now; implement it in M2 with the first working UI/API and validated lock. Use docs/AWS_DEPLOYMENT_PLAN.txt and DEPLOYMENT_CONTRACT.json. The first AWS target is a shared EC2 host with Compose, isolated demo and production projects and authenticated HTTPS. The current deliverable is documentation only.
+
+Week one package the skeleton
+
+Pair C and the setup owner add non-root UI/API build targets, .dockerignore, Compose development/production settings, health checks and a pinned release manifest after implementation is authorized. A second teammate validates local startup from a fresh checkout. Keep uploads, databases, secrets and gold answers outside runtime images. Record Docker/Compose, Linux architecture and base-image digest.
+
+Weeks two and three preserve deployability
+
+Keep policy, image, search and graph workflows working through Compose. Pair B owns persistent single-writer checkpoint/vector directories and consistent backup/restore design; Pair C owns S3 ReceiptStore, scoped secret delivery and verified identity propagation. Pair A supplies smoke/golden checks. Prepare AWS account/region, DNS/IdP, budget and access without treating the server as a shared code-editing workstation.
+
+Week four deploy the demo and collect readiness evidence
+
+With explicit deployment authorization, build/test/scan, publish an immutable image to ECR and deploy its digest to the EC2 demo. Configure ALB/ACM login, private backend access, Systems Manager, EBS/S3 state and CloudWatch/LangSmith. Run DEP01–DEP08, restore and rollback, and the complete golden/OBS evaluation. Extend the capstone schedule if infrastructure access or readiness testing is delayed.
+
+Production promotion after the gates
+
+M8 promotes the tested image digest only after policy/data approval, capacity and RPO/RTO evidence, retention and a named operations owner. Agree the single-host downtime risk; a fictional-policy deployment stays a labeled demo. For stronger isolation choose a separate production host. For availability/scale move to ECS and external state before adding replicas. Keep a release and recovery runbook accessible to all six teammates.

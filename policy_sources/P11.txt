@@ -1,0 +1,5 @@
+SPARKS AI Lab | FICTIONAL | Policy 1.1
+Rule P11 | Currency conversion
+Effective 2026-01-01 to 2026-12-31
+
+Use the documented rate in INR per one foreign currency unit on the transaction date; prefer the documented card statement rate when supplied. Never invent a live rate. For deterministic tests only, FX fixture FX-DEMO-2026 has USD 84, GBP 106 and SGD 63 INR per unit for 15 November 2026. These are fictional rates, not market quotes. Other currencies or dates require a supplied documented rate. Round each converted line to two decimals using ROUND_HALF_UP, then sum. Compare local caps in local currency before conversion. When independently rounded converted claimed, excluded and eligible portions differ by one paise, report the residual as rounding_adjustment_inr; never classify a rounding residual as a policy violation. Apply local-currency caps before conversion; flight caps denominated in INR apply after documented conversion. Unknown FX blocks only a conclusion that actually requires currency conversion.

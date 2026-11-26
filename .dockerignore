@@ -1,0 +1,16 @@
+.venv
+venv
+.env
+.env.*
+!.env.example
+runtime
+artifacts
+tests
+docs
+*.docx
+START_HERE.html
+manifest.json
+**/__pycache__
+.pytest_cache
+.DS_Store
+.github

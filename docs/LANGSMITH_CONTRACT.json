@@ -1,0 +1,164 @@
+{
+  "spec_version": "1.6",
+  "sdk": {
+    "package": "langsmith",
+    "version": "0.14.17",
+    "status": "RELEASE_VERIFIED_NOT_INTEGRATION_TESTED",
+    "source": "https://pypi.org/project/langsmith/0.14.17/"
+  },
+  "required_for_delivery": true,
+  "business_logic_depends_on_export": false,
+  "stage": "DOCUMENTATION_ONLY",
+  "owners": {
+    "instrumentation": "Pair C",
+    "datasets_and_review": "Pair A",
+    "tool_metrics": "Pair B"
+  },
+  "guide": "docs/LANGSMITH_PLAN.txt",
+  "metrics": [
+    {
+      "name": "active_latency_ms",
+      "unit": "milliseconds",
+      "definition": "p50/p95 per route; exclude human confirmation wait"
+    },
+    {
+      "name": "golden_pass_rate",
+      "unit": "fraction",
+      "definition": "all mandatory automatic plus human checks pass; report attempted and blocked counts"
+    },
+    {
+      "name": "retrieval_recall_at_6",
+      "unit": "fraction",
+      "definition": "required IDs in first six retrieved divided by required IDs, on applicable retrieval cases"
+    },
+    {
+      "name": "image_field_accuracy",
+      "unit": "fraction",
+      "definition": "exact readable critical fields; show unreadable abstention separately"
+    },
+    {
+      "name": "tool_error_rate",
+      "unit": "fraction",
+      "definition": "failed tool calls divided by tool calls; tag retries"
+    },
+    {
+      "name": "input_tokens",
+      "unit": "tokens",
+      "definition": "provider reported or unknown"
+    },
+    {
+      "name": "output_tokens",
+      "unit": "tokens",
+      "definition": "provider reported or unknown"
+    },
+    {
+      "name": "cost_per_success",
+      "unit": "billing currency/task",
+      "definition": "total measured cost across all attempts divided by successes; identify unknown charges"
+    }
+  ],
+  "spans": [
+    "route",
+    "planner",
+    "bm25",
+    "vector_search_if_used",
+    "fusion",
+    "rerank",
+    "answer",
+    "vision_or_ocr",
+    "confirmation",
+    "rule_resolution",
+    "calculation",
+    "provider_search",
+    "offer_filter_rank",
+    "critic",
+    "format_repair",
+    "executor_repair"
+  ],
+  "metadata_allowlist": [
+    "request_id",
+    "pseudonymous_thread_id",
+    "route",
+    "environment",
+    "app_commit",
+    "spec_version",
+    "policy_version",
+    "suite_version",
+    "model_id",
+    "prompt_hash",
+    "lock_hash",
+    "retrieval_mode",
+    "retrieved_evidence_ids",
+    "cache_hit",
+    "repair_count",
+    "provider_attempts",
+    "error_type",
+    "evaluation_case_id",
+    "split",
+    "experiment_label"
+  ],
+  "default_hide_inputs_outputs": true,
+  "raw_receipt_export_default": false,
+  "sampling_proposal": {
+    "synthetic_eval": 1.0,
+    "routine_demo": 0.1
+  },
+  "configuration": [
+    "LANGSMITH_TRACING",
+    "LANGSMITH_API_KEY",
+    "LANGSMITH_ENDPOINT",
+    "LANGSMITH_TRACING_SAMPLING_RATE",
+    "LANGSMITH_HIDE_INPUTS",
+    "LANGSMITH_HIDE_OUTPUTS"
+  ],
+  "destination_modes": {
+    "agent_based": [
+      "LANGSMITH_AGENT_ID",
+      "LANGSMITH_AGENT_ENVIRONMENT"
+    ],
+    "project_based": [
+      "LANGSMITH_PROJECT"
+    ],
+    "rule": "Choose one addressing mode and unset unused legacy destination variables."
+  },
+  "golden_datasets": {
+    "core": "tests/golden_100.json",
+    "supplemental": "tests/supplemental_20.json",
+    "source_of_truth": "repository",
+    "target_receives_reference_outputs": false,
+    "raw_images_uploaded_by_default": false
+  },
+  "acceptance_checks": [
+    {
+      "id": "OBS01",
+      "execution_status": "NOT_RUN",
+      "definition_source": "docs/LANGSMITH_PLAN.txt"
+    },
+    {
+      "id": "OBS02",
+      "execution_status": "NOT_RUN",
+      "definition_source": "docs/LANGSMITH_PLAN.txt"
+    },
+    {
+      "id": "OBS03",
+      "execution_status": "NOT_RUN",
+      "definition_source": "docs/LANGSMITH_PLAN.txt"
+    },
+    {
+      "id": "OBS04",
+      "execution_status": "NOT_RUN",
+      "definition_source": "docs/LANGSMITH_PLAN.txt"
+    },
+    {
+      "id": "OBS05",
+      "execution_status": "NOT_RUN",
+      "definition_source": "docs/LANGSMITH_PLAN.txt"
+    },
+    {
+      "id": "OBS06",
+      "execution_status": "NOT_RUN",
+      "definition_source": "docs/LANGSMITH_PLAN.txt"
+    }
+  ],
+  "outage_behavior": "Bounded exporter; unchanged domain result, DEGRADED monitoring, redacted local logs; delivery integration remains pending."
+}

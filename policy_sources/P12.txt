@@ -1,0 +1,5 @@
+SPARKS AI Lab | FICTIONAL | Policy 1.1
+Rule P12 | Budget and eligibility
+Effective 2026-01-01 to 2026-12-31
+
+A trip budget must be explicitly supplied in INR. Claimed total is the sum of confirmed submitted expense totals, including excluded amounts, without double counting receipt subtotals. Budget status is WITHIN_BUDGET when claimed total is less than or equal to budget, OVER_BUDGET otherwise; absent budget yields UNKNOWN. Policy eligibility is assessed separately per category, date and journey. Eligible amount is the sum of allowed capped amounts. Report excluded and over-cap amounts separately. A below-budget trip can still violate policy. Partial receipts cannot establish a complete trip total. With incomplete trip coverage, label the amount submitted subtotal and leave trip-budget status UNKNOWN. Budget alone never makes a claim eligible or approved. Missing budget does not block an otherwise complete policy eligibility assessment.

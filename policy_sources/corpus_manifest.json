@@ -1,0 +1,227 @@
+{
+  "policy_version": "1.1",
+  "organization_id": "demo-company",
+  "index_only": "The text files listed here; policy.json and this manifest are metadata/source authority, not duplicate retrievable documents.",
+  "documents": [
+    {
+      "document_id": "P01",
+      "rule_id": "P01",
+      "path": "P01.txt",
+      "version": "1.1",
+      "effective_from": "2026-01-01",
+      "effective_to": "2026-12-31",
+      "authority": "policy",
+      "organization_id": "demo-company",
+      "section": "Scope and dates"
+    },
+    {
+      "document_id": "P02",
+      "rule_id": "P02",
+      "path": "P02.txt",
+      "version": "1.1",
+      "effective_from": "2026-01-01",
+      "effective_to": "2026-12-31",
+      "authority": "policy",
+      "organization_id": "demo-company",
+      "section": "Domestic hotel limits"
+    },
+    {
+      "document_id": "P03",
+      "rule_id": "P03",
+      "path": "P03.txt",
+      "version": "1.1",
+      "effective_from": "2026-01-01",
+      "effective_to": "2026-12-31",
+      "authority": "policy",
+      "organization_id": "demo-company",
+      "section": "International hotel limits"
+    },
+    {
+      "document_id": "P04",
+      "rule_id": "P04",
+      "path": "P04.txt",
+      "version": "1.1",
+      "effective_from": "2026-01-01",
+      "effective_to": "2026-12-31",
+      "authority": "policy",
+      "organization_id": "demo-company",
+      "section": "Domestic flights"
+    },
+    {
+      "document_id": "P05",
+      "rule_id": "P05",
+      "path": "P05.txt",
+      "version": "1.1",
+      "effective_from": "2026-01-01",
+      "effective_to": "2026-12-31",
+      "authority": "policy",
+      "organization_id": "demo-company",
+      "section": "International flights"
+    },
+    {
+      "document_id": "P06",
+      "rule_id": "P06",
+      "path": "P06.txt",
+      "version": "1.1",
+      "effective_from": "2026-01-01",
+      "effective_to": "2026-12-31",
+      "authority": "policy",
+      "organization_id": "demo-company",
+      "section": "Domestic local transport"
+    },
+    {
+      "document_id": "P07",
+      "rule_id": "P07",
+      "path": "P07.txt",
+      "version": "1.1",
+      "effective_from": "2026-01-01",
+      "effective_to": "2026-12-31",
+      "authority": "policy",
+      "organization_id": "demo-company",
+      "section": "International local transport"
+    },
+    {
+      "document_id": "P08",
+      "rule_id": "P08",
+      "path": "P08.txt",
+      "version": "1.1",
+      "effective_from": "2026-01-01",
+      "effective_to": "2026-12-31",
+      "authority": "policy",
+      "organization_id": "demo-company",
+      "section": "Meals"
+    },
+    {
+      "document_id": "P09",
+      "rule_id": "P09",
+      "path": "P09.txt",
+      "version": "1.1",
+      "effective_from": "2026-01-01",
+      "effective_to": "2026-12-31",
+      "authority": "policy",
+      "organization_id": "demo-company",
+      "section": "Evidence and confirmation"
+    },
+    {
+      "document_id": "P10",
+      "rule_id": "P10",
+      "path": "P10.txt",
+      "version": "1.1",
+      "effective_from": "2026-01-01",
+      "effective_to": "2026-12-31",
+      "authority": "policy",
+      "organization_id": "demo-company",
+      "section": "Exclusions and exceptions"
+    },
+    {
+      "document_id": "P11",
+      "rule_id": "P11",
+      "path": "P11.txt",
+      "version": "1.1",
+      "effective_from": "2026-01-01",
+      "effective_to": "2026-12-31",
+      "authority": "policy",
+      "organization_id": "demo-company",
+      "section": "Currency conversion"
+    },
+    {
+      "document_id": "P12",
+      "rule_id": "P12",
+      "path": "P12.txt",
+      "version": "1.1",
+      "effective_from": "2026-01-01",
+      "effective_to": "2026-12-31",
+      "authority": "policy",
+      "organization_id": "demo-company",
+      "section": "Budget and eligibility"
+    },
+    {
+      "document_id": "P13",
+      "rule_id": "P13",
+      "path": "P13.txt",
+      "version": "1.1",
+      "effective_from": "2026-01-01",
+      "effective_to": "2026-12-31",
+      "authority": "policy",
+      "organization_id": "demo-company",
+      "section": "Submission deadline"
+    },
+    {
+      "document_id": "P14",
+      "rule_id": "P14",
+      "path": "P14.txt",
+      "version": "1.1",
+      "effective_from": "2026-01-01",
+      "effective_to": "2026-12-31",
+      "authority": "policy",
+      "organization_id": "demo-company",
+      "section": "Duplicates"
+    },
+    {
+      "document_id": "P15",
+      "rule_id": "P15",
+      "path": "P15.txt",
+      "version": "1.1",
+      "effective_from": "2026-01-01",
+      "effective_to": "2026-12-31",
+      "authority": "policy",
+      "organization_id": "demo-company",
+      "section": "Image input rules"
+    },
+    {
+      "document_id": "P16",
+      "rule_id": "P16",
+      "path": "P16.txt",
+      "version": "1.1",
+      "effective_from": "2026-01-01",
+      "effective_to": "2026-12-31",
+      "authority": "policy",
+      "organization_id": "demo-company",
+      "section": "Search inputs and ranking"
+    },
+    {
+      "document_id": "P17",
+      "rule_id": "P17",
+      "path": "P17.txt",
+      "version": "1.1",
+      "effective_from": "2026-01-01",
+      "effective_to": "2026-12-31",
+      "authority": "policy",
+      "organization_id": "demo-company",
+      "section": "Search freshness and missing costs"
+    },
+    {
+      "document_id": "P18",
+      "rule_id": "P18",
+      "path": "P18.txt",
+      "version": "1.1",
+      "effective_from": "2026-01-01",
+      "effective_to": "2026-12-31",
+      "authority": "policy",
+      "organization_id": "demo-company",
+      "section": "No booking and data isolation"
+    },
+    {
+      "document_id": "P19",
+      "rule_id": "P19",
+      "path": "P19.txt",
+      "version": "1.1",
+      "effective_from": "2026-01-01",
+      "effective_to": "2026-12-31",
+      "authority": "policy",
+      "organization_id": "demo-company",
+      "section": "Conflicts and abstention"
+    },
+    {
+      "document_id": "P20",
+      "rule_id": "P20",
+      "path": "P20.txt",
+      "version": "1.1",
+      "effective_from": "2026-01-01",
+      "effective_to": "2026-12-31",
+      "authority": "policy",
+      "organization_id": "demo-company",
+      "section": "Calculation and safety contract"
+    }
+  ]
+}

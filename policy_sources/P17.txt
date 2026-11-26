@@ -1,0 +1,5 @@
+SPARKS AI Lab | FICTIONAL | Policy 1.1
+Rule P17 | Search freshness and missing costs
+Effective 2026-01-01 to 2026-12-31
+
+Every recommendation includes provider, offer ID, retrieved_at, expiry when available, currency, price basis, tax and fee inclusion, baggage for flights, cancellation terms when supplied, and policy status. For this prototype an offer older than 15 minutes or explicitly expired must be refreshed before it can be recommended as current. Missing taxes, baggage charges or unknown FX yield PROVISIONAL, not confirmed compliance. Search amounts are estimates, not final charge guarantees. Fixture data must be labeled DEMO and never described as live inventory. No FX conversion is needed to assess a hotel or local transport amount against a cap in the same currency. Such a result may be compliant in local currency without asserting an INR total or INR trip-budget conclusion. FX is required for international flight caps denominated in INR. Exactly 15 minutes old is still fresh unless explicitly expired; expires_at at or before the test clock is expired. Missing expiry may be null, but retrieved_at is required.

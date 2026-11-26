@@ -1,0 +1,148 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Reference data and controlled vocabularies",
+  "description": "Enumerations shared by the application, the evaluation driver and the golden suite.",
+  "type": "object",
+  "required": [
+    "reference_data_version",
+    "countries",
+    "city_tiers",
+    "city_aliases",
+    "currencies",
+    "expense_categories",
+    "fx",
+    "routes",
+    "vocabularies"
+  ],
+  "properties": {
+    "reference_data_version": {
+      "type": "string"
+    },
+    "spec_version": {
+      "type": "string"
+    },
+    "policy_version": {
+      "type": "string"
+    },
+    "purpose": {
+      "type": "string"
+    },
+    "countries": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "code",
+          "name",
+          "currency",
+          "is_home",
+          "supported",
+          "iso_3166_alpha_2",
+          "notes"
+        ],
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "currency": {
+            "type": "string"
+          },
+          "is_home": {
+            "type": "boolean"
+          },
+          "supported": {
+            "type": "boolean"
+          },
+          "iso_3166_alpha_2": {
+            "type": "string"
+          },
+          "notes": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "unsupported_country_behavior": {
+      "type": "string"
+    },
+    "city_tiers": {
+      "type": "object",
+      "required": [
+        "applies_to",
+        "metro",
+        "default_tier"
+      ],
+      "properties": {
+        "applies_to": {
+          "type": "string"
+        },
+        "metro": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "default_tier": {
+          "type": "string"
+        },
+        "notes": {
+          "type": "string"
+        }
+      }
+    },
+    "city_aliases": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "city_alias_rule": {
+      "type": "string"
+    },
+    "currencies": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "expense_categories": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "category_notes": {
+      "type": "string"
+    },
+    "fx": {
+      "type": "object"
+    },
+    "routes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "vocabularies": {
+      "type": "object"
+    },
+    "change_control": {
+      "type": "string"
+    },
+    "city_gazetteer": {
+      "type": "object"
+    },
+    "country_names": {
+      "type": "object"
+    }
+  },
+  "additionalProperties": false
+}

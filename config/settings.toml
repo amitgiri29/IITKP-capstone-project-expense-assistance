@@ -1,0 +1,72 @@
+# Runtime configuration for the expense policy assistant.
+#
+# Secrets never go in this file. Each *_env setting names an environment
+# variable; put its value in your local .env (git-ignored) or your secret store.
+# Override this file's location with EXPENSE_CONFIG=/path/to/settings.toml.
+
+[app]
+environment = "local"
+organization_id = "demo-company"
+data_dir = "runtime"
+api_base_url = "http://127.0.0.1:8000"
+session_ttl_hours = 24
+
+[model]
+# provider:
+#   "claude_code"        local testing: calls the Claude Code CLI in print mode with your existing
+#                        Claude Code sign-in (no API key; tools disabled). Not available inside Docker.
+#   "anthropic"          Claude API via the official SDK; key in the env var named by api_key_env.
+#   "openai_compatible"  an externally hosted chat-completions endpoint at base_url.
+# To switch to your hosted model later, change provider, model_id, base_url and api_key_env here,
+# or set the EXPENSE_MODEL_* overrides in .env (see colab/README.md for the Colab-hosted Qwen model).
+provider = "claude_code"
+model_id = "claude-sonnet-5-5"
+base_url = ""                      # empty = provider default endpoint
+api_key_env = "ANTHROPIC_API_KEY"  # name of the env var that holds the key or token (not used by claude_code)
+timeout_seconds = 120
+max_output_tokens = 16000
+effort = "medium"                  # low | medium | high
+supports_vision = true
+server_side_fallback = true        # Claude API refusal fallback (anthropic provider only)
+cli_path = "claude"                # claude_code provider: CLI executable
+max_budget_usd_per_call = 0.5      # claude_code provider: hard spend cap per call
+
+[travel]
+# provider: "fixture" (offline DEMO offers from fixtures/search) or
+# "http" (an external travel search API at base_url).
+provider = "fixture"
+base_url = ""                      # e.g. https://travel-api.example.com
+api_key_env = "TRAVEL_API_KEY"
+timeout_seconds = 20
+fixture_dir = "fixtures/search"
+
+[retrieval]
+top_k = 6                          # passages sent to the model
+keyword_candidates = 15            # BM25 shortlist size
+vector_candidates = 15             # semantic shortlist size (when embeddings are enabled)
+rerank = false                     # bounded same-model rerank of the shortlist (one extra model call)
+chunk_size_chars = 1800            # LangChain splitter chunk size (~400 tokens)
+chunk_overlap_chars = 200          # overlap between neighbouring chunks
+
+[embeddings]
+# provider:
+#   "fastembed"          free local model on CPU (approved stand-in until hosted embeddings arrive).
+#                        First use downloads ~200 MB from Hugging Face into cache_dir.
+#   "openai_compatible"  your hosted provider's /embeddings endpoint (set base_url, model_id, api_key_env).
+#   "none"               keyword-only retrieval.
+# Changing model_id re-embeds everything automatically; vectors are cached per model.
+provider = "fastembed"
+model_id = "BAAI/bge-small-en-v1.5"
+base_url = ""
+api_key_env = "EMBEDDINGS_API_KEY"
+cache_dir = "runtime/models"
+batch_size = 64
+timeout_seconds = 60
+# When provider = "openai_compatible" (e.g. the Colab-hosted endpoint in colab/) and it does not answer
+# at API startup, use this local model instead. "none" or "" keeps the old behaviour (keyword-only).
+fallback_provider = "fastembed"
+fallback_model_id = "BAAI/bge-small-en-v1.5"
+
+[telemetry]
+langsmith_enabled = false          # cloud export stays off until a workspace and budget are approved
+local_trace = true                 # redacted JSONL traces under data_dir/traces

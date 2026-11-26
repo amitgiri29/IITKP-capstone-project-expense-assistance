@@ -1,0 +1,5 @@
+SPARKS AI Lab | FICTIONAL | Policy 1.1
+Rule P03 | International hotel limits
+Effective 2026-01-01 to 2026-12-31
+
+All inclusive nightly room caps for one room and traveler: US in USD, E 180 and M 250; UK in GBP, E 150 and M 210; Singapore in SGD, E 220 and M 300. Other countries require human review because no rate is defined. Each night is assessed independently. Currency must match the country rate or have an explicit documented conversion. Unknown taxes or mandatory fees make a search offer provisional.

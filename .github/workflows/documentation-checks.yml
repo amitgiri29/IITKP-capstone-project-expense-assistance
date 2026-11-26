@@ -1,0 +1,17 @@
+name: Documentation and fixture checks
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.14.10'
+      - name: Validate documentation and test data only
+        # Standard library only. If this job reports that manifest.json is out of date or a
+        # derived artifact is stale, run python build_package.py locally (it needs python-docx)
+        # and commit the regenerated files.
+        run: python validate_package.py

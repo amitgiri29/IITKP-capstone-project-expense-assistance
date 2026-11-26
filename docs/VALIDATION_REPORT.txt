@@ -1,0 +1,26 @@
+DOCUMENTATION VALIDATION REPORT
+7 November 2026
+
+PASS: exactly 100 core and 20 supplemental cases; exports match the 120-case master.
+PASS: every expected leaf has an automatic comparison or explicit human meaning check.
+PASS: all cases map to specification requirement IDs and policy references; fixture paths resolve.
+PASS: policy JSON and per-section text match the Word policy; the complete portable specification matches Word paragraph content.
+PASS: fixed calculation-boundary expectations checked using Decimal.
+PASS: all JSON files parse and local document links resolve. Formal JSON Schema engine validation was not run; schemas are specification artifacts.
+PASS: final Word rendering inspected; specification 26 pages, fictional policy 5 pages, team plan 6 pages.
+PASS: a temporary local Git commit and fresh clone preserve required dotfiles, data and fixtures; validate_package.py succeeds in that clone. No external remote was used.
+
+NOT RUN: application tests, model calls, actual OCR, live travel search, dependency resolution, lockfile smoke tests and hosted CI. The assistant is not implemented. Golden execution remains NOT_RUN; expected answers require team review before final grading.
+
+PASS: specification 1.5 and Docker/AWS contracts, proposed tools/AWS SDK, three architecture assets and DEP01–DEP08 definitions align. All golden case records and policy remain unchanged.
+NOT RUN: Docker image builds, dependency resolution, AWS provisioning, authenticated smoke/load checks, backups/restore/rollback and DEP01–DEP08. No AWS resources were created.
+
+7 November 2026 — specification 1.6 revision
+PASS: python build_package.py regenerated all three Word documents, docs/REQUIREMENTS.txt and the five golden exports, then python validate_package.py succeeded.
+PASS: the 30 calculation goldens are now recomputed from policy_sources/rule_registry.json with Decimal; the hard-coded cap table was removed from the validator and no expected amount changed.
+PASS: every country, currency, readiness, compliance, budget and run status value used by the 120 cases resolves in policy_sources/reference_data.json, and each case's documented FX rate matches its named fixture.
+PASS: all 21 golden entrypoints have contracts in IMPLEMENTATION_CONTRACT.json; each case's test layer, input fields, expected fields and requirement IDs are within its contract.
+PASS: every file hash in manifest.json matches, and each derived artifact records the hashes of the sources it was built from so a stale rebuild fails the check.
+PASS: each regenerated Word document reproduces its source exactly; no paragraph or heading exists in a Word file that is not a verbatim line of SPECIFICATION.txt or docs/TEAM_PLAN.txt.
+FIXED: the Word copy of the fictional policy described itself as supporting specification 1.3 while the text sources had moved on. It is now generated from policy.json.
+NOT RUN: Word page counts were not re-inspected after the new sections were added; application tests, model calls, OCR, live search, dependency resolution and deployment remain NOT RUN. All 120 golden cases remain NOT_RUN.

@@ -1,0 +1,3 @@
+# Proposed AWS-specific dependencies; resolve and lock during deployment implementation.
+-r requirements-proposed.txt
+boto3==1.43.126

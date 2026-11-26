@@ -1,0 +1,12 @@
+ENVIRONMENT REPORT
+recorded: 2026-11-07
+python: 3.14.10 CPython
+python_build: main Nov  7 2026 18:23:33
+pip: 26.3
+sqlite_engine: 3.51.0
+os: macOS-26.5-arm64-arm-64bit-Mach-O
+machine: arm64
+installer: pyenv 2.8.14 (Homebrew)
+lockfile: requirements.lock.txt
+smoke_checks: imports of all 14 direct packages; FastAPI TestClient request; LangGraph graph with SqliteSaver checkpoint; Pillow decode of fixtures/receipts/receipt_01.png; rank-bm25 scoring
+second_machine_validation: NOT_RUN

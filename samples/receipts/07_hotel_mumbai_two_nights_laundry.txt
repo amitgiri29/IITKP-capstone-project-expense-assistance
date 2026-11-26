@@ -1,0 +1,10 @@
+Seaview Residency, Bandra Kurla Complex, Mumbai, Maharashtra, India
+FICTIONAL TEST RECEIPT - synthetic data for the SPARKS AI Lab capstone.
+Tax invoice SVR/2026/04417          Invoice date: 16 Nov 2026
+Guest: Kavya Iyer
+Arrival: 14 Nov 2026     Departure: 16 Nov 2026     Nights: 2
+Night of 14 Nov 2026 (room + GST, all taxes included)   INR 7,500.00
+Night of 15 Nov 2026 (room + GST, all taxes included)   INR 6,800.00
+Laundry                                                  INR   450.00
+Total payable                                            INR 14,750.00
+Paid by corporate card. Thank you for staying with us.

@@ -1,0 +1,41 @@
+/* Shared style for SPARKS AI Lab architecture diagrams (rendered to PNG with playwright-cli). */
+@font-face { font-family:'Inter'; font-weight:400; src:url('/ui/static/fonts/inter-latin-400-normal.woff2') format('woff2'); }
+@font-face { font-family:'Inter'; font-weight:500; src:url('/ui/static/fonts/inter-latin-500-normal.woff2') format('woff2'); }
+@font-face { font-family:'Inter'; font-weight:600; src:url('/ui/static/fonts/inter-latin-600-normal.woff2') format('woff2'); }
+@font-face { font-family:'Inter'; font-weight:700; src:url('/ui/static/fonts/inter-latin-700-normal.woff2') format('woff2'); }
+@font-face { font-family:'Inter'; font-weight:800; src:url('/ui/static/fonts/inter-latin-800-normal.woff2') format('woff2'); }
+@font-face { font-family:'JetBrains Mono'; font-weight:500; src:url('/ui/static/fonts/jetbrains-mono-latin-500-normal.woff2') format('woff2'); }
+* { box-sizing: border-box; margin: 0; }
+body { font-family: 'Inter', sans-serif; background: #F8FAFC; color: #0F172A; padding: 36px 40px; width: 1600px; }
+.head { display:flex; justify-content:space-between; align-items:flex-end; margin-bottom: 22px; }
+.head h1 { font-size: 30px; font-weight: 800; letter-spacing: -.02em; }
+.head p { font-size: 15px; color: #475569; margin-top: 6px; }
+.brand { display:flex; align-items:center; gap:10px; font-weight:800; letter-spacing:.08em; font-size: 16px; }
+.brand img { width: 40px; height: 40px; }
+.chip-ai { font-size: 11px; font-weight: 700; color:#BE123C; background:#FFF1F2; border:1px solid #FECDD3; border-radius:5px; padding:2px 6px; letter-spacing:0; }
+.mono { font-family: 'JetBrains Mono', monospace; }
+.layer { background:#FFFFFF; border:1px solid #E2E8F0; border-radius: 14px; padding: 14px 16px; box-shadow: 0 1px 3px rgba(15,23,42,.05); }
+.layer-h { display:flex; align-items:center; justify-content:space-between; margin-bottom: 10px; }
+.layer-h b { font-size: 15px; }
+.tech { font-family:'JetBrains Mono', monospace; font-size: 11.5px; font-weight: 500; color:#475569; background:#F1F5F9;
+  border:1px solid #E2E8F0; border-radius: 6px; padding: 3px 8px; }
+.tag { display:inline-block; font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; padding: 3px 8px; border-radius: 999px; }
+.t-ui { color:#BE123C; background:#FFF1F2; } .t-api { color:#4F46E5; background:#EEF2FF; } .t-app { color:#047857; background:#ECFDF5; }
+.t-ad { color:#B45309; background:#FFFBEB; } .t-data { color:#334155; background:#F1F5F9; } .t-ext { color:#0E7490; background:#ECFEFF; }
+.chips { display:flex; flex-wrap:wrap; gap: 7px; }
+.chip { font-size: 12.5px; font-weight: 500; color:#334155; background:#F8FAFC; border:1px solid #E2E8F0; border-radius: 8px; padding: 6px 10px; }
+.chip.on { border-color:#A7F3D0; background:#ECFDF5; color:#065F46; }
+.chip.plan { border-style: dashed; color:#64748B; background:#FFFFFF; }
+.chip.ai { border-color:#C7D2FE; background:#EEF2FF; color:#3730A3; }
+.chip.admin { border-color:#FECDD3; background:#FFF1F2; color:#9F1239; }
+.cols { display:grid; gap: 12px; }
+.box { border:1px solid #E2E8F0; border-radius: 12px; padding: 12px; background:#FFFFFF; }
+.box h4 { font-size: 13.5px; margin-bottom: 8px; display:flex; justify-content:space-between; align-items:center; gap: 8px; }
+.box ul { padding-left: 16px; font-size: 12.5px; color:#334155; line-height: 1.6; }
+.arrow { text-align:center; color:#94A3B8; font-size: 12px; font-weight: 600; letter-spacing:.04em; margin: 6px 0; }
+.arrow:before { content: "▼"; display:block; font-size: 14px; color:#CBD5E1; line-height: 1; }
+.dash { border: 1.5px dashed #CBD5E1 !important; background: #FFFFFF; }
+.legend { display:flex; gap: 18px; font-size: 12.5px; color:#475569; margin-top: 16px; align-items:center; flex-wrap: wrap; }
+.legend span { display:inline-flex; align-items:center; gap: 6px; }
+.sw { width: 18px; height: 12px; border-radius: 4px; display:inline-block; border:1px solid #E2E8F0; }
+.foot { margin-top: 14px; font-size: 12px; color:#64748B; display:flex; justify-content:space-between; }

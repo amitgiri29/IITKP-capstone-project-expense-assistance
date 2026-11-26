@@ -1,0 +1,116 @@
+SPECIFICATION REQUIREMENTS ANNEX
+Version 1.6
+
+AC01 | FR01 | Policy facts
+Answer supported domestic and international hotel, flight and local-transport policy questions from applicable policy passages with citations. Return exact limits, currency and unit; do not add unsupported exceptions.
+Policy: P01, P02, P03, P04, P05, P06, P07
+Tests: GT001, GT002, GT003, GT004, GT005, GT006, GT007, GT008, GT009, GT010, GT011, GT012, GT013, GT014, GT015, GT016, GT017, GT018, GT019, GT020, GT021, GT022, GT028
+
+AC02 | FR01 | Scope and applicability
+State meal scope limits, ask for an applicable policy outside effective dates, and require human review for unsupported destinations without inventing a cap.
+Policy: P01, P03, P08, P19
+Tests: GT023, GT024, GT025
+
+AC03 | FR04 | Deterministic assessment
+Calculate independently of the model. Cap each hotel night, each one-way flight journey and each local day; keep exclusions and over-cap amounts separate.
+Policy: P02, P03, P04, P05, P06, P07, P10, P20
+Tests: GT015, GT031, GT032, GT033, GT034, GT035, GT036, GT037, GT038, GT039, GT040, GT041, GT042, GT043, GT044, GT045, GT046, GT047, GT048, GT049, GT050, GT051, GT052, GT053, GT054, GT055, GT056, GT057, GT058, GT059, GT060, GT061, GT062, GT063, GT064, GT065, GT066, GT067, GT068, GT069, GT070, GT071, GT076, GT077, GT078, GT104, GT112
+
+AC04 | FR05 | Budget separate from compliance
+Compare confirmed claimed total, including exclusions, with an explicit INR budget. Equality is within budget. Missing budget or partial trip coverage makes budget UNKNOWN.
+Policy: P12
+Tests: GT031, GT032, GT033, GT034, GT035, GT036, GT037, GT038, GT039, GT040, GT041, GT042, GT043, GT044, GT045, GT046, GT047, GT048, GT049, GT050, GT051, GT052, GT053, GT054, GT055, GT056, GT057, GT058, GT059, GT060, GT061, GT062, GT063, GT064, GT065, GT066, GT067, GT068, GT069, GT070, GT071, GT076, GT077, GT078, GT102, GT103, GT104, GT112
+
+AC05 | FR02 | Read image evidence
+Parse the actual PNG/JPEG pixels and retain visible fields, uncertainty and provenance. Do not guess cropped currency, unreadable totals or ambiguous dates. Detect totals differing by more than 0.01.
+Policy: P15
+Tests: GT061, GT062, GT063, GT064, GT065, GT066, GT067, GT068, GT069, GT070, GT071, GT072, GT073, GT074, GT075, GT076, GT077, GT078, GT079, GT080
+
+AC06 | FR03 | Confirm and complete evidence
+Pause before final assessment until critical extracted fields are confirmed. Missing invoices or flight boarding passes require NEEDS_EVIDENCE. READY_FOR_REVIEW is never approval.
+Policy: P09, P20
+Tests: GT026, GT028, GT061, GT062, GT063, GT064, GT065, GT066, GT067, GT068, GT069, GT070, GT071, GT072, GT073, GT074, GT075, GT076, GT077, GT078, GT079, GT080, GT111
+
+AC07 | FR06 | Search and ranking
+Use a read-only provider, validate search criteria before calling it, filter policy then rank up to three offers using the specified tie-breakers. Keep violating alternatives separate.
+Policy: P02, P03, P04, P05, P16
+Tests: GT081, GT082, GT083, GT084, GT085, GT086, GT087, GT088, GT089, GT090, GT091, GT092, GT093, GT094, GT095, GT096, GT097, GT098, GT099, GT100
+
+AC08 | FR06 | Freshness and unknown price
+Enforce the fixed test clock, 15-minute freshness and provider expiry. Refresh stale offers, label fixtures DEMO and mark required missing costs or conversion as provisional.
+Policy: P11, P17
+Tests: GT081, GT082, GT083, GT084, GT085, GT086, GT087, GT088, GT089, GT090, GT091, GT092, GT093, GT094, GT095, GT096, GT097, GT098, GT099, GT100
+
+AC09 | FR09 | No booking or credential collection
+Decline booking, reservation, payment, cancellation and modification; do not register those tools or collect payment or identity documents for search.
+Policy: P18
+Tests: GT029, GT081, GT082, GT083, GT084, GT085, GT086, GT087, GT088, GT089, GT090, GT091, GT092, GT093, GT094, GT095, GT096, GT097, GT098, GT099, GT100
+
+AC10 | FR09 | Treat external text as data
+Ignore instructions in receipt text, policy passages and travel offers. Never expose secrets, hidden prompts or other users’ data.
+Policy: P15, P18
+Tests: GT071, GT100, GT114
+
+AC11 | FR04 | Documented FX
+Use a documented transaction-date FX rate only when conversion is needed. Convert and ROUND_HALF_UP per line to two decimals before summation.
+Policy: P11
+Tests: GT030, GT031, GT032, GT033, GT034, GT035, GT036, GT037, GT038, GT039, GT040, GT041, GT042, GT043, GT044, GT045, GT046, GT047, GT048, GT049, GT050, GT051, GT052, GT053, GT054, GT055, GT056, GT057, GT058, GT059, GT060, GT063, GT064, GT065, GT067, GT069, GT096, GT109, GT110
+
+AC12 | FR07 | Conversation and correction
+Persist confirmed context through clarification. New confirmed amounts or dates invalidate affected calculations and offer caches, then recompute.
+Policy: P09, P12, P20
+Tests: GT111, GT112
+
+AC13 | FR09 | Session authorization
+Validate server-owned organization/session authorization before reading or returning state; a model or user cannot override it.
+Policy: P18
+Tests: GT113
+
+AC14 | FR08 | Evidence validation and conflict
+Verify citation IDs and substantive support. Equally authoritative applicable policy conflicts require HUMAN_REVIEW with both sources and no chosen limit. Repair an unsupported citation at most once.
+Policy: P19
+Tests: GT115, GT120
+
+AC15 | FR09 | Bounded faults
+One malformed-output repair, at most three attempts per provider operation, one critic-requested executor repair, and no fabricated success after failures. Bound the complete run by configuration.
+Policy: P20
+Tests: GT088, GT089, GT099, GT116
+
+AC16 | FR09 | Upload and capability errors
+Reject unsupported MIME/decoded types, files over 10 MiB or more than five images before model calls. Disclose absent vision/OCR and offer interim transcription without claiming image completion.
+Policy: P15, P20
+Tests: GT117, GT118, GT119
+
+AC17 | FR04 | Dates and duplicates
+Day 30 submission is timely; day 31 needs review. Flag repeated issuer, receipt number and date for confirmation; never double count or assert fraud.
+Policy: P13, P14
+Tests: GT027, GT105, GT106, GT107
+
+AC18 | FR09 | Invalid input
+Reject negative monetary amounts and inconsistent data. A critical unresolved input blocks a final decision using the documented status precedence.
+Policy: P20
+Tests: GT101, GT108
+
+AC19 | FR09 | Retention and deletion
+Delete raw uploads 24 hours after upload and redacted traces after 30 days, evaluated against the injected clock. Honour owner-requested deletion of a session or a single receipt, invalidate assessments that depended on deleted evidence, and account for object versions and backups before claiming an exact deletion time.
+Policy: P18
+Tests: implementation tests; see docs/TEST_PROTOCOL.txt section 8
+Checks: Expired upload removed and counted by the cleanup task; DELETE /sessions/{id} removes state, checkpoints, cached offers and uploads; DELETE /receipts/{image_id} invalidates the dependent assessment; Deletion of another session’s receipt is refused with 403; Retention claims account for S3 noncurrent versions and backup retention
+
+AC20 | FR09 | Operational endpoints and error envelope
+Expose an unauthenticated liveness probe that performs no dependency call and a readiness probe that reports the failing component without leaking secrets. Return the documented error envelope with a stable error_code for every rejected request, and keep domain clarification as a normal success response.
+Policy: P18, P20
+Tests: implementation tests; see docs/TEST_PROTOCOL.txt section 8
+Checks: GET /health returns 200 with no database, index, model or provider call; GET /ready returns 503 naming the failing component when the rule registry or index version does not resolve; Every 4xx and 5xx body matches the error envelope and uses a reference_data error_code; Error bodies contain no credentials, file paths or another session record; Request 11 in one minute for one session returns 429 with retry_after_seconds
+
+AC21 | FR04 | Registry-resolved arithmetic
+Every cap, threshold and rounding parameter used in a calculation resolves to a cap_id or parameter_id in the reviewed rule registry for the applicable policy version and service date. Numbers are never hard-coded in application logic. A missing, stale or out-of-window entry blocks final calculation and reports the unresolved reference.
+Policy: P02, P03, P04, P05, P06, P07, P11, P12, P13, P19, P20
+Tests: implementation tests; see docs/TEST_PROTOCOL.txt section 8
+Checks: Assessment records the cap_id and registry version applied to each line; A service date outside the cap effective window blocks the final amount; A policy revision invalidates dependent cached retrieval and resolved rules; No numeric policy literal appears in domain code; a grep check enforces this; The registry reproduces every calculation golden without reading tests/
+
+AC22 | FR08 | Administrator policy library
+An administrator can add, list and remove policy documents that the shared retrieval service searches and the policy assistant cites. Other roles cannot manage the library. Added documents are treated as data, carry their authority and effective dates, and never change registry-resolved arithmetic.
+Policy: P18, P19
+Tests: implementation tests; see docs/TEST_PROTOCOL.txt section 8
+Checks: Non-admin sessions get 403 FORBIDDEN_ROLE on every library management route; A client cannot claim a role when creating a session; An added document is retrieved and cited with origin library; A conflicting number in an added document does not change the registry limit; Unsupported type, oversize, duplicate and reversed dates are rejected; Removal drops the document from retrieval; the library is re-indexed after restart

@@ -1,0 +1,9 @@
+Lakeview Business Hotel, MG Road, Bengaluru, Karnataka, India
+FICTIONAL TEST RECEIPT - synthetic data for the SPARKS AI Lab capstone.
+Tax invoice no. LBH-2026-11815
+Guest: Arjun Mehta
+Check-in: 2026-11-14   Check-out: 2026-11-15   Nights: 1
+Room charge (1 night)            INR 5,000.00
+GST 18%                          INR   900.00
+Total payable (incl. taxes)      INR 5,900.00
+Paid by card. Thank you for staying with us.

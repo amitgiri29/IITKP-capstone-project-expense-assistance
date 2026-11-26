@@ -1,0 +1,39 @@
+# Server-held traveler directory for the fictional organization.
+# Grade and role come from here, never from the user's message (IMPLEMENTATION_CONTRACT identity.grade_authority).
+# role: "employee" or "admin". Only admins can add or remove policy library documents.
+# The three accounts are fixed: the sign-in screen offers exactly these and nothing else.
+# All people below are synthetic (invented names; .example addresses cannot receive mail).
+
+[organization]
+id = "demo-company"
+name = "SPARKS AI Lab (fictional)"
+
+[[travelers]]
+traveler_id = "employee-A"
+display_name = "Arjun Mehta"
+job_title = "Software Engineer"
+department = "Engineering"
+location = "Bengaluru"
+email = "arjun.mehta@sparks-ai-lab.example"
+grade = "E"
+role = "employee"
+
+[[travelers]]
+traveler_id = "manager-B"
+display_name = "Kavya Iyer"
+job_title = "Engineering Manager"
+department = "Engineering"
+location = "Bengaluru"
+email = "kavya.iyer@sparks-ai-lab.example"
+grade = "M"
+role = "employee"
+
+[[travelers]]
+traveler_id = "admin-P"
+display_name = "Rohan Desai"
+job_title = "Finance & Policy Administrator"
+department = "Finance"
+location = "Mumbai"
+email = "rohan.desai@sparks-ai-lab.example"
+grade = "M"
+role = "admin"

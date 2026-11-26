@@ -1,0 +1,5 @@
+SPARKS AI Lab | FICTIONAL | Policy 1.1
+Rule P16 | Search inputs and ranking
+Effective 2026-01-01 to 2026-12-31
+
+Hotel search needs country, city, checkin, checkout, grade, rooms and travelers; MVP supports one room and one adult. Flight search needs origin, destination, date, grade, traveler count, cabin, one way or return, and return date if applicable. Candidate fixtures use one adult. Filter hard constraints and policy first. Rank eligible hotels by all inclusive stay total, then distance to venue if known, then offer ID. Rank eligible flights by all inclusive price, then duration, then offer ID. Return up to three eligible options. If fewer qualify, return fewer. Noncompliant alternatives must be shown separately with the violation. For tied hotel prices, a known venue distance sorts before an unknown distance; sort known distances ascending, then offer ID lexicographically. Offers with different currencies require documented conversion to a common comparison currency before ranking. An incomplete cost breakdown is provisional, not compliant. One adult is supported for flight search as well as hotels.

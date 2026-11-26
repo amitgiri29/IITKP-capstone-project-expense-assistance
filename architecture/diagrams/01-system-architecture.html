@@ -1,0 +1,55 @@
+<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="diagram.css"><title>System architecture</title></head><body>
+<div class="head">
+  <div><h1>SPARKS AI Lab · Expense Policy Assistant — System architecture</h1>
+  <p>Layered design: policy numbers live in a reviewed registry, frameworks stay at the edges, identity is server-held.</p></div>
+  <div class="brand"><img src="/assets/brand/sparks-ai-lab-mark.png" alt="">SPARKS <span class="chip-ai">AI LAB</span></div>
+</div>
+<div style="display:grid;grid-template-columns: 250px 1fr 270px; gap: 18px; align-items:start">
+  <!-- left: users + evaluation -->
+  <div style="display:flex;flex-direction:column;gap:14px">
+    <div class="box"><h4>Users <span class="tag t-ext">Browser</span></h4>
+      <ul><li>Employee (grade E)</li><li>Manager (grade M)</li><li>Policy administrator</li></ul></div>
+    <div class="box dash"><h4>Evaluation harness</h4>
+      <ul><li>Driver over 21 entrypoint contracts</li><li>120 golden cases, Decimal comparators</li><li>Fresh context per case; canaries; observations from events</li><li>273 automated tests (pytest)</li></ul></div>
+    <div class="box dash"><h4>Package tooling</h4>
+      <ul><li>build_package.py · validate_package.py</li><li>Derived Word docs, manifest hashes</li></ul></div>
+  </div>
+  <!-- centre: layers -->
+  <div>
+    <div class="layer"><div class="layer-h"><span><span class="tag t-ui">Presentation</span> &nbsp;<b>Streamlit web UI</b></span><span class="tech">Streamlit 1.67 · self-hosted Inter</span></div>
+      <div class="chips"><span class="chip">Home &amp; limits</span><span class="chip ai">Policy Assistant</span><span class="chip">Claims &amp; Verification</span><span class="chip">Receipts</span><span class="chip">Travel Search</span><span class="chip">Travel Band Limits</span><span class="chip admin">Policy Documents (admin upload · chunk · embed)</span></div></div>
+    <div class="arrow">HTTPS JSON · bearer session token</div>
+    <div class="layer"><div class="layer-h"><span><span class="tag t-api">API &amp; security</span> &nbsp;<b>FastAPI service</b></span><span class="tech">FastAPI 0.162 · Uvicorn 0.54 · Pydantic 2.14</span></div>
+      <div class="chips"><span class="chip on">Sessions · grade &amp; role from directory</span><span class="chip on">Rate limit 10/min/session</span><span class="chip on">Error envelope</span><span class="chip on">Upload validation (Pillow)</span><span class="chip on">/health · /ready</span><span class="chip on">Redacted request traces</span><span class="chip admin">/admin/policies (admin only)</span></div></div>
+    <div class="arrow">in-process calls</div>
+    <div class="cols" style="grid-template-columns: 1fr 1fr 1fr">
+      <div class="box"><h4>Workflows <span class="tag t-app">Application</span></h4>
+        <ul><li>Guards: secrets, booking, other users' data</li><li>Policy Q&amp;A: applicability → retrieve → answer → reconcile</li><li>Citation validation &amp; repair</li><li class="mono" style="color:#64748B">LangGraph orchestration — planned (M6)</li></ul></div>
+      <div class="box"><h4>Domain core <span class="tag t-app">Plain Python</span></h4>
+        <ul><li>Rule-registry resolver (22 caps, 13 parameters)</li><li>Decimal calculator: per night / journey / local day</li><li>FX (documented rates), budget, deadline, duplicates</li><li>No framework imports; no policy literals</li></ul></div>
+      <div class="box"><h4>Retrieval <span class="tag t-app">RAG</span></h4>
+        <ul><li>Hybrid: BM25 + vectors, reciprocal rank fusion</li><li>LangChain loaders &amp; splitters (PDF, DOCX, TXT, MD)</li><li>Filters first: organization, date, geography</li><li>FastEmbed bge-small (stand-in) · SQLite vector cache</li></ul></div>
+    </div>
+    <div class="arrow">ports</div>
+    <div class="cols" style="grid-template-columns: 1.4fr 1fr 1fr">
+      <div class="box"><h4>Model port <span class="tag t-ad">Adapter</span></h4>
+        <div class="chips"><span class="chip on">Claude Code CLI (default)</span><span class="chip">Anthropic SDK 2.6</span><span class="chip">OpenAI-compatible endpoint</span></div>
+        <ul style="margin-top:8px"><li>Structured JSON · ≤3 attempts · 1 format repair</li></ul></div>
+      <div class="box"><h4>Telemetry <span class="tag t-ad">Adapter</span></h4><ul><li>Redacted local JSONL</li><li class="mono" style="color:#64748B">LangSmith — off</li></ul></div>
+      <div class="box dash"><h4>Travel port <span class="tag t-ad">Planned</span></h4><ul><li>Configurable external API</li><li>Milestone M5</li></ul></div>
+    </div>
+    <div class="arrow">read / write</div>
+    <div class="layer"><div class="layer-h"><span><span class="tag t-data">Data</span> &nbsp;<b>Storage &amp; normative sources</b></span><span class="tech">SQLite · file system</span></div>
+      <div class="chips"><span class="chip">SQLite: sessions, receipts, assessments, policy library</span><span class="chip">Private uploads per session</span><span class="chip">Redacted traces</span><span class="chip on">policy_sources: 20 policy sections</span><span class="chip on">rule_registry.json</span><span class="chip on">reference_data.json</span></div></div>
+  </div>
+  <!-- right: external -->
+  <div style="display:flex;flex-direction:column;gap:14px">
+    <div class="box" style="border-color:#C7D2FE"><h4>Claude Sonnet 5.5 <span class="tag t-ext">External</span></h4>
+      <ul><li>Model <span class="mono" style="white-space:nowrap">claude-sonnet-5-5</span></li><li>Reached through the model port</li><li>Answers from retrieved evidence only</li><li>Swap to a hosted model by configuration</li></ul></div>
+    <div class="box dash"><h4>Travel search API <span class="tag t-ext">Planned</span></h4><ul><li>Base URL + key in config</li><li>Read-only; no booking endpoints</li></ul></div>
+    <div class="box"><h4>Configuration</h4><ul><li><span class="mono">config/settings.toml</span> — model, embeddings, travel, retrieval</li><li><span class="mono">config/profiles.toml</span> — grade &amp; role</li><li>Secrets only in <span class="mono">.env</span></li></ul></div>
+  </div>
+</div>
+<div class="legend"><span><i class="sw" style="background:#ECFDF5;border-color:#A7F3D0"></i>Implemented &amp; in use</span><span><i class="sw" style="background:#EEF2FF;border-color:#C7D2FE"></i>AI-assisted</span><span><i class="sw" style="background:#FFF1F2;border-color:#FECDD3"></i>Administrator only</span><span><i class="sw" style="background:#fff;border:1.5px dashed #CBD5E1"></i>Planned / not yet built</span></div>
+<div class="foot"><span>Figure 1 · Architecture & Implementation Overview v1.1 · 10 November 2026</span><span>SPARKS AI Lab is fictional · capstone demonstration</span></div>
+</body></html>

@@ -1,0 +1,5 @@
+SPARKS AI Lab | FICTIONAL | Policy 1.1
+Rule P09 | Evidence and confirmation
+Effective 2026-01-01 to 2026-12-31
+
+Itemized hotel invoices, flight invoices plus boarding passes, and taxi or transit receipts are required for claim completion. Missing evidence means NEEDS_EVIDENCE even if an indicative amount can be calculated. Any amount extracted from an image is provisional until the user confirms critical fields. This is a document completeness check, not a verification that the receipt is genuine.

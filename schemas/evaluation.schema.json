@@ -1,0 +1,308 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Golden case and evaluation envelope",
+  "oneOf": [
+    {
+      "$ref": "#/$defs/GoldenCase"
+    },
+    {
+      "$ref": "#/$defs/EvaluationEnvelope"
+    }
+  ],
+  "$defs": {
+    "GoldenCase": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^GT[0-9]{3}$"
+        },
+        "title": {
+          "type": "string"
+        },
+        "category": {
+          "enum": [
+            "policy_qa",
+            "calculation",
+            "image",
+            "search",
+            "robustness"
+          ]
+        },
+        "tier": {
+          "enum": [
+            "core_100",
+            "supplemental"
+          ]
+        },
+        "split": {
+          "enum": [
+            "development",
+            "held_out"
+          ]
+        },
+        "scenario_group": {
+          "type": "string"
+        },
+        "entrypoint": {
+          "type": "string"
+        },
+        "test_layer": {
+          "enum": [
+            "component",
+            "workflow"
+          ]
+        },
+        "preconditions": {
+          "type": "object"
+        },
+        "input": {
+          "type": "object"
+        },
+        "fixtures": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "expected": {
+          "type": "object"
+        },
+        "requirement_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        },
+        "required_rule_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        },
+        "steps": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string"
+          }
+        },
+        "automatic_checks": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "path": {
+                "type": "string",
+                "pattern": "^/(result|observations)/"
+              },
+              "operator": {
+                "enum": [
+                  "equal",
+                  "decimal_equal",
+                  "ordered_equal",
+                  "set_equal",
+                  "less_than_or_equal"
+                ]
+              },
+              "expected": {}
+            },
+            "required": [
+              "path",
+              "operator",
+              "expected"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "human_checks": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "execution_status": {
+          "enum": [
+            "NOT_RUN"
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "title",
+        "category",
+        "tier",
+        "split",
+        "scenario_group",
+        "entrypoint",
+        "test_layer",
+        "preconditions",
+        "input",
+        "fixtures",
+        "expected",
+        "requirement_ids",
+        "required_rule_ids",
+        "steps",
+        "automatic_checks",
+        "human_checks",
+        "execution_status"
+      ],
+      "additionalProperties": true
+    },
+    "EvaluationEnvelope": {
+      "type": "object",
+      "properties": {
+        "case_id": {
+          "type": "string"
+        },
+        "result": {
+          "type": "object"
+        },
+        "observations": {
+          "type": "object"
+        },
+        "response_text": {
+          "type": "string"
+        },
+        "evidence": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "run_metadata": {
+          "type": "object",
+          "properties": {
+            "spec_version": {
+              "type": "string"
+            },
+            "policy_version": {
+              "type": "string"
+            },
+            "suite_version": {
+              "type": "string"
+            },
+            "app_commit": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "model_id": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "prompt_hash": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "lock_hash": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "clock": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "status": {
+              "enum": [
+                "NOT_RUN",
+                "PASS",
+                "PENDING_REVIEW",
+                "FAIL",
+                "ERROR",
+                "BLOCKED_CAPABILITY"
+              ],
+              "description": "PASS requires every automatic check and the human rubric. PENDING_REVIEW means all automatic checks passed and human review has not been recorded; it never counts as PASS."
+            },
+            "duration_ms": {
+              "type": [
+                "number",
+                "null"
+              ],
+              "minimum": 0
+            },
+            "reviewer": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "automatic_status": {
+              "enum": [
+                "PASS",
+                "FAIL",
+                "ERROR",
+                "BLOCKED_CAPABILITY"
+              ]
+            },
+            "human_review_status": {
+              "enum": [
+                "PENDING",
+                "PASS",
+                "FAIL",
+                "NOT_REQUIRED"
+              ]
+            }
+          },
+          "required": [
+            "spec_version",
+            "policy_version",
+            "suite_version",
+            "app_commit",
+            "model_id",
+            "prompt_hash",
+            "lock_hash",
+            "clock",
+            "status",
+            "duration_ms",
+            "reviewer"
+          ],
+          "additionalProperties": true
+        }
+      },
+      "required": [
+        "case_id",
+        "result",
+        "observations",
+        "response_text",
+        "evidence",
+        "run_metadata"
+      ],
+      "additionalProperties": false
+    },
+    "Check": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "pattern": "^/(result|observations)/"
+        },
+        "operator": {
+          "enum": [
+            "equal",
+            "decimal_equal",
+            "ordered_equal",
+            "set_equal",
+            "less_than_or_equal"
+          ]
+        },
+        "expected": {}
+      },
+      "required": [
+        "path",
+        "operator",
+        "expected"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

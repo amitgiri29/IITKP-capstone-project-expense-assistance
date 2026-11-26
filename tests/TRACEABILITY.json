@@ -1,0 +1,2024 @@
+{
+  "spec_version": "1.6",
+  "policy_version": "1.1",
+  "suite_version": "1.1",
+  "cases": [
+    {
+      "case_id": "GT001",
+      "title": "Metro hotel employee",
+      "tier": "core_100",
+      "requirement_ids": [
+        "AC01"
+      ],
+      "policy_rule_ids": [
+        "P01",
+        "P02"
+      ],
+      "entrypoint": "answer_policy_question",
+      "fixtures": []
+    },
+    {
+      "case_id": "GT002",
+      "title": "Metro hotel manager",
+      "tier": "supplemental",
+      "requirement_ids": [
+        "AC01"
+      ],
+      "policy_rule_ids": [
+        "P02"
+      ],
+      "entrypoint": "answer_policy_question",
+      "fixtures": []
+    },
+    {
+      "case_id": "GT003",
+      "title": "Other Indian city",
+      "tier": "core_100",
+      "requirement_ids": [
+        "AC01"
+      ],
+      "policy_rule_ids": [
+        "P02"
+      ],
+      "entrypoint": "answer_policy_question",
+      "fixtures": []
+    },
+    {
+      "case_id": "GT004",
+      "title": "Other city manager",
+      "tier": "supplemental",
+      "requirement_ids": [
+        "AC01"
+      ],
+      "policy_rule_ids": [
+        "P02"
+      ],
+      "entrypoint": "answer_policy_question",
+      "fixtures": []
+    },
+    {
+      "case_id": "GT005",
+      "title": "US hotel employee",
+      "tier": "core_100",
+      "requirement_ids": [
+        "AC01"
+      ],
+      "policy_rule_ids": [
+        "P03"
+      ],
+      "entrypoint": "answer_policy_question",
+      "fixtures": []
+    },
+    {
+      "case_id": "GT006",
+      "title": "US hotel manager",
+      "tier": "supplemental",
+      "requirement_ids": [
+        "AC01"
+      ],
+      "policy_rule_ids": [
+        "P03"
+      ],
+      "entrypoint": "answer_policy_question",
+      "fixtures": []
+    },
+    {
+      "case_id": "GT007",
+      "title": "UK hotel employee",
+      "tier": "core_100",
+      "requirement_ids": [
+        "AC01"
+      ],
+      "policy_rule_ids": [
+        "P03"
+      ],
+      "entrypoint": "answer_policy_question",
+      "fixtures": []
+    },
+    {
+      "case_id": "GT008",
+      "title": "UK hotel manager",
+      "tier": "supplemental",
+      "requirement_ids": [
+        "AC01"
+      ],
+      "policy_rule_ids": [
+        "P03"
+      ],
+      "entrypoint": "answer_policy_question",
+      "fixtures": []
+    },
+    {
+      "case_id": "GT009",
+      "title": "Singapore hotel employee",
+      "tier": "core_100",
+      "requirement_ids": [
+        "AC01"
+      ],
+      "policy_rule_ids": [
+        "P03"
+      ],
+      "entrypoint": "answer_policy_question",
+      "fixtures": []
+    },
+    {
+      "case_id": "GT010",
+      "title": "Singapore hotel manager",
+      "tier": "supplemental",
+      "requirement_ids": [
+        "AC01"
+      ],
+      "policy_rule_ids": [
+        "P03"
+      ],
+      "entrypoint": "answer_policy_question",
+      "fixtures": []
+    },
+    {
+      "case_id": "GT011",
+      "title": "Domestic flight employee",
+      "tier": "core_100",
+      "requirement_ids": [
+        "AC01"
+      ],
+      "policy_rule_ids": [
+        "P04"
+      ],
+      "entrypoint": "answer_policy_question",
+      "fixtures": []
+    },
+    {
+      "case_id": "GT012",
+      "title": "Domestic flight manager",
+      "tier": "supplemental",
+      "requirement_ids": [
+        "AC01"
+      ],
+      "policy_rule_ids": [
+        "P04"
+      ],
+      "entrypoint": "answer_policy_question",
+      "fixtures": []
+    },
+    {
+      "case_id": "GT013",
+      "title": "International flight employee",
+      "tier": "core_100",
+      "requirement_ids": [
+        "AC01"
+      ],
+      "policy_rule_ids": [
+        "P05"
+      ],
+      "entrypoint": "answer_policy_question",
+      "fixtures": []
+    },
+    {
+      "case_id": "GT014",
+      "title": "International flight manager",
+      "tier": "supplemental",
+      "requirement_ids": [
+        "AC01"
+      ],
+      "policy_rule_ids": [
+        "P05"
+      ],
+      "entrypoint": "answer_policy_question",
+      "fixtures": []
+    },
+    {
+      "case_id": "GT015",
+      "title": "Long flight upgrade",
+      "tier": "core_100",
+      "requirement_ids": [
+        "AC01",
+        "AC03"
+      ],
+      "policy_rule_ids": [
+        "P05",
+        "P10"
+      ],
+      "entrypoint": "answer_policy_question",
+      "fixtures": []
+    },
+    {
+      "case_id": "GT016",
+      "title": "Domestic transport employee",
+      "tier": "core_100",
+      "requirement_ids": [
+        "AC01"
+      ],
+      "policy_rule_ids": [
+        "P06"
+      ],
+      "entrypoint": "answer_policy_question",
+      "fixtures": []
+    },
+    {
+      "case_id": "GT017",
+      "title": "Domestic transport manager",
+      "tier": "core_100",
+      "requirement_ids": [
+        "AC01"
+      ],
+      "policy_rule_ids": [
+        "P06"
+      ],
+      "entrypoint": "answer_policy_question",
+      "fixtures": []
+    },
+    {
+      "case_id": "GT018",
+      "title": "US transport",
+      "tier": "core_100",
+      "requirement_ids": [
+        "AC01"
+      ],
+      "policy_rule_ids": [
+        "P07"
+      ],
+      "entrypoint": "answer_policy_question",
+      "fixtures": []
+    },
+    {
+      "case_id": "GT019",
+      "title": "UK transport",
+      "tier": "core_100",
+      "requirement_ids": [
+        "AC01"
+      ],
+      "policy_rule_ids": [
+        "P07"
+      ],
+      "entrypoint": "answer_policy_question",
+      "fixtures": []
+    },
+    {
+      "case_id": "GT020",
+      "title": "Singapore transport",
+      "tier": "core_100",
+      "requirement_ids": [
+        "AC01"
+      ],
+      "policy_rule_ids": [
+        "P07"
+      ],
+      "entrypoint": "answer_policy_question",
+      "fixtures": []
+    },
+    {
+      "case_id": "GT021",
+      "title": "Taxes inside hotel cap",
+      "tier": "supplemental",
+      "requirement_ids": [
+        "AC01"
+      ],
+      "policy_rule_ids": [
+        "P02",
+        "P03"
+      ],
+      "entrypoint": "answer_policy_question",
+      "fixtures": []
+    },
+    {
+      "case_id": "GT022",
+      "title": "Multiple taxi rides",
+      "tier": "core_100",
+      "requirement_ids": [
+        "AC01"
+      ],
+      "policy_rule_ids": [
+        "P06",
+        "P07"
+      ],
+      "entrypoint": "answer_policy_question",
+      "fixtures": []
+    },
+    {
+      "case_id": "GT023",
+      "title": "Meals scope",
+      "tier": "core_100",
+      "requirement_ids": [
+        "AC02"
+      ],
+      "policy_rule_ids": [
+        "P08"
+      ],
+      "entrypoint": "answer_policy_question",
+      "fixtures": []
+    },
+    {
+      "case_id": "GT024",
+      "title": "Unsupported country",
+      "tier": "core_100",
+      "requirement_ids": [
+        "AC02"
+      ],
+      "policy_rule_ids": [
+        "P03",
+        "P19"
+      ],
+      "entrypoint": "answer_policy_question",
+      "fixtures": []
+    },
+    {
+      "case_id": "GT025",
+      "title": "Future policy",
+      "tier": "core_100",
+      "requirement_ids": [
+        "AC02"
+      ],
+      "policy_rule_ids": [
+        "P01",
+        "P19"
+      ],
+      "entrypoint": "answer_policy_question",
+      "fixtures": []
+    },
+    {
+      "case_id": "GT026",
+      "title": "Receipt completeness",
+      "tier": "core_100",
+      "requirement_ids": [
+        "AC06"
+      ],
+      "policy_rule_ids": [
+        "P09"
+      ],
+      "entrypoint": "answer_policy_question",
+      "fixtures": []
+    },
+    {
+      "case_id": "GT027",
+      "title": "Deadline",
+      "tier": "core_100",
+      "requirement_ids": [
+        "AC17"
+      ],
+      "policy_rule_ids": [
+        "P13"
+      ],
+      "entrypoint": "answer_policy_question",
+      "fixtures": []
+    },
+    {
+      "case_id": "GT028",
+      "title": "Airport taxi",
+      "tier": "core_100",
+      "requirement_ids": [
+        "AC01",
+        "AC06"
+      ],
+      "policy_rule_ids": [
+        "P06",
+        "P09"
+      ],
+      "entrypoint": "answer_policy_question",
+      "fixtures": []
+    },
+    {
+      "case_id": "GT029",
+      "title": "No booking",
+      "tier": "core_100",
+      "requirement_ids": [
+        "AC09"
+      ],
+      "policy_rule_ids": [
+        "P18"
+      ],
+      "entrypoint": "answer_policy_question",
+      "fixtures": []
+    },
+    {
+      "case_id": "GT030",
+      "title": "Exchange rates",
+      "tier": "core_100",
+      "requirement_ids": [
+        "AC11"
+      ],
+      "policy_rule_ids": [
+        "P11"
+      ],
+      "entrypoint": "answer_policy_question",
+      "fixtures": []
+    },
+    {
+      "case_id": "GT031",
+      "title": "hotel_IN_metro_E below cap",
+      "tier": "core_100",
+      "requirement_ids": [
+        "AC03",
+        "AC04",
+        "AC11"
+      ],
+      "policy_rule_ids": [
+        "P02",
+        "P11",
+        "P12",
+        "P20"
+      ],
+      "entrypoint": "assess_confirmed_claim",
+      "fixtures": []
+    },
+    {
+      "case_id": "GT032",
+      "title": "hotel_IN_metro_E at cap",
+      "tier": "core_100",
+      "requirement_ids": [
+        "AC03",
+        "AC04",
+        "AC11"
+      ],
+      "policy_rule_ids": [
+        "P02",
+        "P11",
+        "P12",
+        "P20"
+      ],
+      "entrypoint": "assess_confirmed_claim",
+      "fixtures": []
+    },
+    {
+      "case_id": "GT033",
+      "title": "hotel_IN_metro_E above cap",
+      "tier": "core_100",
+      "requirement_ids": [
+        "AC03",
+        "AC04",
+        "AC11"
+      ],
+      "policy_rule_ids": [
+        "P02",
+        "P11",
+        "P12",
+        "P20"
+      ],
+      "entrypoint": "assess_confirmed_claim",
+      "fixtures": []
+    },
+    {
+      "case_id": "GT034",
+      "title": "hotel_IN_other_M below cap",
+      "tier": "core_100",
+      "requirement_ids": [
+        "AC03",
+        "AC04",
+        "AC11"
+      ],
+      "policy_rule_ids": [
+        "P02",
+        "P11",
+        "P12",
+        "P20"
+      ],
+      "entrypoint": "assess_confirmed_claim",
+      "fixtures": []
+    },
+    {
+      "case_id": "GT035",
+      "title": "hotel_IN_other_M at cap",
+      "tier": "core_100",
+      "requirement_ids": [
+        "AC03",
+        "AC04",
+        "AC11"
+      ],
+      "policy_rule_ids": [
+        "P02",
+        "P11",
+        "P12",
+        "P20"
+      ],
+      "entrypoint": "assess_confirmed_claim",
+      "fixtures": []
+    },
+    {
+      "case_id": "GT036",
+      "title": "hotel_IN_other_M above cap",
+      "tier": "core_100",
+      "requirement_ids": [
+        "AC03",
+        "AC04",
+        "AC11"
+      ],
+      "policy_rule_ids": [
+        "P02",
+        "P11",
+        "P12",
+        "P20"
+      ],
+      "entrypoint": "assess_confirmed_claim",
+      "fixtures": []
+    },
+    {
+      "case_id": "GT037",
+      "title": "hotel_US_E below cap",
+      "tier": "core_100",
+      "requirement_ids": [
+        "AC03",
+        "AC04",
+        "AC11"
+      ],
+      "policy_rule_ids": [
+        "P03",
+        "P11",
+        "P12",
+        "P20"
+      ],
+      "entrypoint": "assess_confirmed_claim",
+      "fixtures": []
+    },
+    {
+      "case_id": "GT038",
+      "title": "hotel_US_E at cap",
+      "tier": "core_100",
+      "requirement_ids": [
+        "AC03",
+        "AC04",
+        "AC11"
+      ],
+      "policy_rule_ids": [
+        "P03",
+        "P11",
+        "P12",
+        "P20"
+      ],
+      "entrypoint": "assess_confirmed_claim",
+      "fixtures": []
+    },
+    {
+      "case_id": "GT039",
+      "title": "hotel_US_E above cap",
+      "tier": "core_100",
+      "requirement_ids": [
+        "AC03",
+        "AC04",
+        "AC11"
+      ],
+      "policy_rule_ids": [
+        "P03",
+        "P11",
+        "P12",
+        "P20"
+      ],
+      "entrypoint": "assess_confirmed_claim",
+      "fixtures": []
+    },
+    {
+      "case_id": "GT040",
+      "title": "hotel_UK_M below cap",
+      "tier": "core_100",
+      "requirement_ids": [
+        "AC03",
+        "AC04",
+        "AC11"
+      ],
+      "policy_rule_ids": [
+        "P03",
+        "P11",
+        "P12",
+        "P20"
+      ],
+      "entrypoint": "assess_confirmed_claim",
+      "fixtures": []
+    },
+    {
+      "case_id": "GT041",
+      "title": "hotel_UK_M at cap",
+      "tier": "core_100",
+      "requirement_ids": [
+        "AC03",
+        "AC04",
+        "AC11"
+      ],
+      "policy_rule_ids": [
+        "P03",
+        "P11",
+        "P12",
+        "P20"
+      ],
+      "entrypoint": "assess_confirmed_claim",
+      "fixtures": []
+    },
+    {
+      "case_id": "GT042",
+      "title": "hotel_UK_M above cap",
+      "tier": "core_100",
+      "requirement_ids": [
+        "AC03",
+        "AC04",
+        "AC11"
+      ],
+      "policy_rule_ids": [
+        "P03",
+        "P11",
+        "P12",
+        "P20"
+      ],
+      "entrypoint": "assess_confirmed_claim",
+      "fixtures": []
+    },
+    {
+      "case_id": "GT043",
+      "title": "hotel_SG_E below cap",
+      "tier": "core_100",
+      "requirement_ids": [
+        "AC03",
+        "AC04",
+        "AC11"
+      ],
+      "policy_rule_ids": [
+        "P03",
+        "P11",
+        "P12",
+        "P20"
+      ],
+      "entrypoint": "assess_confirmed_claim",
+      "fixtures": []
+    },
+    {
+      "case_id": "GT044",
+      "title": "hotel_SG_E at cap",
+      "tier": "core_100",
+      "requirement_ids": [
+        "AC03",
+        "AC04",
+        "AC11"
+      ],
+      "policy_rule_ids": [
+        "P03",
+        "P11",
+        "P12",
+        "P20"
+      ],
+      "entrypoint": "assess_confirmed_claim",
+      "fixtures": []
+    },
+    {
+      "case_id": "GT045",
+      "title": "hotel_SG_E above cap",
+      "tier": "core_100",
+      "requirement_ids": [
+        "AC03",
+        "AC04",
+        "AC11"
+      ],
+      "policy_rule_ids": [
+        "P03",
+        "P11",
+        "P12",
+        "P20"
+      ],
+      "entrypoint": "assess_confirmed_claim",
+      "fixtures": []
+    },
+    {
+      "case_id": "GT046",
+      "title": "flight_IN_E below cap",
+      "tier": "core_100",
+      "requirement_ids": [
+        "AC03",
+        "AC04",
+        "AC11"
+      ],
+      "policy_rule_ids": [
+        "P04",
+        "P11",
+        "P12",
+        "P20"
+      ],
+      "entrypoint": "assess_confirmed_claim",
+      "fixtures": []
+    },
+    {
+      "case_id": "GT047",
+      "title": "flight_IN_E at cap",
+      "tier": "core_100",
+      "requirement_ids": [
+        "AC03",
+        "AC04",
+        "AC11"
+      ],
+      "policy_rule_ids": [
+        "P04",
+        "P11",
+        "P12",
+        "P20"
+      ],
+      "entrypoint": "assess_confirmed_claim",
+      "fixtures": []
+    },
+    {
+      "case_id": "GT048",
+      "title": "flight_IN_E above cap",
+      "tier": "core_100",
+      "requirement_ids": [
+        "AC03",
+        "AC04",
+        "AC11"
+      ],
+      "policy_rule_ids": [
+        "P04",
+        "P11",
+        "P12",
+        "P20"
+      ],
+      "entrypoint": "assess_confirmed_claim",
+      "fixtures": []
+    },
+    {
+      "case_id": "GT049",
+      "title": "flight_int_E below cap",
+      "tier": "supplemental",
+      "requirement_ids": [
+        "AC03",
+        "AC04",
+        "AC11"
+      ],
+      "policy_rule_ids": [
+        "P05",
+        "P11",
+        "P12",
+        "P20"
+      ],
+      "entrypoint": "assess_confirmed_claim",
+      "fixtures": []
+    },
+    {
+      "case_id": "GT050",
+      "title": "flight_int_E at cap",
+      "tier": "supplemental",
+      "requirement_ids": [
+        "AC03",
+        "AC04",
+        "AC11"
+      ],
+      "policy_rule_ids": [
+        "P05",
+        "P11",
+        "P12",
+        "P20"
+      ],
+      "entrypoint": "assess_confirmed_claim",
+      "fixtures": []
+    },
+    {
+      "case_id": "GT051",
+      "title": "flight_int_E above cap",
+      "tier": "supplemental",
+      "requirement_ids": [
+        "AC03",
+        "AC04",
+        "AC11"
+      ],
+      "policy_rule_ids": [
+        "P05",
+        "P11",
+        "P12",
+        "P20"
+      ],
+      "entrypoint": "assess_confirmed_claim",
+      "fixtures": []
+    },
+    {
+      "case_id": "GT052",
+      "title": "local_IN_E below cap",
+      "tier": "supplemental",
+      "requirement_ids": [
+        "AC03",
+        "AC04",
+        "AC11"
+      ],
+      "policy_rule_ids": [
+        "P06",
+        "P11",
+        "P12",
+        "P20"
+      ],
+      "entrypoint": "assess_confirmed_claim",
+      "fixtures": []
+    },
+    {
+      "case_id": "GT053",
+      "title": "local_IN_E at cap",
+      "tier": "supplemental",
+      "requirement_ids": [
+        "AC03",
+        "AC04",
+        "AC11"
+      ],
+      "policy_rule_ids": [
+        "P06",
+        "P11",
+        "P12",
+        "P20"
+      ],
+      "entrypoint": "assess_confirmed_claim",
+      "fixtures": []
+    },
+    {
+      "case_id": "GT054",
+      "title": "local_IN_E above cap",
+      "tier": "supplemental",
+      "requirement_ids": [
+        "AC03",
+        "AC04",
+        "AC11"
+      ],
+      "policy_rule_ids": [
+        "P06",
+        "P11",
+        "P12",
+        "P20"
+      ],
+      "entrypoint": "assess_confirmed_claim",
+      "fixtures": []
+    },
+    {
+      "case_id": "GT055",
+      "title": "local_US_M below cap",
+      "tier": "supplemental",
+      "requirement_ids": [
+        "AC03",
+        "AC04",
+        "AC11"
+      ],
+      "policy_rule_ids": [
+        "P07",
+        "P11",
+        "P12",
+        "P20"
+      ],
+      "entrypoint": "assess_confirmed_claim",
+      "fixtures": []
+    },
+    {
+      "case_id": "GT056",
+      "title": "local_US_M at cap",
+      "tier": "supplemental",
+      "requirement_ids": [
+        "AC03",
+        "AC04",
+        "AC11"
+      ],
+      "policy_rule_ids": [
+        "P07",
+        "P11",
+        "P12",
+        "P20"
+      ],
+      "entrypoint": "assess_confirmed_claim",
+      "fixtures": []
+    },
+    {
+      "case_id": "GT057",
+      "title": "local_US_M above cap",
+      "tier": "supplemental",
+      "requirement_ids": [
+        "AC03",
+        "AC04",
+        "AC11"
+      ],
+      "policy_rule_ids": [
+        "P07",
+        "P11",
+        "P12",
+        "P20"
+      ],
+      "entrypoint": "assess_confirmed_claim",
+      "fixtures": []
+    },
+    {
+      "case_id": "GT058",
+      "title": "local_SG_E below cap",
+      "tier": "supplemental",
+      "requirement_ids": [
+        "AC03",
+        "AC04",
+        "AC11"
+      ],
+      "policy_rule_ids": [
+        "P07",
+        "P11",
+        "P12",
+        "P20"
+      ],
+      "entrypoint": "assess_confirmed_claim",
+      "fixtures": []
+    },
+    {
+      "case_id": "GT059",
+      "title": "local_SG_E at cap",
+      "tier": "supplemental",
+      "requirement_ids": [
+        "AC03",
+        "AC04",
+        "AC11"
+      ],
+      "policy_rule_ids": [
+        "P07",
+        "P11",
+        "P12",
+        "P20"
+      ],
+      "entrypoint": "assess_confirmed_claim",
+      "fixtures": []
+    },
+    {
+      "case_id": "GT060",
+      "title": "local_SG_E above cap",
+      "tier": "supplemental",
+      "requirement_ids": [
+        "AC03",
+        "AC04",
+        "AC11"
+      ],
+      "policy_rule_ids": [
+        "P07",
+        "P11",
+        "P12",
+        "P20"
+      ],
+      "entrypoint": "assess_confirmed_claim",
+      "fixtures": []
+    },
+    {
+      "case_id": "GT061",
+      "title": "Domestic hotel below cap",
+      "tier": "core_100",
+      "requirement_ids": [
+        "AC05",
+        "AC06",
+        "AC03",
+        "AC04"
+      ],
+      "policy_rule_ids": [
+        "P02",
+        "P12",
+        "P15"
+      ],
+      "entrypoint": "parse_image_then_review",
+      "fixtures": [
+        "fixtures/receipts/receipt_01.png"
+      ]
+    },
+    {
+      "case_id": "GT062",
+      "title": "Domestic hotel above cap",
+      "tier": "core_100",
+      "requirement_ids": [
+        "AC05",
+        "AC06",
+        "AC03",
+        "AC04"
+      ],
+      "policy_rule_ids": [
+        "P02",
+        "P12",
+        "P15"
+      ],
+      "entrypoint": "parse_image_then_review",
+      "fixtures": [
+        "fixtures/receipts/receipt_02.png"
+      ]
+    },
+    {
+      "case_id": "GT063",
+      "title": "US hotel with FX",
+      "tier": "core_100",
+      "requirement_ids": [
+        "AC05",
+        "AC06",
+        "AC03",
+        "AC04",
+        "AC11"
+      ],
+      "policy_rule_ids": [
+        "P03",
+        "P11",
+        "P12",
+        "P15"
+      ],
+      "entrypoint": "parse_image_then_review",
+      "fixtures": [
+        "fixtures/receipts/receipt_03.png"
+      ]
+    },
+    {
+      "case_id": "GT064",
+      "title": "UK hotel over cap",
+      "tier": "core_100",
+      "requirement_ids": [
+        "AC05",
+        "AC06",
+        "AC03",
+        "AC04",
+        "AC11"
+      ],
+      "policy_rule_ids": [
+        "P03",
+        "P11",
+        "P12",
+        "P15"
+      ],
+      "entrypoint": "parse_image_then_review",
+      "fixtures": [
+        "fixtures/receipts/receipt_04.png"
+      ]
+    },
+    {
+      "case_id": "GT065",
+      "title": "Singapore hotel exactly at cap",
+      "tier": "core_100",
+      "requirement_ids": [
+        "AC05",
+        "AC06",
+        "AC03",
+        "AC04",
+        "AC11"
+      ],
+      "policy_rule_ids": [
+        "P03",
+        "P11",
+        "P12",
+        "P15"
+      ],
+      "entrypoint": "parse_image_then_review",
+      "fixtures": [
+        "fixtures/receipts/receipt_05.png"
+      ]
+    },
+    {
+      "case_id": "GT066",
+      "title": "Domestic flight at cap",
+      "tier": "core_100",
+      "requirement_ids": [
+        "AC05",
+        "AC06",
+        "AC03",
+        "AC04"
+      ],
+      "policy_rule_ids": [
+        "P04",
+        "P12",
+        "P15"
+      ],
+      "entrypoint": "parse_image_then_review",
+      "fixtures": [
+        "fixtures/receipts/receipt_06.png"
+      ]
+    },
+    {
+      "case_id": "GT067",
+      "title": "International flight above cap",
+      "tier": "core_100",
+      "requirement_ids": [
+        "AC05",
+        "AC06",
+        "AC03",
+        "AC04",
+        "AC11"
+      ],
+      "policy_rule_ids": [
+        "P05",
+        "P11",
+        "P12",
+        "P15"
+      ],
+      "entrypoint": "parse_image_then_review",
+      "fixtures": [
+        "fixtures/receipts/receipt_07.png"
+      ]
+    },
+    {
+      "case_id": "GT068",
+      "title": "Domestic taxi at cap",
+      "tier": "core_100",
+      "requirement_ids": [
+        "AC05",
+        "AC06",
+        "AC03",
+        "AC04"
+      ],
+      "policy_rule_ids": [
+        "P06",
+        "P12",
+        "P15"
+      ],
+      "entrypoint": "parse_image_then_review",
+      "fixtures": [
+        "fixtures/receipts/receipt_08.png"
+      ]
+    },
+    {
+      "case_id": "GT069",
+      "title": "US taxi above cap",
+      "tier": "core_100",
+      "requirement_ids": [
+        "AC05",
+        "AC06",
+        "AC03",
+        "AC04",
+        "AC11"
+      ],
+      "policy_rule_ids": [
+        "P07",
+        "P11",
+        "P12",
+        "P15"
+      ],
+      "entrypoint": "parse_image_then_review",
+      "fixtures": [
+        "fixtures/receipts/receipt_09.png"
+      ]
+    },
+    {
+      "case_id": "GT070",
+      "title": "Personal minibar excluded",
+      "tier": "core_100",
+      "requirement_ids": [
+        "AC05",
+        "AC06",
+        "AC03",
+        "AC04"
+      ],
+      "policy_rule_ids": [
+        "P02",
+        "P10",
+        "P12",
+        "P15"
+      ],
+      "entrypoint": "parse_image_then_review",
+      "fixtures": [
+        "fixtures/receipts/receipt_10.png"
+      ]
+    },
+    {
+      "case_id": "GT071",
+      "title": "Receipt instruction injection",
+      "tier": "core_100",
+      "requirement_ids": [
+        "AC05",
+        "AC06",
+        "AC03",
+        "AC04",
+        "AC10"
+      ],
+      "policy_rule_ids": [
+        "P02",
+        "P15",
+        "P12"
+      ],
+      "entrypoint": "parse_image_then_review",
+      "fixtures": [
+        "fixtures/receipts/receipt_11.png"
+      ]
+    },
+    {
+      "case_id": "GT072",
+      "title": "Currency omitted",
+      "tier": "core_100",
+      "requirement_ids": [
+        "AC05",
+        "AC06"
+      ],
+      "policy_rule_ids": [
+        "P15",
+        "P20",
+        "P12"
+      ],
+      "entrypoint": "parse_image_then_review",
+      "fixtures": [
+        "fixtures/receipts/receipt_12.png"
+      ]
+    },
+    {
+      "case_id": "GT073",
+      "title": "Total unreadable",
+      "tier": "core_100",
+      "requirement_ids": [
+        "AC05",
+        "AC06"
+      ],
+      "policy_rule_ids": [
+        "P15",
+        "P20",
+        "P12"
+      ],
+      "entrypoint": "parse_image_then_review",
+      "fixtures": [
+        "fixtures/receipts/receipt_13.png"
+      ]
+    },
+    {
+      "case_id": "GT074",
+      "title": "Components disagree with total",
+      "tier": "core_100",
+      "requirement_ids": [
+        "AC05",
+        "AC06"
+      ],
+      "policy_rule_ids": [
+        "P15",
+        "P20",
+        "P12"
+      ],
+      "entrypoint": "parse_image_then_review",
+      "fixtures": [
+        "fixtures/receipts/receipt_14.png"
+      ]
+    },
+    {
+      "case_id": "GT075",
+      "title": "Ambiguous printed date",
+      "tier": "core_100",
+      "requirement_ids": [
+        "AC05",
+        "AC06"
+      ],
+      "policy_rule_ids": [
+        "P15",
+        "P20",
+        "P12"
+      ],
+      "entrypoint": "parse_image_then_review",
+      "fixtures": [
+        "fixtures/receipts/receipt_15.png"
+      ]
+    },
+    {
+      "case_id": "GT076",
+      "title": "Rotated readable taxi",
+      "tier": "core_100",
+      "requirement_ids": [
+        "AC05",
+        "AC06",
+        "AC03",
+        "AC04"
+      ],
+      "policy_rule_ids": [
+        "P06",
+        "P15",
+        "P12"
+      ],
+      "entrypoint": "parse_image_then_review",
+      "fixtures": [
+        "fixtures/receipts/receipt_16.png"
+      ]
+    },
+    {
+      "case_id": "GT077",
+      "title": "Two nights cannot offset",
+      "tier": "core_100",
+      "requirement_ids": [
+        "AC05",
+        "AC06",
+        "AC03",
+        "AC04"
+      ],
+      "policy_rule_ids": [
+        "P02",
+        "P12",
+        "P15"
+      ],
+      "entrypoint": "parse_image_then_review",
+      "fixtures": [
+        "fixtures/receipts/receipt_17.png"
+      ]
+    },
+    {
+      "case_id": "GT078",
+      "title": "Taxi tip excluded",
+      "tier": "core_100",
+      "requirement_ids": [
+        "AC05",
+        "AC06",
+        "AC03",
+        "AC04"
+      ],
+      "policy_rule_ids": [
+        "P06",
+        "P10",
+        "P12",
+        "P15"
+      ],
+      "entrypoint": "parse_image_then_review",
+      "fixtures": [
+        "fixtures/receipts/receipt_18.png"
+      ]
+    },
+    {
+      "case_id": "GT079",
+      "title": "Extract but await confirmation",
+      "tier": "core_100",
+      "requirement_ids": [
+        "AC05",
+        "AC06"
+      ],
+      "policy_rule_ids": [
+        "P09",
+        "P15",
+        "P12"
+      ],
+      "entrypoint": "parse_image_then_review",
+      "fixtures": [
+        "fixtures/receipts/receipt_19.png"
+      ]
+    },
+    {
+      "case_id": "GT080",
+      "title": "Flight boarding pass absent",
+      "tier": "core_100",
+      "requirement_ids": [
+        "AC05",
+        "AC06"
+      ],
+      "policy_rule_ids": [
+        "P04",
+        "P09",
+        "P12",
+        "P15"
+      ],
+      "entrypoint": "parse_image_then_review",
+      "fixtures": [
+        "fixtures/receipts/receipt_20.png"
+      ]
+    },
+    {
+      "case_id": "GT081",
+      "title": "Flight compliant ranking",
+      "tier": "core_100",
+      "requirement_ids": [
+        "AC07",
+        "AC08",
+        "AC09"
+      ],
+      "policy_rule_ids": [
+        "P04",
+        "P16",
+        "P17",
+        "P18"
+      ],
+      "entrypoint": "search_and_assess_offers",
+      "fixtures": [
+        "fixtures/search/search_01.json"
+      ]
+    },
+    {
+      "case_id": "GT082",
+      "title": "Hotel compliant ranking",
+      "tier": "core_100",
+      "requirement_ids": [
+        "AC07",
+        "AC08",
+        "AC09"
+      ],
+      "policy_rule_ids": [
+        "P02",
+        "P16",
+        "P17",
+        "P18"
+      ],
+      "entrypoint": "search_and_assess_offers",
+      "fixtures": [
+        "fixtures/search/search_02.json"
+      ]
+    },
+    {
+      "case_id": "GT083",
+      "title": "Flight no compliant offer",
+      "tier": "core_100",
+      "requirement_ids": [
+        "AC07",
+        "AC08",
+        "AC09"
+      ],
+      "policy_rule_ids": [
+        "P04",
+        "P16",
+        "P17",
+        "P18"
+      ],
+      "entrypoint": "search_and_assess_offers",
+      "fixtures": [
+        "fixtures/search/search_03.json"
+      ]
+    },
+    {
+      "case_id": "GT084",
+      "title": "Hotel no compliant offer",
+      "tier": "core_100",
+      "requirement_ids": [
+        "AC07",
+        "AC08",
+        "AC09"
+      ],
+      "policy_rule_ids": [
+        "P02",
+        "P16",
+        "P17",
+        "P18"
+      ],
+      "entrypoint": "search_and_assess_offers",
+      "fixtures": [
+        "fixtures/search/search_04.json"
+      ]
+    },
+    {
+      "case_id": "GT085",
+      "title": "Reject business class",
+      "tier": "core_100",
+      "requirement_ids": [
+        "AC07",
+        "AC08",
+        "AC09"
+      ],
+      "policy_rule_ids": [
+        "P04",
+        "P16",
+        "P17",
+        "P18"
+      ],
+      "entrypoint": "search_and_assess_offers",
+      "fixtures": [
+        "fixtures/search/search_05.json"
+      ]
+    },
+    {
+      "case_id": "GT086",
+      "title": "Hotel tax unknown",
+      "tier": "core_100",
+      "requirement_ids": [
+        "AC07",
+        "AC08",
+        "AC09"
+      ],
+      "policy_rule_ids": [
+        "P02",
+        "P16",
+        "P17",
+        "P18"
+      ],
+      "entrypoint": "search_and_assess_offers",
+      "fixtures": [
+        "fixtures/search/search_06.json"
+      ]
+    },
+    {
+      "case_id": "GT087",
+      "title": "Flight baggage unknown",
+      "tier": "core_100",
+      "requirement_ids": [
+        "AC07",
+        "AC08",
+        "AC09"
+      ],
+      "policy_rule_ids": [
+        "P04",
+        "P17",
+        "P18"
+      ],
+      "entrypoint": "search_and_assess_offers",
+      "fixtures": [
+        "fixtures/search/search_07.json"
+      ]
+    },
+    {
+      "case_id": "GT088",
+      "title": "Expired flight",
+      "tier": "core_100",
+      "requirement_ids": [
+        "AC07",
+        "AC08",
+        "AC09",
+        "AC15"
+      ],
+      "policy_rule_ids": [
+        "P17",
+        "P18"
+      ],
+      "entrypoint": "search_and_assess_offers",
+      "fixtures": [
+        "fixtures/search/search_08.json"
+      ]
+    },
+    {
+      "case_id": "GT089",
+      "title": "Stale hotel",
+      "tier": "core_100",
+      "requirement_ids": [
+        "AC07",
+        "AC08",
+        "AC09",
+        "AC15"
+      ],
+      "policy_rule_ids": [
+        "P02",
+        "P17",
+        "P18"
+      ],
+      "entrypoint": "search_and_assess_offers",
+      "fixtures": [
+        "fixtures/search/search_09.json"
+      ]
+    },
+    {
+      "case_id": "GT090",
+      "title": "Tie flight duration",
+      "tier": "core_100",
+      "requirement_ids": [
+        "AC07",
+        "AC08",
+        "AC09"
+      ],
+      "policy_rule_ids": [
+        "P16",
+        "P17",
+        "P18"
+      ],
+      "entrypoint": "search_and_assess_offers",
+      "fixtures": [
+        "fixtures/search/search_10.json"
+      ]
+    },
+    {
+      "case_id": "GT091",
+      "title": "Tie hotel distance",
+      "tier": "core_100",
+      "requirement_ids": [
+        "AC07",
+        "AC08",
+        "AC09"
+      ],
+      "policy_rule_ids": [
+        "P02",
+        "P16",
+        "P17",
+        "P18"
+      ],
+      "entrypoint": "search_and_assess_offers",
+      "fixtures": [
+        "fixtures/search/search_11.json"
+      ]
+    },
+    {
+      "case_id": "GT092",
+      "title": "No inventory",
+      "tier": "core_100",
+      "requirement_ids": [
+        "AC07",
+        "AC08",
+        "AC09"
+      ],
+      "policy_rule_ids": [
+        "P02",
+        "P16",
+        "P20",
+        "P17",
+        "P18"
+      ],
+      "entrypoint": "search_and_assess_offers",
+      "fixtures": [
+        "fixtures/search/search_12.json"
+      ]
+    },
+    {
+      "case_id": "GT093",
+      "title": "Missing flight date",
+      "tier": "core_100",
+      "requirement_ids": [
+        "AC07",
+        "AC08",
+        "AC09"
+      ],
+      "policy_rule_ids": [
+        "P16",
+        "P17",
+        "P18"
+      ],
+      "entrypoint": "search_and_assess_offers",
+      "fixtures": [
+        "fixtures/search/search_13.json"
+      ]
+    },
+    {
+      "case_id": "GT094",
+      "title": "Invalid hotel dates",
+      "tier": "core_100",
+      "requirement_ids": [
+        "AC07",
+        "AC08",
+        "AC09"
+      ],
+      "policy_rule_ids": [
+        "P02",
+        "P16",
+        "P17",
+        "P18"
+      ],
+      "entrypoint": "search_and_assess_offers",
+      "fixtures": [
+        "fixtures/search/search_14.json"
+      ]
+    },
+    {
+      "case_id": "GT095",
+      "title": "Booking request",
+      "tier": "core_100",
+      "requirement_ids": [
+        "AC07",
+        "AC08",
+        "AC09"
+      ],
+      "policy_rule_ids": [
+        "P18",
+        "P17"
+      ],
+      "entrypoint": "search_and_assess_offers",
+      "fixtures": [
+        "fixtures/search/search_15.json"
+      ]
+    },
+    {
+      "case_id": "GT096",
+      "title": "Foreign flight FX absent",
+      "tier": "core_100",
+      "requirement_ids": [
+        "AC07",
+        "AC08",
+        "AC09",
+        "AC11"
+      ],
+      "policy_rule_ids": [
+        "P05",
+        "P11",
+        "P17",
+        "P18"
+      ],
+      "entrypoint": "search_and_assess_offers",
+      "fixtures": [
+        "fixtures/search/search_16.json"
+      ]
+    },
+    {
+      "case_id": "GT097",
+      "title": "US hotel within limit",
+      "tier": "core_100",
+      "requirement_ids": [
+        "AC07",
+        "AC08",
+        "AC09"
+      ],
+      "policy_rule_ids": [
+        "P03",
+        "P16",
+        "P17",
+        "P18"
+      ],
+      "entrypoint": "search_and_assess_offers",
+      "fixtures": [
+        "fixtures/search/search_17.json"
+      ]
+    },
+    {
+      "case_id": "GT098",
+      "title": "Hotel nightly cap not average",
+      "tier": "core_100",
+      "requirement_ids": [
+        "AC07",
+        "AC08",
+        "AC09"
+      ],
+      "policy_rule_ids": [
+        "P02",
+        "P16",
+        "P17",
+        "P18"
+      ],
+      "entrypoint": "search_and_assess_offers",
+      "fixtures": [
+        "fixtures/search/search_18.json"
+      ]
+    },
+    {
+      "case_id": "GT099",
+      "title": "Search timeout",
+      "tier": "core_100",
+      "requirement_ids": [
+        "AC07",
+        "AC08",
+        "AC09",
+        "AC15"
+      ],
+      "policy_rule_ids": [
+        "P20",
+        "P17",
+        "P18"
+      ],
+      "entrypoint": "search_and_assess_offers",
+      "fixtures": [
+        "fixtures/search/search_19.json"
+      ]
+    },
+    {
+      "case_id": "GT100",
+      "title": "Offer prompt injection",
+      "tier": "core_100",
+      "requirement_ids": [
+        "AC07",
+        "AC08",
+        "AC09",
+        "AC10"
+      ],
+      "policy_rule_ids": [
+        "P02",
+        "P16",
+        "P18",
+        "P17"
+      ],
+      "entrypoint": "search_and_assess_offers",
+      "fixtures": [
+        "fixtures/search/search_20.json"
+      ]
+    },
+    {
+      "case_id": "GT101",
+      "title": "Missing grade",
+      "tier": "core_100",
+      "requirement_ids": [
+        "AC18"
+      ],
+      "policy_rule_ids": [
+        "P01",
+        "P20"
+      ],
+      "entrypoint": "validate_claim_context",
+      "fixtures": []
+    },
+    {
+      "case_id": "GT102",
+      "title": "No trip budget",
+      "tier": "core_100",
+      "requirement_ids": [
+        "AC04"
+      ],
+      "policy_rule_ids": [
+        "P12"
+      ],
+      "entrypoint": "calculate_budget",
+      "fixtures": []
+    },
+    {
+      "case_id": "GT103",
+      "title": "Incomplete trip",
+      "tier": "core_100",
+      "requirement_ids": [
+        "AC04"
+      ],
+      "policy_rule_ids": [
+        "P12"
+      ],
+      "entrypoint": "calculate_budget",
+      "fixtures": []
+    },
+    {
+      "case_id": "GT104",
+      "title": "Two taxis one day",
+      "tier": "core_100",
+      "requirement_ids": [
+        "AC03",
+        "AC04"
+      ],
+      "policy_rule_ids": [
+        "P06",
+        "P12"
+      ],
+      "entrypoint": "aggregate_local_transport",
+      "fixtures": []
+    },
+    {
+      "case_id": "GT105",
+      "title": "Duplicate receipt",
+      "tier": "core_100",
+      "requirement_ids": [
+        "AC17"
+      ],
+      "policy_rule_ids": [
+        "P14"
+      ],
+      "entrypoint": "detect_duplicates",
+      "fixtures": []
+    },
+    {
+      "case_id": "GT106",
+      "title": "Deadline day 30",
+      "tier": "core_100",
+      "requirement_ids": [
+        "AC17"
+      ],
+      "policy_rule_ids": [
+        "P13"
+      ],
+      "entrypoint": "validate_submission_deadline",
+      "fixtures": [
+        "fixtures/context/valid_claim.json"
+      ]
+    },
+    {
+      "case_id": "GT107",
+      "title": "Deadline day 31",
+      "tier": "core_100",
+      "requirement_ids": [
+        "AC17"
+      ],
+      "policy_rule_ids": [
+        "P13"
+      ],
+      "entrypoint": "validate_submission_deadline",
+      "fixtures": [
+        "fixtures/context/valid_claim.json"
+      ]
+    },
+    {
+      "case_id": "GT108",
+      "title": "Negative expense",
+      "tier": "core_100",
+      "requirement_ids": [
+        "AC18"
+      ],
+      "policy_rule_ids": [
+        "P20"
+      ],
+      "entrypoint": "validate_amount",
+      "fixtures": []
+    },
+    {
+      "case_id": "GT109",
+      "title": "Missing FX",
+      "tier": "core_100",
+      "requirement_ids": [
+        "AC11"
+      ],
+      "policy_rule_ids": [
+        "P11"
+      ],
+      "entrypoint": "resolve_fx",
+      "fixtures": []
+    },
+    {
+      "case_id": "GT110",
+      "title": "FX rounding",
+      "tier": "core_100",
+      "requirement_ids": [
+        "AC11"
+      ],
+      "policy_rule_ids": [
+        "P11"
+      ],
+      "entrypoint": "convert_currency_lines",
+      "fixtures": []
+    },
+    {
+      "case_id": "GT111",
+      "title": "Clarification preserves context",
+      "tier": "core_100",
+      "requirement_ids": [
+        "AC12",
+        "AC06"
+      ],
+      "policy_rule_ids": [
+        "P02",
+        "P09",
+        "P12"
+      ],
+      "entrypoint": "resume_conversation",
+      "fixtures": [
+        "fixtures/context/valid_claim.json"
+      ]
+    },
+    {
+      "case_id": "GT112",
+      "title": "Correction recalculates",
+      "tier": "core_100",
+      "requirement_ids": [
+        "AC12",
+        "AC03",
+        "AC04"
+      ],
+      "policy_rule_ids": [
+        "P02",
+        "P12"
+      ],
+      "entrypoint": "correct_claim",
+      "fixtures": [
+        "fixtures/context/valid_claim.json"
+      ]
+    },
+    {
+      "case_id": "GT113",
+      "title": "Cross session request",
+      "tier": "core_100",
+      "requirement_ids": [
+        "AC13"
+      ],
+      "policy_rule_ids": [
+        "P18"
+      ],
+      "entrypoint": "authorize_session",
+      "fixtures": []
+    },
+    {
+      "case_id": "GT114",
+      "title": "System prompt extraction",
+      "tier": "core_100",
+      "requirement_ids": [
+        "AC10"
+      ],
+      "policy_rule_ids": [
+        "P18"
+      ],
+      "entrypoint": "handle_secret_request",
+      "fixtures": []
+    },
+    {
+      "case_id": "GT115",
+      "title": "Authoritative conflict",
+      "tier": "core_100",
+      "requirement_ids": [
+        "AC14"
+      ],
+      "policy_rule_ids": [
+        "P19"
+      ],
+      "entrypoint": "resolve_policy_conflict",
+      "fixtures": []
+    },
+    {
+      "case_id": "GT116",
+      "title": "Malformed JSON twice",
+      "tier": "core_100",
+      "requirement_ids": [
+        "AC15"
+      ],
+      "policy_rule_ids": [
+        "P20"
+      ],
+      "entrypoint": "parse_planner_output",
+      "fixtures": []
+    },
+    {
+      "case_id": "GT117",
+      "title": "Unsupported image format",
+      "tier": "core_100",
+      "requirement_ids": [
+        "AC16"
+      ],
+      "policy_rule_ids": [
+        "P15"
+      ],
+      "entrypoint": "validate_upload",
+      "fixtures": []
+    },
+    {
+      "case_id": "GT118",
+      "title": "Oversized image",
+      "tier": "core_100",
+      "requirement_ids": [
+        "AC16"
+      ],
+      "policy_rule_ids": [
+        "P15"
+      ],
+      "entrypoint": "validate_upload",
+      "fixtures": []
+    },
+    {
+      "case_id": "GT119",
+      "title": "Image capability absent",
+      "tier": "core_100",
+      "requirement_ids": [
+        "AC16"
+      ],
+      "policy_rule_ids": [
+        "P20"
+      ],
+      "entrypoint": "check_image_capability",
+      "fixtures": []
+    },
+    {
+      "case_id": "GT120",
+      "title": "Missing citation ID",
+      "tier": "core_100",
+      "requirement_ids": [
+        "AC14"
+      ],
+      "policy_rule_ids": [
+        "P02",
+        "P19"
+      ],
+      "entrypoint": "validate_and_repair_citations",
+      "fixtures": []
+    }
+  ],
+  "deployment_annex": "docs/DEPLOYMENT_CONTRACT.json"
+}

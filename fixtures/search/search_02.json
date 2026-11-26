@@ -1,0 +1,96 @@
+{
+  "clock": "2026-11-15T12:00:00Z",
+  "mode": "DEMO",
+  "offers": [
+    {
+      "id": "H1",
+      "type": "hotel",
+      "provider": "DEMO",
+      "country": "IN",
+      "city": "Bengaluru",
+      "checkin": "2026-11-20",
+      "checkout": "2026-11-21",
+      "rooms": 1,
+      "travelers": 1,
+      "currency": "INR",
+      "total": 4900,
+      "nightly_totals": [
+        4900
+      ],
+      "taxes_included": true,
+      "mandatory_fees_included": true,
+      "distance_km": 2,
+      "retrieved_at": "2026-11-15T11:55:00Z",
+      "expires_at": "2026-11-15T12:10:00Z",
+      "cancellation_terms": "Not provided"
+    },
+    {
+      "id": "H2",
+      "type": "hotel",
+      "provider": "DEMO",
+      "country": "IN",
+      "city": "Bengaluru",
+      "checkin": "2026-11-20",
+      "checkout": "2026-11-21",
+      "rooms": 1,
+      "travelers": 1,
+      "currency": "INR",
+      "total": 4200,
+      "nightly_totals": [
+        4200
+      ],
+      "taxes_included": true,
+      "mandatory_fees_included": true,
+      "distance_km": 2,
+      "retrieved_at": "2026-11-15T11:55:00Z",
+      "expires_at": "2026-11-15T12:10:00Z",
+      "cancellation_terms": "Not provided"
+    },
+    {
+      "id": "H3",
+      "type": "hotel",
+      "provider": "DEMO",
+      "country": "IN",
+      "city": "Bengaluru",
+      "checkin": "2026-11-20",
+      "checkout": "2026-11-21",
+      "rooms": 1,
+      "travelers": 1,
+      "currency": "INR",
+      "total": 5000,
+      "nightly_totals": [
+        5000
+      ],
+      "taxes_included": true,
+      "mandatory_fees_included": true,
+      "distance_km": 2,
+      "retrieved_at": "2026-11-15T11:55:00Z",
+      "expires_at": "2026-11-15T12:10:00Z",
+      "cancellation_terms": "Not provided"
+    },
+    {
+      "id": "H4",
+      "type": "hotel",
+      "provider": "DEMO",
+      "country": "IN",
+      "city": "Bengaluru",
+      "checkin": "2026-11-20",
+      "checkout": "2026-11-21",
+      "rooms": 1,
+      "travelers": 1,
+      "currency": "INR",
+      "total": 5100,
+      "nightly_totals": [
+        5100
+      ],
+      "taxes_included": true,
+      "mandatory_fees_included": true,
+      "distance_km": 2,
+      "retrieved_at": "2026-11-15T11:55:00Z",
+      "expires_at": "2026-11-15T12:10:00Z",
+      "cancellation_terms": "Not provided"
+    }
+  ],
+  "fault": null,
+  "refresh_result": null
+}

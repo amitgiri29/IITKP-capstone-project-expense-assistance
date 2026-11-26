@@ -1,0 +1,7 @@
+CityCab Bengaluru - trip receipt
+FICTIONAL TEST RECEIPT - synthetic data for the SPARKS AI Lab capstone.
+Receipt ID CC-55102   Date 2026-11-14
+From Kempegowda International Airport to MG Road, Bengaluru
+Fare (incl. tolls and taxes)   INR 1,200.00
+Tip                            INR   100.00
+Total charged                  INR 1,300.00

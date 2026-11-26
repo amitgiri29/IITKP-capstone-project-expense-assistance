@@ -1,0 +1,36 @@
+{
+  "purpose": "Documents scripts/ingest_documents.py adds to the policy library through the real POST /admin/policies route (same parsing, chunking, vectors and duplicate check as an admin upload). Text-only documents.",
+  "decided": "2026-11-18 by user instruction: ingest the documents, keep one for the user to ingest by hand.",
+  "left_for_manual_upload": [
+    {"path": "samples/policy_documents/01_conference_travel_guidance.md", "title": "Conference travel guidance", "authority": "guidance", "geography": "general", "version": "1.0", "effective_from": "2026-01-01", "effective_to": "2026-12-31", "why": "Kept for the user to upload on Policy Documents and test; questions and expected answers are in samples/policy_documents/README.md."}
+  ],
+  "not_ingested": [
+    "samples/policy_documents/06_NEGATIVE_cap_override_attempt.txt (negative test: upload only while testing)",
+    "samples/policy_documents/07_NEGATIVE_prompt_injection.md (negative test: upload only while testing)",
+    "samples/policy_documents/08_NEGATIVE_scanned_image_only.pdf (must be rejected: no text layer)"
+  ],
+  "documents": [
+    {"path": "samples/policy_documents/02_international_travel_guidance.pdf", "title": "International travel guidance", "authority": "guidance", "geography": "international", "version": "1.0", "effective_from": "2026-01-01", "effective_to": "2026-12-31"},
+    {"path": "samples/policy_documents/03_travel_booking_process.docx", "title": "Travel booking process", "authority": "guidance", "geography": "general", "version": "1.0", "effective_from": "2026-01-01", "effective_to": "2026-12-31"},
+    {"path": "samples/policy_documents/04_travel_safety_and_wellbeing.txt", "title": "Travel safety and wellbeing guidance", "authority": "guidance", "geography": "general", "version": "1.0", "effective_from": "2026-01-01", "effective_to": "2026-12-31"},
+    {"path": "samples/policy_documents/05_expense_claim_faq.md", "title": "Expense claim FAQ", "authority": "guidance", "geography": "general", "version": "1.0", "effective_from": "2026-01-01", "effective_to": "2026-12-31"},
+    {"path": "corpus/india_references/pdf/R01_2017-07-13.pdf", "title": "GoI reference (not SPARKS policy): 7th CPC Travelling Allowance Rules", "authority": "guidance", "geography": "domestic", "version": "OM 13.07.2017", "effective_from": "2017-07-13", "effective_to": "2026-12-31"},
+    {"path": "corpus/india_references/pdf/R02_2018-02-01.pdf", "title": "GoI reference (not SPARKS policy): TA Rules 7th CPC clarifications", "authority": "guidance", "geography": "domestic", "version": "OM 01.02.2018", "effective_from": "2018-02-01", "effective_to": "2026-12-31"},
+    {"path": "corpus/india_references/pdf/R03_2018-03-13.pdf", "title": "GoI reference (not SPARKS policy): Time limit for TA claims", "authority": "guidance", "geography": "domestic", "version": "OM 13.03.2018", "effective_from": "2018-03-13", "effective_to": "2026-12-31"},
+    {"path": "corpus/india_references/pdf/R09_2021-12-31.pdf", "title": "GoI reference (not SPARKS policy): Booking air tickets on Government account", "authority": "guidance", "geography": "domestic", "version": "OM 31.12.2021", "effective_from": "2021-12-31", "effective_to": "2026-12-31"},
+    {"path": "corpus/india_references/pdf/R12_2017-07-19.pdf", "title": "GoI reference (not SPARKS policy): Air tickets from authorised agents", "authority": "guidance", "geography": "domestic", "version": "OM 19.07.2017", "effective_from": "2017-07-19", "effective_to": "2026-12-31"},
+    {"path": "corpus/india_references/pdf/R15_2018-12-31.pdf", "title": "GoI reference (not SPARKS policy): Air travel not paid by Government", "authority": "guidance", "geography": "domestic", "version": "OM 31.12.2018", "effective_from": "2018-12-31", "effective_to": "2026-12-31"},
+    {"path": "corpus/india_references/pdf/R21_2008-09-23.pdf", "title": "GoI reference (not SPARKS policy, superseded): 6th CPC Travelling Allowance Rules", "authority": "guidance", "geography": "domestic", "version": "OM 23.09.2008", "effective_from": "2008-09-01", "effective_to": "2017-06-30"},
+    {"path": "corpus/india_references/pdf/R26_2014-11-25.pdf", "title": "GoI reference (not SPARKS policy): Foreign training tours approval", "authority": "guidance", "geography": "international", "version": "OM 25.11.2014", "effective_from": "2014-11-25", "effective_to": "2026-12-31"},
+    {"path": "corpus/india_references/pdf/R27_2016-01-05.pdf", "title": "GoI reference (not SPARKS policy): Foreign visits approval (SCoS) instructions", "authority": "guidance", "geography": "international", "version": "OM 05.01.2016", "effective_from": "2016-01-05", "effective_to": "2026-12-31"},
+    {"path": "corpus/india_references/pdf/R28_2016-01-25.pdf", "title": "GoI reference (not SPARKS policy): Foreign visits guidelines clarification", "authority": "guidance", "geography": "international", "version": "OM 25.01.2016", "effective_from": "2016-01-25", "effective_to": "2026-12-31"},
+    {"path": "corpus/india_references/pdf/R29_2016-10-26.pdf", "title": "GoI reference (not SPARKS policy): Leave abroad during foreign deputation", "authority": "guidance", "geography": "international", "version": "OM 26.10.2016", "effective_from": "2016-10-26", "effective_to": "2026-12-31"},
+    {"path": "corpus/india_references/pdf/R30_2014-10-29.pdf", "title": "GoI reference (not SPARKS policy): Economy measures (austerity) 2014", "authority": "guidance", "geography": "general", "version": "OM 29.10.2014", "effective_from": "2014-10-29", "effective_to": "2026-12-31"},
+    {"path": "corpus/india_references/pdf/R31_2009-09-07.pdf", "title": "GoI reference (not SPARKS policy, historical): Economy measures 2009-10", "authority": "guidance", "geography": "general", "version": "OM 07.09.2009", "effective_from": "2009-09-07", "effective_to": "2010-03-31"},
+    {"path": "corpus/india_references/pdf/R32_2021-06-15.pdf", "title": "GoI reference (not SPARKS policy): Time limit for TA claims on retirement", "authority": "guidance", "geography": "domestic", "version": "OM 15.06.2021", "effective_from": "2021-06-15", "effective_to": "2026-12-31"},
+    {"path": "corpus/india_references/pdf/R33_2022-01-06.pdf", "title": "GoI reference (not SPARKS policy): Composite Transfer Grant on retirement", "authority": "guidance", "geography": "domestic", "version": "OM 06.01.2022", "effective_from": "2022-01-06", "effective_to": "2026-12-31"},
+    {"path": "corpus/india_references/pdf/R34_2011-01-24.pdf", "title": "GoI reference (not SPARKS policy, superseded): 6th CPC TA Rules 2011", "authority": "guidance", "geography": "domestic", "version": "OM 24.01.2011", "effective_from": "2011-01-24", "effective_to": "2017-06-30"},
+    {"path": "corpus/india_references/pdf/R35_2016-10-26.pdf", "title": "GoI reference (not SPARKS policy): Private airlines for organ donation travel", "authority": "guidance", "geography": "domestic", "version": "OM 26.10.2016", "effective_from": "2016-10-26", "effective_to": "2026-12-31"},
+    {"path": "corpus/india_references/pdf/R36_2006-10-25.pdf", "title": "GoI reference (not SPARKS policy): Internet rail ticket booking charges", "authority": "guidance", "geography": "domestic", "version": "OM 25.10.2006", "effective_from": "2006-10-25", "effective_to": "2026-12-31"}
+  ]
+}

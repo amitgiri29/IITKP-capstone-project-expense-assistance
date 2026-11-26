@@ -1,0 +1,112 @@
+EXPENSE POLICY ASSISTANT TECHNOLOGY STACK
+Specification 1.6 | 7 November 2026
+
+Technology stack and version baseline
+
+Use one Python application repository for the six person team. Streamlit supplies the screens; FastAPI owns validation, sessions and tool access; LangChain connects model and retrieval adapters; LangGraph coordinates stateful workflows. Keep policy arithmetic and offer ranking in plain Python.
+
+Baseline reviewed on 7 November 2026. The exact releases below were verified on Python.org and PyPI. They are proposed direct dependency pins, not a resolved or integration-tested environment. Validate the full dependency set on the team’s operating systems before treating it as the build baseline. Pin transitive dependencies after that check.
+
+Component | Version | Purpose and implementation details
+Python | 3.14.10 | Standard CPython runtime for UI, API, tools and evaluation. Use the same patch release across the team; avoid free-threaded builds for the first prototype.
+Streamlit | 1.67.0 | Python UI for policy chat, receipt upload and confirmation, and travel search. Calls FastAPI; keeps provider secrets out of browser responses.
+FastAPI | 0.162.0 | Backend routes for sessions, chat, receipt extraction, claim review and travel search. Enforces authorization and input limits.
+Uvicorn | 0.54.0 | Runs the FastAPI service. Start with one worker for the prototype so local state and rate limits have a clear owner.
+Pydantic | 2.14.3 | Validates request, tool and model-output schemas. Rejects malformed fields; it does not verify policy truth.
+LangChain | 1.4.9 | Model and tool interfaces, prompt templates and retrieval integration. Use a provider-specific adapter only after the course names the API.
+LangGraph | 1.2.20 | Routing, planner/executor/critic nodes, confirmation pauses, resumed conversations and the one-repair limit.
+HTTPX | 0.28.1 | HTTP calls to the supplied model and read-only travel APIs through replaceable adapters; explicit timeouts and bounded retries.
+
+
+LangChain and LangGraph are in the same ecosystem. Portability comes from the plain Python domain layer and explicit interfaces, plus the TXT and JSON specification files. Using Claude, Gemini or Codex to help write code does not change the application’s fixed hosted-model requirement.
+
+
+Retrieval storage and supporting packages
+
+Component | Version | Purpose and implementation details
+rank-bm25 | 0.2.2 | Keyword ranking over policy chunks. Normalize aliases; apply authorization and applicability filters before scoring. No local model is required.
+qdrant-client | 1.20.0 | Conditional vector store in persistent local mode, owned by the API process. Supply permitted API embeddings explicitly; do not enable FastEmbed or local inference extras.
+SQLite | Runtime bundled | Session metadata, caches and redacted trace records via Python sqlite3. Record sqlite3.sqlite_version in the environment report; its exact engine version depends on the Python distribution.
+langgraph-checkpoint-sqlite | 3.1.3 | Persists graph checkpoints for follow-ups and confirmation pauses. Use a separate checkpoint database and server-authorized thread IDs.
+Pillow | 13.0.0 | Decode and validate PNG/JPEG uploads, inspect dimensions and reject invalid image bytes. This library does not perform OCR.
+python-multipart | 0.0.33 | Parses FastAPI image uploads. Enforce file count, size and decoded-image limits in application code.
+python-dotenv | 1.2.4 | Loads local development configuration. Commit .env.example with placeholders; keep .env and secrets out of Git.
+pytest | 9.2.0 | Development-only test runner for deterministic tools, adapters, API behavior and the golden evaluation harness.
+LangSmith | 0.14.17 | Shared tracing, performance dashboards, golden dataset experiments and human feedback. Use redaction and a bounded exporter; dependency compatibility is checked during setup.
+
+
+Features implemented without another service
+
+Python Decimal performs money arithmetic and rounding. Standard-library JSON and logging write redacted run traces with request ID, node, duration, evidence IDs, failures and token counts when supplied. Implement prototype TTL caching and session rate limiting in the API; no Redis is required initially. LangSmith is the planned shared tracing and evaluation platform, with a configured usage budget.
+
+Start ingestion with the provided UTF-8 policy text and JSON. PDF and Word source ingestion can be added later after choosing and pinning parsers. Qdrant local mode needs no separate server version; any later server or cloud migration must record and test that deployment version. The vector store is not an embedding model.
+
+
+External services and development setup
+
+Provider versions to record before integration
+
+Hosted small model: course supplied; provider, exact model ID or snapshot, endpoint/API revision and adapter package version are pending. All planner, executor, critic, answer and reranking calls use this model. Record capabilities for images, structured output and tool calls; never silently substitute a larger model.
+
+Embeddings: conditional on course permission. Record provider, model ID, revision and vector dimension; use the same settings for documents and queries. Without permission, run disclosed BM25-only retrieval and leave the dense-hybrid requirement unresolved. OCR: use the supplied model’s vision capability, otherwise an explicitly permitted OCR API with its own recorded version. No OCR product is selected yet.
+
+Flights, hotels and FX: begin with version 1.0 fixtures. Select live providers only after verifying access, coverage, costs and terms; record API revisions and timestamps. Duffel remains a candidate, not a committed integration. No booking or payment endpoints may be registered.
+
+Repository and local runtime
+
+Use Git with a shared private GitHub repository and short pull requests. VS Code or another editor is optional; editor versions do not define application behavior. Suggested folders: ui/, api/, domain/, retrieval/, adapters/, workflows/, tests/, policy_sources/ and artifacts/. Keep generated databases, private uploads, virtual environments and credentials out of Git.
+
+Install Python 3.14.10. Create a virtual environment using python3.14 -m venv .venv (Windows: py -3.14 -m venv .venv). Activate it with source .venv/bin/activate on macOS/Linux, or .venv\Scripts\Activate.ps1 in Windows PowerShell. Confirm python --version reports the selected patch release.
+
+From the extracted package, run python -m pip install -r requirements-proposed.txt, then python -m pip check. Add requirements-vector-proposed.txt only when permitted embeddings will be used. These commands install dependencies; the application itself is still to be built.
+
+After the modules exist, run python -m uvicorn api.main:app --reload --port 8000 and, in another activated terminal, python -m streamlit run ui/app.py. Run python -m pytest for implementation tests; run python validate_package.py separately for fixture consistency.
+
+Locking and deployment gate
+
+The first setup owner must resolve dependencies, test imports, run UI/API and checkpoint smoke tests, then save python -m pip freeze output as requirements.lock.txt and record Python, pip, SQLite and OS versions in artifacts/environment.txt. Recreate that lock on teammates’ machines. Resolve any conflict explicitly and update the stack record; do not label proposed pins as tested. Implement Docker packaging in M2 as soon as the UI/API skeleton and tested lockfile exist. Use the shared EC2/Compose hosting plan in docs/AWS_DEPLOYMENT_PLAN.txt; production access requires DEP01–DEP08. Infrastructure creation and deployment are later authorized implementation tasks.
+
+
+Version sources and dependency artifacts
+
+The links below identify the checked release pages. Version verification establishes that releases exist; it does not establish that every listed package works together. The supplied model integration and application tests remain pending.
+
+langchain 1.4.9 — https://pypi.org/project/langchain/1.4.9/
+
+langgraph 1.2.20 — https://pypi.org/project/langgraph/1.2.20/
+
+langgraph-checkpoint-sqlite 3.1.3 — https://pypi.org/project/langgraph-checkpoint-sqlite/3.1.3/
+
+fastapi 0.162.0 — https://pypi.org/project/fastapi/0.162.0/
+
+streamlit 1.67.0 — https://pypi.org/project/streamlit/1.67.0/
+
+pydantic 2.14.3 — https://pypi.org/project/pydantic/2.14.3/
+
+uvicorn 0.54.0 — https://pypi.org/project/uvicorn/0.54.0/
+
+httpx 0.28.1 — https://pypi.org/project/httpx/0.28.1/
+
+rank-bm25 0.2.2 — https://pypi.org/project/rank-bm25/0.2.2/
+
+qdrant-client 1.20.0 — https://pypi.org/project/qdrant-client/1.20.0/
+
+pillow 13.0.0 — https://pypi.org/project/pillow/13.0.0/
+
+python-multipart 0.0.33 — https://pypi.org/project/python-multipart/0.0.33/
+
+pytest 9.2.0 — https://pypi.org/project/pytest/9.2.0/
+
+python-dotenv 1.2.4 — https://pypi.org/project/python-dotenv/1.2.4/
+
+Python 3.14.10 — https://www.python.org/downloads/release/python-31410/
+
+LangGraph persistence — https://docs.langchain.com/oss/python/langgraph/persistence
+
+Files added to the package
+
+TECH_STACK.txt repeats this section in portable text. requirements-proposed.txt lists core direct pins, including pytest for development. requirements-vector-proposed.txt adds the optional Qdrant client. TECH_STACK.json records versions, roles, sources and verification status for coding assistants. A resolved lockfile is intentionally deferred until dependency resolution and runtime checks succeed.
+
+
+
+LangSmith: docs/LANGSMITH_PLAN.txt. AWS/Docker tools and boto3 1.43.126: docs/AWS_DEPLOYMENT_PLAN.txt.

@@ -1,0 +1,52 @@
+{
+  "clock": "2026-11-15T12:00:00Z",
+  "mode": "DEMO",
+  "offers": [
+    {
+      "id": "H1",
+      "type": "hotel",
+      "provider": "DEMO",
+      "country": "US",
+      "city": "New York",
+      "checkin": "2026-11-20",
+      "checkout": "2026-11-21",
+      "rooms": 1,
+      "travelers": 1,
+      "currency": "USD",
+      "total": 170,
+      "nightly_totals": [
+        170
+      ],
+      "taxes_included": true,
+      "mandatory_fees_included": true,
+      "distance_km": 2,
+      "retrieved_at": "2026-11-15T11:55:00Z",
+      "expires_at": "2026-11-15T12:10:00Z",
+      "cancellation_terms": "Not provided"
+    },
+    {
+      "id": "H2",
+      "type": "hotel",
+      "provider": "DEMO",
+      "country": "US",
+      "city": "New York",
+      "checkin": "2026-11-20",
+      "checkout": "2026-11-21",
+      "rooms": 1,
+      "travelers": 1,
+      "currency": "USD",
+      "total": 190,
+      "nightly_totals": [
+        190
+      ],
+      "taxes_included": true,
+      "mandatory_fees_included": true,
+      "distance_km": 2,
+      "retrieved_at": "2026-11-15T11:55:00Z",
+      "expires_at": "2026-11-15T12:10:00Z",
+      "cancellation_terms": "Not provided"
+    }
+  ],
+  "fault": null,
+  "refresh_result": null
+}

@@ -1,0 +1,65 @@
+M0 RULE REGISTRY AND REFERENCE DATA REVIEW
+Specification 1.6 | Policy 1.1 | Registry 1.1 | Prepared 7 November 2026
+
+STATUS: PREPARED, AWAITING SECOND REVIEWER. The assistant prepared this checklist and ran the automated cross-checks below. A teammate who did not write the registry must confirm every row against the policy text, then set review_status to REVIEWED in policy_sources/rule_registry.json and record their name under rule_registry_review in docs/DECISIONS.json. The assistant cannot be the second reviewer.
+
+AUTOMATED CROSS-CHECKS RUN
+- Every one of the 22 caps: the cap amount, its currency and its grade appear in the text of the cited rule. 22 of 22 matched.
+- All 30 calculation golden cases recompute exactly from the registry (python validate_package.py).
+- Every parameter was read against its cited rule. One defect was found and fixed, see below.
+
+DEFECT FOUND AND FIXED DURING M0
+PARAM-RATE-LIMIT-PER-SESSION-MINUTE cited P18, but P18 says nothing about rate limits. The value 10 is a proposed operational default from SPECIFICATION.txt, not a policy rule. It was removed from the policy registry and recorded under operational_defaults in IMPLEMENTATION_CONTRACT.json. The registry now holds 13 parameters. No golden case or expected value changed.
+
+CAPS — reviewer ticks each row against the cited rule text
+[ ] | cap_id | rule | grade | scope | tier | basis | cap | order | golden coverage
+[ ] | CAP-HOTEL-IN-METRO-E | P02 | E | IN | metro | per_night | INR 5000.00 | before_conversion | hotel_IN_metro_E
+[ ] | CAP-HOTEL-IN-METRO-M | P02 | M | IN | metro | per_night | INR 7000.00 | before_conversion | NONE - read against policy text with extra care
+[ ] | CAP-HOTEL-IN-OTHER-E | P02 | E | IN | other | per_night | INR 3500.00 | before_conversion | NONE - read against policy text with extra care
+[ ] | CAP-HOTEL-IN-OTHER-M | P02 | M | IN | other | per_night | INR 5000.00 | before_conversion | hotel_IN_other_M
+[ ] | CAP-HOTEL-US-E | P03 | E | US | - | per_night | USD 180.00 | before_conversion | hotel_US_E
+[ ] | CAP-HOTEL-US-M | P03 | M | US | - | per_night | USD 250.00 | before_conversion | NONE - read against policy text with extra care
+[ ] | CAP-HOTEL-UK-E | P03 | E | UK | - | per_night | GBP 150.00 | before_conversion | NONE - read against policy text with extra care
+[ ] | CAP-HOTEL-UK-M | P03 | M | UK | - | per_night | GBP 210.00 | before_conversion | hotel_UK_M
+[ ] | CAP-HOTEL-SG-E | P03 | E | SG | - | per_night | SGD 220.00 | before_conversion | hotel_SG_E
+[ ] | CAP-HOTEL-SG-M | P03 | M | SG | - | per_night | SGD 300.00 | before_conversion | NONE - read against policy text with extra care
+[ ] | CAP-FLIGHT-IN-E | P04 | E | IN | - | per_one_way_journey | INR 12000.00 | before_conversion | flight_IN_E
+[ ] | CAP-FLIGHT-IN-M | P04 | M | IN | - | per_one_way_journey | INR 18000.00 | before_conversion | NONE - read against policy text with extra care
+[ ] | CAP-FLIGHT-INT-E | P05 | E | INTERNATIONAL | - | per_one_way_journey | INR 80000.00 | after_conversion | flight_int_E
+[ ] | CAP-FLIGHT-INT-M | P05 | M | INTERNATIONAL | - | per_one_way_journey | INR 120000.00 | after_conversion | NONE - read against policy text with extra care
+[ ] | CAP-LOCAL-IN-E | P06 | E | IN | - | per_local_day | INR 1500.00 | before_conversion | local_IN_E
+[ ] | CAP-LOCAL-IN-M | P06 | M | IN | - | per_local_day | INR 2000.00 | before_conversion | NONE - read against policy text with extra care
+[ ] | CAP-LOCAL-US-E | P07 | E | US | - | per_local_day | USD 70.00 | before_conversion | NONE - read against policy text with extra care
+[ ] | CAP-LOCAL-US-M | P07 | M | US | - | per_local_day | USD 100.00 | before_conversion | local_US_M
+[ ] | CAP-LOCAL-UK-E | P07 | E | UK | - | per_local_day | GBP 55.00 | before_conversion | NONE - read against policy text with extra care
+[ ] | CAP-LOCAL-UK-M | P07 | M | UK | - | per_local_day | GBP 80.00 | before_conversion | NONE - read against policy text with extra care
+[ ] | CAP-LOCAL-SG-E | P07 | E | SG | - | per_local_day | SGD 90.00 | before_conversion | local_SG_E
+[ ] | CAP-LOCAL-SG-M | P07 | M | SG | - | per_local_day | SGD 130.00 | before_conversion | NONE - read against policy text with extra care
+
+PARAMETERS
+[ ] | parameter_id | rule | value | unit
+[ ] | PARAM-SUBMISSION-DEADLINE-DAYS | P13 | 30 | calendar_days
+[ ] | PARAM-MONEY-ROUNDING | P11 | "ROUND_HALF_UP" | rounding_mode
+[ ] | PARAM-MONEY-SCALE | P11 | 2 | fractional_digits
+[ ] | PARAM-COMPONENT-DISCREPANCY-TOLERANCE | P15 | "0.01" | currency_units
+[ ] | PARAM-MAX-IMAGES-PER-CLAIM | P15 | 5 | images
+[ ] | PARAM-MAX-IMAGE-BYTES | P15 | 10485760 | bytes
+[ ] | PARAM-OFFER-FRESHNESS-MINUTES | P17 | 15 | minutes
+[ ] | PARAM-MAX-RECOMMENDATIONS | P16 | 3 | offers
+[ ] | PARAM-MVP-ROOMS | P16 | 1 | rooms
+[ ] | PARAM-MVP-TRAVELERS | P16 | 1 | adults
+[ ] | PARAM-ALLOWED-CABIN | P04 | ["economy"] | cabin
+[ ] | PARAM-CHECKED-BAG-KG | P04 | 20 | kilograms
+[ ] | PARAM-BUDGET-EQUALITY-WITHIN | P12 | true | boolean
+
+REFERENCE DATA — reviewer confirms
+[ ] Supported countries are exactly IN, US, UK and SG (P01, P03, P07); UK is the package-local code and GB the ISO alias.
+[ ] Metro tier is exactly Bengaluru, Delhi and Mumbai; every other Indian city uses the other tier (P02).
+[ ] Aliases Bangalore to Bengaluru (P02); New Delhi to Delhi and Bombay to Mumbai are assistant additions not stated in P02 - accept or remove.
+[ ] FX-DEMO-2026 is USD 84, GBP 106, SGD 63 for 15 November 2026 (P11); CARD-DEMO-ROUNDING-2026-11-15 USD 84.5 is used only by GT110.
+[ ] Reason, missing-field and error codes are acceptable names; no golden case asserts on them.
+
+Twelve caps have no golden boundary case: CAP-HOTEL-IN-METRO-M, CAP-HOTEL-IN-OTHER-E, CAP-HOTEL-US-M, CAP-HOTEL-UK-E, CAP-HOTEL-SG-M, CAP-FLIGHT-IN-M, CAP-FLIGHT-INT-M, CAP-LOCAL-IN-M, CAP-LOCAL-US-E, CAP-LOCAL-UK-E, CAP-LOCAL-UK-M, CAP-LOCAL-SG-M. An error in any of these would pass every existing test, so they need the most careful human check.
+
+SIGN-OFF
+Second reviewer: ____________________  Date: __________  Result: REVIEWED / CHANGES REQUESTED
